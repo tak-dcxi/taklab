@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { BaseIconChevron } from '~/components/BaseIcon'
+import { BaseIcon } from '~/components/BaseIcon'
 import { buttonStyle } from '~/styles/object/buttonStyle'
 
 type BaseLinkButtonPropsType = {
@@ -16,7 +16,7 @@ export const BaseLinkButton: React.VFC<BaseLinkButtonPropsType> = ({ children, h
     return (
       <MyButton href={href} onClick={onClick} {...(blank && { target: '_blank', rel: 'noopener noreferrer' })}>
         {children}
-        <BaseIconChevron type="right" size={18} />
+        <BaseIcon type={'chevron-right'} size={18} />
       </MyButton>
     )
   }
@@ -25,7 +25,7 @@ export const BaseLinkButton: React.VFC<BaseLinkButtonPropsType> = ({ children, h
     <Link href={href} passHref>
       <MyButton onClick={onClick} {...(blank && { target: '_blank', rel: 'noopener noreferrer' })}>
         {children}
-        <BaseIconChevron type="right" size={18} />
+        <BaseIcon type={'chevron-right'} size={18} />
       </MyButton>
     </Link>
   )

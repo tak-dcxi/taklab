@@ -1,7 +1,7 @@
 export const getDate = (date: string): string => {
-  return new Date(date).toLocaleDateString('ja-JP', {
+  return new Date(date).toLocaleDateString('en', {
     day: 'numeric',
-    month: 'short',
+    month: 'long',
     year: 'numeric',
   })
 }

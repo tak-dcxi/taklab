@@ -16,7 +16,7 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({ title, descript
   const baseURL: string = process.env.BASE_URL
   const currentURL: string = baseURL + useRouter().pathname
 
-  const [viewport, setViewport] = useState('width=device-width,initial-scale=1')
+  const [viewport, setViewport] = useState<string>('width=device-width,initial-scale=1')
 
   useEffect(() => {
     const handleResize = (): void => {
@@ -50,6 +50,49 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({ title, descript
       <meta property="og:image" content={`${baseURL}/ogp.png`} />
       <meta name="twitter:card" content="summary_large_image" />
       <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link
+        rel="preload"
+        as="style"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap"
+      />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap"
+        media="print"
+        // @ts-ignore
+        onLoad="this.media='all'"
+      />
+      <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" />
+      </noscript>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+              function loadCDN(src, integrity) {
+                var script = document.createElement('script')
+                script.src = src
+                script.integrity = integrity
+                script.crossOrigin = 'anonymous'
+                script.defer = true
+                document.head.appendChild(script)
+              }`,
+        }}
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+              try {
+                document.querySelector(':focus-visible')
+              } catch (error) {
+                loadCDN(
+                  'https://cdn.jsdelivr.net/npm/focus-visible@5.2.0/dist/focus-visible.min.js',
+                  'sha384-xRa5B8rCDfdg0npZcxAh+RXswrbFk3g6dlHVeABeluN8EIwdyljz/LqJgc2R3KNA'
+                )
+              }`,
+        }}
+      />
     </Head>
   )
 }

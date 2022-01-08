@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { breakpoints } from '~/utils/breakpoints'
+import { breakpoints } from '~/constant/breakpoints'
 
 export const useMatchMedia = (): { [key: string]: boolean } => {
-  const [media, setMedia] = useState({
+  const [media, setMedia] = useState<{ [key: string]: boolean }>({
     sm: false,
     md: false,
     lg: false,
@@ -24,7 +24,7 @@ export const useMatchMedia = (): { [key: string]: boolean } => {
     handleResize()
 
     return () => window.removeEventListener('resize', handleResize)
-  }, [media])
+  }, [])
 
   return media
 }

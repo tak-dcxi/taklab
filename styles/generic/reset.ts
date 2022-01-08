@@ -29,6 +29,10 @@ export const reset = css`
   a {
     color: inherit;
     text-decoration: none;
+
+    & svg {
+      pointer-events: none;
+    }
   }
 
   ul,

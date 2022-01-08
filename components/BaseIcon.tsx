@@ -1,22 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
+import { v4 as uuidv4 } from 'uuid'
 
 type BaseIconPropsType = {
   color?: string
   size?: number
   label?: string
+  type: 'chevron-up' | 'chevron-right' | 'chevron-down' | 'chevron-left' | 'cross' | 'menu' | 'search' | 'sun' | 'moon'
 }
 
-type BaseIconChevronPropsType = {
-  type: 'up' | 'right' | 'down' | 'left'
-}
+export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor', size = 16, label, type }) => {
+  const randomID: string = `icon-${uuidv4()}`
 
-const Wrapper: React.VFC<BaseIconPropsType & { children: React.ReactNode }> = ({
-  children,
-  color = 'currentColor',
-  size = 16,
-  label,
-}) => {
   return (
     <MySVGtag
       role="img"
@@ -25,27 +20,43 @@ const Wrapper: React.VFC<BaseIconPropsType & { children: React.ReactNode }> = ({
       viewBox="0 0 24 24"
       fill="none"
       stroke={color}
-      strokeLinecap="square"
-      {...(label && { 'aria-label': label })}
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      {...(label && { 'aria-labelledby': randomID })}
     >
-      {children}
+      {label && <title id={randomID}>{label}</title>}
+      {type === 'chevron-up' && <path d="M18 15l-6-6-6 6" />}
+      {type === 'chevron-right' && <path d="M9 18l6-6-6-6" />}
+      {type === 'chevron-down' && <path d="M6 9l6 6 6-6" />}
+      {type === 'chevron-left' && <path d="M15 18l-6-6 6-6" />}
+      {type === 'cross' && (
+        <>
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </>
+      )}
+      {type === 'menu' && (
+        <>
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </>
+      )}
+      {type === 'search' && (
+        <>
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </>
+      )}
+      {type === 'sun' && (
+        <>
+          <circle cx="12" cy="12" r="5" />
+          <path d="M12 1v2m0 18v2M4.2 4.2l1.4 1.4m12.8 12.8 1.4 1.4M1 12h2m18 0h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+        </>
+      )}
+      {type === 'moon' && <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />}
     </MySVGtag>
-  )
-}
-
-export const BaseIconChevron: React.VFC<BaseIconPropsType & BaseIconChevronPropsType> = ({
-  type,
-  color,
-  size,
-  label,
-}) => {
-  return (
-    <Wrapper size={size} color={color} label={label}>
-      {type === 'up' && <path d="m6 14 6-6 6 6h0" />}
-      {type === 'right' && <path d="m10 6 6 6-6 6h0" />}
-      {type === 'down' && <path d="m6 10 6 6 6-6" />}
-      {type === 'left' && <path d="m14 18-6-6 6-6h0" />}
-    </Wrapper>
   )
 }
 
@@ -56,5 +67,8 @@ type MySVGTagPropsType = {
 
 const MySVGtag = styled.svg<MySVGTagPropsType>`
   height: ${(props) => props.height / 16}rem;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2px;
   width: ${(props) => props.width / 16}rem;
 `

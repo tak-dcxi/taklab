@@ -3,8 +3,8 @@ import { css } from 'styled-components'
 // https://www.a11yproject.com/posts/2013-01-11-how-to-hide-content/
 // https://github.com/ampproject/amphtml/blob/0222243cc2c4cf39f1dbefcfd3b196450f5f0b97/css/ampshared.css#L197-L227
 
-export const visuallyHidden = css`
-  .visually-hidden {
+export const VisuallyHidden = css`
+  .VisuallyHidden {
     border: 0 !important;
     display: block !important;
     height: 4px !important;

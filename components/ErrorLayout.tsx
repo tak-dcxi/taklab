@@ -37,7 +37,7 @@ export const ErrorLayout: React.VFC<ErrorLayoutPropsType> = ({ statusCode }) => 
             <MyText>アクセスしようとしたページは表示できませんでした。</MyText>
           )}
           <MyButtonWrapper>
-            <BaseLinkButton href="/">トップページへ戻る</BaseLinkButton>
+            <BaseLinkButton href={'/'}>トップページへ戻る</BaseLinkButton>
           </MyButtonWrapper>
         </MyContents>
       </BaseContainer>

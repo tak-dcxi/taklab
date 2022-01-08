@@ -10,7 +10,7 @@ type EventArchivePagePropsType = {
 }
 
 const EventArchivePage: React.VFC<EventArchivePagePropsType> = ({ events, media, page }) => {
-  const [offset, setOffset] = useState(0)
+  const [offset, setOffset] = useState<number>(0)
   const perPage: number = 5
   const length: number = events.length
 

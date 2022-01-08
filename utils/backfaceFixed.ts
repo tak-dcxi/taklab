@@ -24,6 +24,7 @@ export const backfaceFixed = (fixed: boolean): void => {
   }
 
   Object.keys(styles).forEach((key) => (body.style[key] = fixed ? styles[key] : ''))
+  html.style.height = fixed ? '100vh' : ''
 
   if (!fixed) window.scrollTo(0, scrollY * -1)
 }

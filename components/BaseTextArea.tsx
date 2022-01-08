@@ -1,6 +1,5 @@
 import React, { useRef } from 'react'
 import styled from 'styled-components'
-import { formFieldStyle } from '~/styles/object/formFieldStyle'
 
 export type BaseTextAreaPropsType = {
   id?: string
@@ -61,14 +60,14 @@ export const BaseTextArea = React.forwardRef<HTMLTextAreaElement, BaseTextAreaPr
 
 const MyWrapper = styled.span`
   display: block;
-  font-size: max(var(--fsize-3), 16px);
+  font-size: max(var(--fontsize-3), 16px);
   position: relative;
 `
 
 const MyInput = styled.textarea`
   appearance: none;
-  background-color: var(--grayscale-6);
-  border: 1px solid var(--grayscale-4);
+  background-color: var(--color-grayscale-7);
+  border: 1px solid var(--color-grayscale-5);
   border-radius: 0;
   display: block;
   font: inherit;

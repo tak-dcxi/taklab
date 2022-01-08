@@ -8,18 +8,20 @@ type SiteLayoutPropsType = {
 
 export const SiteLayout: React.VFC<SiteLayoutPropsType> = ({ children }) => {
   return (
-    <MyWrapper>
+    <MyRoot>
       <SiteHeader />
-      <MyMain aria-label="メインコンテンツ">{children}</MyMain>
+      <MyMain id="main" aria-label="メインコンテンツ" tabIndex={-1}>
+        {children}
+      </MyMain>
       <SiteFooter />
-    </MyWrapper>
+    </MyRoot>
   )
 }
 
-const MyWrapper = styled.div`
+const MyRoot = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100%;
   min-width: 320px;
 
   & > * {

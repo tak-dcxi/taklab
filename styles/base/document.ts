@@ -1,19 +1,19 @@
 import { css } from 'styled-components'
-import { breakpoints } from '~/utils/breakpoints'
+import { breakpoints } from '~/constant/breakpoints'
 
-export const page = css`
+export const document = css`
   html {
-    font-family: YakuHanJP, 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'BIZ UDPGothic', Meiryo,
+      sans-serif;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
+    height: 100%;
     line-break: strict;
-    min-height: 100vh;
     -webkit-overflow-scrolling: touch;
     overflow-wrap: break-word;
     -webkit-tap-highlight-color: transparent;
     text-align: start;
     text-underline-offset: 0.125em;
-    width: 100%;
 
     &:lang(ja) {
       font-kerning: none;
@@ -21,14 +21,13 @@ export const page = css`
   }
 
   body {
-    background-color: var(--layout-color-background);
-    color: var(--text-color-default);
-    font-size: var(--fsize-2);
-    font-weight: var(--normal);
+    background-color: var(--theme-background-1);
+    color: var(--theme-text-1);
+    font-size: var(--fontsize-2);
+    font-weight: normal;
+    height: 100%;
     line-height: var(--leading-normal);
-    min-height: 100%;
     padding: 0;
-    width: 100%;
   }
 
   i,
@@ -39,5 +38,10 @@ export const page = css`
     :lang(ja) & {
       font-style: normal;
     }
+  }
+
+  [id='__next'] {
+    height: 100%;
+    isolation: isolate;
   }
 `

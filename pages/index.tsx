@@ -1,67 +1,31 @@
 import React from 'react'
-import { getEvents, getMedia, getPosts, getPage, getFeaturedMedia } from '~/libs/wordpress'
-import { EventCard, EventType } from '~/components/EventCard'
-import { PostCard, PostType } from '~/components/PostCard'
-import { HomeLayout } from '~/components/HomeLayout'
+import { client, PostType } from '~/libs/microCMS'
+import { PostCard } from '~/components/PostCard'
+import { HomeLayout, HomeAPIType } from '~/components/HomeLayout'
 
 type HomePropsType = {
-  posts: []
-  home: { acf?: { firstview_headline: string; firstview_image: { url: string } } }
-  events: []
-  media: []
+  home: HomeAPIType
+  posts: PostType[]
 }
 
-const Home: React.VFC<HomePropsType> = ({ posts, events, media, home }) => {
-  const perPage: number = 3
+const Home: React.VFC<HomePropsType> = ({ home, posts }) => {
+  const perPage: number = 6
 
-  const MyPostCards = posts.slice(0, perPage).map((post: PostType & { id: number }) => {
-    const featuredMediaId: number = post['featured_media']
-    const featuredMedia: string = getFeaturedMedia(media, featuredMediaId)
-    return (
-      <div key={post.id}>
-        <PostCard post={post} featuredMedia={featuredMedia} lv={3} />
-      </div>
-    )
+  const MyPostCards = posts.slice(0, perPage).map((post) => {
+    return <PostCard key={post.id} api={post} lv={3} />
   })
 
-  const MyEventCards = events.slice(0, perPage).map((event: EventType & { id: number }) => {
-    const featuredMediaId: number = event['featured_media']
-    const featuredMedia: string = getFeaturedMedia(media, featuredMediaId)
-    return (
-      <div key={event.id}>
-        <EventCard event={event} featuredMedia={featuredMedia} lv={3} />
-      </div>
-    )
-  })
-
-  return (
-    <HomeLayout
-      title={home.acf.firstview_headline}
-      image={home.acf.firstview_image.url}
-      perPage={perPage}
-      postCards={MyPostCards}
-      eventCards={MyEventCards}
-    />
-  )
+  return <HomeLayout api={home} perPage={perPage} postCards={MyPostCards} />
 }
 
-export const getStaticProps = async ({
-  params,
-}): Promise<{
-  props: HomePropsType
-  revalidate: number
-}> => {
-  const posts: [] = await getPosts(3)
-  const home: {} = await getPage('home')
-  const events: [] = await getEvents()
-  const media: [] = await getMedia()
+export const getStaticProps = async () => {
+  const home = await client.get({ endpoint: 'pages', contentId: 'home' })
+  const posts = await client.get({ endpoint: 'blog' })
 
   return {
     props: {
-      posts,
-      home,
-      events,
-      media,
+      home: home,
+      posts: posts.contents,
     },
     revalidate: 1,
   }

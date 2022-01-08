@@ -23,10 +23,10 @@ export const BaseImage: React.VFC<BaseImagePropsType> = ({
     <MyWrapper>
       <Image
         src={src}
-        layout="responsive"
+        layout={'responsive'}
         width={x}
         height={y}
-        decoding="async"
+        decoding={'async'}
         loading={lazyload ? 'lazy' : 'eager'}
         alt={alt}
         objectFit={objectFit}
@@ -37,6 +37,6 @@ export const BaseImage: React.VFC<BaseImagePropsType> = ({
 }
 
 const MyWrapper = styled.span`
-  background-color: var(--grayscale-1);
+  background-color: var(--color-grayscale-1);
   display: block;
 `

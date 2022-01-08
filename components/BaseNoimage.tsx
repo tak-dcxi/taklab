@@ -20,7 +20,7 @@ type MyRootPropsType = {
 }
 
 const MyRoot = styled.div<MyRootPropsType>`
-  background-color: var(--grayscale-1);
+  background-color: var(--color-grayscale-1);
   color: var(--text-color-lighten);
   position: relative;
 

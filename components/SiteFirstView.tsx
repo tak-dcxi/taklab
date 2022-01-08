@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import styled from 'styled-components'
-import { globalFontSize } from '~/styles/settings/CSSVariables'
+import { globalFontSize } from '~/styles/settings/commonVariables'
 
 type SiteFirstViewPropsType = {
   headline: string
@@ -31,7 +31,7 @@ export const SiteFirstView: React.VFC<SiteFirstViewPropsType> = ({ headline, ima
 }
 
 const MyRoot = styled.header`
-  background-color: var(--grayscale-2);
+  background-color: var(--color-grayscale-2);
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
@@ -57,7 +57,7 @@ const MyImageWrapper = styled.div`
   position: relative;
 
   &::after {
-    background-color: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.2) radial-gradient(rgba(0, 0, 0, 0.4) 30%, transparent 0) center center / 4px 4px;
     bottom: 0;
     content: '';
     left: 0;
