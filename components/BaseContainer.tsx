@@ -14,5 +14,5 @@ const MyContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
   max-width: 1024px;
-  padding: 0 clamp(16px, 11px + 1.4815vw, 32px);
+  padding: 0 max(16px, min(11px + 1.4815vw, 32px));
 `

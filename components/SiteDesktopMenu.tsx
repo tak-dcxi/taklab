@@ -82,8 +82,14 @@ const MyNavbarLink = styled.a`
     transition: transform 0.3s;
   }
 
+  &[aria-current] {
+    &::before {
+      background-color: currentColor;
+    }
+  }
+
   & > svg {
-    margin-right: 0.4em;
+    margin-right: 0.25em;
   }
 
   ${hoverable(`

@@ -6,30 +6,45 @@ type BaseIconPropsType = {
   color?: string
   size?: number
   label?: string
-  type: 'chevron-up' | 'chevron-right' | 'chevron-down' | 'chevron-left' | 'cross' | 'menu' | 'search' | 'sun' | 'moon'
+  type:
+    | 'chevron-up'
+    | 'chevron-right'
+    | 'chevron-down'
+    | 'chevron-left'
+    | 'enter'
+    | 'cross'
+    | 'menu'
+    | 'search'
+    | 'sun'
+    | 'moon'
 }
 
 export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor', size = 16, label, type }) => {
-  const randomID: string = `icon-${uuidv4()}`
+  const randomID: string = uuidv4()
 
   return (
     <MySVGtag
-      role="img"
       width={size}
       height={size}
       viewBox="0 0 24 24"
       fill="none"
       stroke={color}
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      {...(label && { 'aria-labelledby': randomID })}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...(label ? { role: 'img', 'aria-labelledby': randomID } : { 'aria-hidden': 'true' })}
     >
       {label && <title id={randomID}>{label}</title>}
       {type === 'chevron-up' && <path d="M18 15l-6-6-6 6" />}
       {type === 'chevron-right' && <path d="M9 18l6-6-6-6" />}
       {type === 'chevron-down' && <path d="M6 9l6 6 6-6" />}
       {type === 'chevron-left' && <path d="M15 18l-6-6 6-6" />}
+      {type === 'enter' && (
+        <>
+          <path d="M10 9l-6 6 6 6" />
+          <path d="M20 4v7a4 4 0 0 1-4 4H5" />
+        </>
+      )}
       {type === 'cross' && (
         <>
           <line x1="18" y1="6" x2="6" y2="18" />
@@ -67,8 +82,5 @@ type MySVGTagPropsType = {
 
 const MySVGtag = styled.svg<MySVGTagPropsType>`
   height: ${(props) => props.height / 16}rem;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2px;
   width: ${(props) => props.width / 16}rem;
 `

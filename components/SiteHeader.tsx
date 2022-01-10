@@ -13,7 +13,7 @@ export const SiteHeader: React.VFC = () => {
   const media: { [key: string]: boolean } = useMatchMedia()
 
   return (
-    <MyRoot>
+    <MyRoot aria-label="サイトヘッダー">
       <MyContainer>
         <MyLogo>
           <Link href={'/'} passHref>
@@ -33,12 +33,12 @@ export const SiteHeader: React.VFC = () => {
 }
 
 const MyRoot = styled.header`
-  background-color: var(--theme-background-weak);
+  background-color: var(--theme-header-background);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   height: var(--height-header);
   position: sticky;
   top: 0;
-  z-index: var(--fixed-object-context);
+  z-index: var(--context-fixed-object);
 `
 
 const MyContainer = styled.div`
@@ -58,7 +58,7 @@ const MyContainer = styled.div`
 
 const MyLogo = styled.p`
   grid-area: header-logo;
-  padding: 0 clamp(16px, 11px + 1.4815vw, 32px);
+  padding: 0 max(16px, min(11px + 1.4815vw, 32px));
 `
 
 const MyLogoLink = styled.a`

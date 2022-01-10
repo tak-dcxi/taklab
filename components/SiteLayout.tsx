@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { SiteHeader } from '~/components/SiteHeader'
 import { SiteFooter } from '~/components/SiteFooter'
+import { SiteSkipLink } from '~/components/SiteSkipLink'
 
 type SiteLayoutPropsType = {
   children: React.ReactNode
@@ -9,6 +10,7 @@ type SiteLayoutPropsType = {
 export const SiteLayout: React.VFC<SiteLayoutPropsType> = ({ children }) => {
   return (
     <MyRoot>
+      <SiteSkipLink />
       <SiteHeader />
       <MyMain id="main" aria-label="メインコンテンツ" tabIndex={-1}>
         {children}

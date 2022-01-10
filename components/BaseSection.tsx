@@ -1,14 +1,14 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { BaseContainer } from '~/components/BaseContainer'
 import { BaseHeading1 } from '~/components/BaseHeading1'
 
-type HomeSectionPropsType = {
+type BaseSectionPropsType = {
   title: string
   children: React.ReactNode
 }
 
-export const HomeSection: React.VFC<HomeSectionPropsType> = ({ title, children }) => {
+export const BaseSection: React.VFC<BaseSectionPropsType> = ({ title, children }) => {
   return (
     <MySection>
       <BaseContainer>
@@ -22,17 +22,13 @@ export const HomeSection: React.VFC<HomeSectionPropsType> = ({ title, children }
 }
 
 const MySection = styled.section`
-  padding: clamp(64px, 56px + 2.3077vw, 100px) 0;
+  padding: max(64px, min(56px + 2.3077vw, 100px)) 0; /* clamp() */
 
   & > * > * + * {
     margin-top: 56px;
   }
 
   & + & {
-    border-top: 1px solid var(--theme-border-divider);
-  }
-
-  &:nth-of-type(2n) {
-    background-color: var(--theme-background-strong);
+    border-top: 1px solid var(--theme-divider);
   }
 `

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import styled from 'styled-components'
 import { BaseLogo } from '~/components/BaseLogo'
@@ -13,37 +13,11 @@ type HomeFirstViewPropsType = {
 }
 
 export const HomeFirstView: React.VFC<HomeFirstViewPropsType> = ({ image, alt }) => {
-  const [showBlurImage, setShowBlurImage] = useState<boolean>(false)
-
-  useEffect(() => {
-    const handleResize = (): void => setShowBlurImage(window.matchMedia('(min-width: 1920px)').matches)
-
-    window.addEventListener('resize', handleResize)
-    handleResize()
-
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
   return (
-    <MyRoot>
+    <MyFirstView>
       <MyHeadline>
-        <BaseLogo size={`clamp(${280 / 16}rem, 14.6154rem + 12.8205vw, ${480 / 16}rem)`} />
+        <BaseLogo size={`max(${280 / 16}rem, min(14.6154rem + 12.8205vw, ${480 / 16}rem))`} />
       </MyHeadline>
-      {showBlurImage && (
-        <MyBlurImage aria-hidden="true">
-          <Image
-            src={image.url}
-            alt=""
-            layout="fill"
-            decoding="async"
-            loading="eager"
-            priority
-            objectFit="cover"
-            role="presentation"
-            quality={10}
-          />
-        </MyBlurImage>
-      )}
       <MyImage>
         <Image
           src={image.url}
@@ -56,18 +30,20 @@ export const HomeFirstView: React.VFC<HomeFirstViewPropsType> = ({ image, alt })
           quality={75}
         />
       </MyImage>
-    </MyRoot>
+    </MyFirstView>
   )
 }
 
-const MyRoot = styled.header`
+const MyFirstView = styled.header`
   background-color: var(--color-grayscale-2);
   display: grid;
   isolation: isolate;
-  min-height: clamp(440px, 380px + 18.5185vw, 640px);
+  margin: auto;
+  min-height: max(440px, min(380px + 18.5185vw, 640px)); /* clamp() */
   overflow: hidden;
   place-items: center;
   position: relative;
+  width: min(100%, 1920px);
 
   & > * {
     grid-area: 1 / -1;
@@ -91,13 +67,6 @@ const MyHeadline = styled.h1`
 `
 
 const MyImage = styled.div`
-  height: 100%;
-  margin: auto;
-  width: min(100%, 1920px);
-`
-
-const MyBlurImage = styled.div`
-  filter: blur(40px);
   height: 100%;
   width: 100%;
 `

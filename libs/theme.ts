@@ -37,8 +37,3 @@ export const discriminationTheme = (): void => {
   initialTheme()
   applyVisited('visted')
 }
-
-export const currentTheme = (): string => {
-  const storageTheme: string = sessionStorage.getItem('theme')
-  return storageTheme
-}

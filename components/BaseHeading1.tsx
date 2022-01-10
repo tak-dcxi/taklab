@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { breakpoints } from '~/constant/breakpoints'
 
 type BaseHeadingPropsType = {
   children: string
@@ -21,7 +20,7 @@ export const BaseHeading1: React.VFC<BaseHeadingPropsType> = ({ children, lv, id
 
 const MyH1 = styled.h1`
   font-family: var(--font-montserrat);
-  font-size: clamp(var(--fontsize-6), 1.3519rem + 0.7407vw, var(--fontsize-7));
+  font-size: max(var(--fontsize-6), min(1.3519rem + 0.7407vw, var(--fontsize-7))); /* clamp() */
   font-weight: bold;
   letter-spacing: 0.02em;
   line-height: var(--leading-tight);

@@ -13,7 +13,7 @@ export const SiteDrawerButton = React.forwardRef(
     if (type === 'open') {
       return (
         <MyButton ref={ref} type="button" aria-label="メニューを開く" aria-haspopup="true" onClick={onClick}>
-          <MyButtonIcon role="img" data-type={type} />
+          <MyButtonIcon data-type={type} />
         </MyButton>
       )
     }
@@ -21,7 +21,7 @@ export const SiteDrawerButton = React.forwardRef(
     if (type === 'close') {
       return (
         <MyButton type="button" aria-label="メニューを閉じる" onClick={onClick}>
-          <MyButtonIcon role="img" data-type={type} />
+          <MyButtonIcon data-type={type} />
         </MyButton>
       )
     }

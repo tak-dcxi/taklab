@@ -11,20 +11,19 @@ type BaseSocialIconPropsType = {
 }
 
 export const BaseSocialIcon: React.VFC<BaseSocialIconPropsType> = ({ color, size = 100, type, presentation }) => {
-  const randomID: string = `socialIcon-${uuidv4()}`
+  const randomID: string = uuidv4()
 
   return (
     <MySVGtag
-      role="img"
       width={size}
       height={size}
       viewBox="0 0 100 100"
-      {...(!presentation && { 'aria-labelledby': randomID })}
       {...(type === 'twitter' && { fill: color || social.twitter.color })}
       {...(type === 'github' && { fill: color || social.github.color })}
       {...(type === 'zenn' && { fill: color || social.twitter.color })}
       {...(type === 'note' && { fill: color || social.note.color })}
       {...(type === 'rss' && { fill: color || social.rss.color })}
+      {...(presentation ? { 'aria-hidden': 'true' } : { role: 'img', 'aria-labelledby': randomID })}
     >
       {type === 'twitter' && (
         <>

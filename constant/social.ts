@@ -28,8 +28,8 @@ export const social: { [key: string]: SocialType } = {
     color: '#41c9b4',
   },
   rss: {
-    name: 'rss',
-    url: `${meta.baseURL}/feed`,
-    color: 'var(--color-accent)',
+    name: 'RSS',
+    url: `${meta.baseURL}/rss/feed.xml`,
+    color: 'var(--color-primary)',
   },
 }

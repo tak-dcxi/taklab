@@ -5,7 +5,6 @@ import { BaseContainer } from '~/components/BaseContainer'
 import { SiteBreadcrumbs } from '~/components/SiteBreadcrumbs'
 import { SiteFirstView } from '~/components/SiteFirstView'
 import { SiteHeadTags } from '~/components/SiteHeadTags'
-import { SiteLayout } from '~/components/SiteLayout'
 
 type ErrorLayoutPropsType = {
   statusCode: number
@@ -25,7 +24,7 @@ export const ErrorLayout: React.VFC<ErrorLayoutPropsType> = ({ statusCode }) => 
   ]
 
   return (
-    <SiteLayout>
+    <>
       <SiteHeadTags title={title} noindex />
       <SiteFirstView headline={title} />
       <BaseContainer>
@@ -41,7 +40,7 @@ export const ErrorLayout: React.VFC<ErrorLayoutPropsType> = ({ statusCode }) => 
           </MyButtonWrapper>
         </MyContents>
       </BaseContainer>
-    </SiteLayout>
+    </>
   )
 }
 

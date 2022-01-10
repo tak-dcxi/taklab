@@ -14,10 +14,10 @@ export const SiteFooter: React.VFC = () => {
   const { asPath } = useRouter()
 
   return (
-    <MyRoot>
+    <MyRoot aria-label="サイトフッター">
       <BaseContainer>
         <MyLogoWrapper>
-          <BaseLogo size={'clamp(11.5rem, 10.8333rem + 3.3333vw, 13.75rem)'} />
+          <BaseLogo size={'max(11.5rem, min(10.8333rem + 3.3333vw, 13.75rem))'} />
         </MyLogoWrapper>
         <MyFooterMenu>
           <ul>
@@ -58,7 +58,7 @@ export const SiteFooter: React.VFC = () => {
         </MyFooterSocial>
         <MyCopyright>
           <small lang="en" translate="no">
-            © 2022 Takahiro Arai
+            © {new Date().getFullYear()} Takahiro Arai
           </small>
         </MyCopyright>
       </BaseContainer>
@@ -68,9 +68,9 @@ export const SiteFooter: React.VFC = () => {
 
 const MyRoot = styled.footer`
   background-color: var(--color-grayscale-1);
-  border-top: 1px solid var(--theme-border-divider);
+  border-top: 1px solid var(--theme-divider);
   color: var(--color-grayscale-7);
-  padding: clamp(48px, 44px + 1.4815vw, 64px) 0;
+  padding: max(48px, min(44px + 1.4815vw, 64px)) 0;
 `
 
 const MyLogoWrapper = styled.p`
@@ -88,6 +88,7 @@ const MyLogoWrapper = styled.p`
 
 const MyFooterMenu = styled.div`
   margin-top: 28px;
+  overflow: hidden;
 
   & ul {
     display: flex;
@@ -110,6 +111,7 @@ const MyFooterMenu = styled.div`
 
 const MyFooterSocial = styled.div`
   margin-top: 20px;
+  overflow: hidden;
 
   & ul {
     display: flex;
@@ -164,6 +166,7 @@ const MyFooterLink = styled.a`
 
 const MySocialLink = styled.a`
   display: inline-block;
+  isolation: isolate;
   padding: 4px;
   position: relative;
 
@@ -183,7 +186,7 @@ const MySocialLink = styled.a`
 
   ${hoverable(`
     &::after {
-      opacity: 0.5;
+      opacity: 1;
     }
   `)}
 `

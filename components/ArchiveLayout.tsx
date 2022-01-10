@@ -5,7 +5,6 @@ import { BaseContainer } from '~/components/BaseContainer'
 import { SiteBreadcrumbs } from '~/components/SiteBreadcrumbs'
 import { SiteFirstView } from '~/components/SiteFirstView'
 import { SiteHeadTags } from '~/components/SiteHeadTags'
-import { SiteLayout } from '~/components/SiteLayout'
 
 type ArchiveLayoutPropsType = {
   children: React.ReactNode
@@ -34,7 +33,7 @@ export const ArchiveLayout: React.VFC<ArchiveLayoutPropsType> = ({
   }
 
   return (
-    <SiteLayout>
+    <>
       <SiteHeadTags title={title} />
       <SiteFirstView headline={title} image={image} />
       <BaseContainer>
@@ -46,7 +45,7 @@ export const ArchiveLayout: React.VFC<ArchiveLayoutPropsType> = ({
           {length > perPage && <ArchivePagination length={length} perPage={perPage} onChange={handlePageChange} />}
         </MyContents>
       </BaseContainer>
-    </SiteLayout>
+    </>
   )
 }
 

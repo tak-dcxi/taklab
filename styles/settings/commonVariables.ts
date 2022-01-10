@@ -20,11 +20,12 @@ export const commonVariables = css`
     * グレースケール
     * 通常の要素に使用する色です。
   */
-    --color-grayscale-1: #2a2c2f;
-    --color-grayscale-2: #4a4a4a;
+    --color-grayscale-0: #1c1c1c;
+    --color-grayscale-1: #2c2c2c;
+    --color-grayscale-2: #484848;
     --color-grayscale-3: #999;
     --color-grayscale-4: #e0e0e0;
-    --color-grayscale-5: #e6e6e6;
+    --color-grayscale-5: #e7e7e7;
     --color-grayscale-6: #f2f2f2;
     --color-grayscale-7: #fefefe;
 
@@ -36,6 +37,7 @@ export const commonVariables = css`
     /**
     * フォントサイズリスト
   */
+    --fontsize-0: ${10 / globalFontSize}rem; /* = 10px */
     --fontsize-1: ${12 / globalFontSize}rem; /* = 12px */
     --fontsize-2: ${14 / globalFontSize}rem; /* = 14px */
     --fontsize-3: ${16 / globalFontSize}rem; /* = 16px */
@@ -58,12 +60,12 @@ export const commonVariables = css`
     * z-index
     * コンテキスト内のz-indexは値の大小で重なり順を制御せず、0と1をboolとして扱います。
   */
-    --fixed-object-context: 10;
-    --popup-context: 11;
+    --context-fixed-object: 10;
+    --context-popup: 11;
 
     /**
     * コンポーネントのサイズ
   */
-    --height-header: clamp(52px, 3.1019rem + 0.7407vw, 60px);
+    --height-header: max(52px, min(3.1019rem + 0.7407vw, 60px));
   }
 `

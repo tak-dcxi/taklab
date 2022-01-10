@@ -179,7 +179,7 @@ const MyContainer = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-  width: clamp(280px, 80%, 440px);
+  width: max(280px, min(14.537rem + 14.8148vw, 440px));
   z-index: 1;
 
   [data-drawer-transition='enter'] & {
@@ -197,10 +197,10 @@ const MyContents = styled.div`
 `
 
 const MyList = styled.ul`
-  border-bottom: 2px solid var(--theme-border-1);
+  border-bottom: 2px solid var(--theme-drawer-divider);
 
   & > li + li {
-    border-top: 1px dashed var(--theme-border-1);
+    border-top: 1px dashed var(--theme-drawer-divider);
   }
 `
 
@@ -218,8 +218,8 @@ const MyLink = styled.a`
     transition: background-color 0.3s;
 
     &::after {
-      border-right: 2px solid var(--theme-text-2);
-      border-top: 2px solid var(--theme-text-2);
+      border-right: 2px solid var(--theme-text-weak);
+      border-top: 2px solid var(--theme-text-weak);
       bottom: 0;
       content: '';
       display: inline-block;
@@ -244,20 +244,20 @@ const MyPrimaryLabel = styled.span`
 `
 
 const MySecondaryLabel = styled.span`
-  color: var(--theme-text-2);
+  color: var(--theme-text-weak);
   display: block;
   font-size: max(var(--fontsize-1), 10px);
 `
 
 const MyButtonWrapper = styled.div`
-  border-bottom: var(--theme-border-1) 1px solid;
+  border-bottom: var(--theme-drawer-divider) 1px solid;
   display: flex;
   justify-content: flex-end;
   order: -1;
 `
 
 const MyGroupList = styled.dl`
-  border-bottom: 2px solid var(--theme-border-1);
+  border-bottom: 2px solid var(--theme-drawer-divider);
   font-family: var(--font-montserrat);
 
   & > dt {
@@ -266,7 +266,7 @@ const MyGroupList = styled.dl`
   }
 
   & > dd {
-    border-top: 1px dashed var(--theme-border-1);
+    border-top: 1px dashed var(--theme-drawer-divider);
   }
 `
 
@@ -282,8 +282,8 @@ const MySocialLink = styled.a`
   }
 
   &::after {
-    border-right: 2px solid var(--theme-text-2);
-    border-top: 2px solid var(--theme-text-2);
+    border-right: 2px solid var(--theme-text-weak);
+    border-top: 2px solid var(--theme-text-weak);
     bottom: 0;
     content: '';
     display: inline-block;
@@ -302,7 +302,7 @@ const MySocialLink = styled.a`
 `
 
 const MyThemeTogglerWrapper = styled.p`
-  border-bottom: 2px solid var(--theme-border-1);
+  border-bottom: 2px solid var(--theme-drawer-divider);
 `
 
 const MyThemeToggler = styled.button`

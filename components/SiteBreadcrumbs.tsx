@@ -42,7 +42,7 @@ export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ lists }) 
 
 const MyRoot = styled.nav`
   border-bottom: 1px dotted var(--boundary-color-strong);
-  color: var(--theme-text-1);
+  color: var(--theme-text-default);
   font-size: var(--fontsize-2);
   padding-bottom: 16px;
   padding-top: 16px;

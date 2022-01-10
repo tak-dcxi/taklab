@@ -21,8 +21,8 @@ export const document = css`
   }
 
   body {
-    background-color: var(--theme-background-1);
-    color: var(--theme-text-1);
+    background-color: var(--theme-background-default);
+    color: var(--theme-text-default);
     font-size: var(--fontsize-2);
     font-weight: normal;
     height: 100%;

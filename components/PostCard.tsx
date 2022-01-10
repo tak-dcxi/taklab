@@ -1,8 +1,7 @@
 import React from 'react'
 import { PostType } from '~/libs/microCMS'
 import Link from 'next/link'
-import styled, { css } from 'styled-components'
-import { BaseImage } from '~/components/BaseImage'
+import styled from 'styled-components'
 import { BaseNoimage } from '~/components/BaseNoimage'
 import { hoverable } from '~/styles/tools/hoverable'
 import { getDate } from '~/utils/getDate'
@@ -52,7 +51,7 @@ const MyContents = styled.a`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 20px;
+  padding: 24px;
   position: relative;
   transition: background-color 0.3s;
 
@@ -74,7 +73,7 @@ const MyContents = styled.a`
 
 const MyImageWrapper = styled.div`
   grid-area: card-image;
-  margin: -20px -20px 0;
+  margin: -24px -24px 0;
   order: -2;
 `
 
@@ -109,7 +108,7 @@ const MyDate = styled.dl`
   padding-top: 16px;
 
   & > dd {
-    color: var(--theme-text-2);
+    color: var(--theme-text-weak);
     font-family: var(--font-montserrat);
     font-size: var(--fontsize-2);
     line-height: var(--leading-x-tight);
@@ -121,7 +120,7 @@ const MyTags = styled.dl`
   margin: 4px -4px -4px;
 
   & > dd {
-    color: var(--theme-text-2);
+    color: var(--theme-text-weak);
     font-size: var(--fontsize-2);
     line-height: var(--leading-x-tight);
     margin: 4px;
