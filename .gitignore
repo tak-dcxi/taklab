@@ -11,6 +11,9 @@
 # next.js
 /.next/
 /out/
+/public/rss/atom.xml
+/public/rss/feed.json
+/public/rss/feed.xml
 
 # production
 /build

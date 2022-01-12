@@ -34,19 +34,19 @@ const MyRoot = styled.div`
   }
 
   & h2:not([class]) {
-    font-size: var(--fsize-6);
+    font-size: var(--fontsize-6);
   }
 
   & h3:not([class]) {
-    font-size: var(--fsize-5);
+    font-size: var(--fontsize-5);
   }
 
   & h4:not([class]) {
-    font-size: var(--fsize-4);
+    font-size: var(--fontsize-4);
   }
 
   & h5:not([class]) {
-    font-size: var(--fsize-3);
+    font-size: var(--fontsize-3);
   }
 
   & *:is(ul, ol):not([class]) {
@@ -70,7 +70,7 @@ const MyRoot = styled.div`
   }
 
   & blockquote {
-    background-color: var(--grayscale-4);
+    background-color: var(--color-grayscale-5);
     border: 1px solid var(--boundary-color-strong);
     padding: 2em;
   }
@@ -80,7 +80,7 @@ const MyRoot = styled.div`
   }
 
   & .wp-block-embed {
-    background-color: var(--grayscale-4);
+    background-color: var(--color-grayscale-5);
     width: fit-content;
 
     & blockquote {

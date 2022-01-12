@@ -2,69 +2,88 @@ import React from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { hoverable } from '~/styles/tools/hoverable'
+import { BaseContainer } from '~/components/BaseContainer'
+import { BaseIcon } from './BaseIcon'
 
-type SiteBreadcrumbsPropsType = {
-  lists: { [key: string]: string }[]
+export type BreadcrumbsType = {
+  string: string
+  path?: string
 }
 
-export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ lists }) => {
+type SiteBreadcrumbsPropsType = {
+  items: BreadcrumbsType[]
+}
+
+export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) => {
   return (
     <MyRoot aria-label="現在位置">
-      <MyList itemScope itemType="http://schema.org/BreadcrumbList">
-        {lists.map(({ string, path }, index: number) => (
-          <MyListItem key={index} itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
-            {lists.length - 1 !== index ? (
-              <>
-                <Link href={path} passHref>
-                  <MyLink itemProp="item">
-                    <span itemProp="name">{string}</span>
-                  </MyLink>
-                </Link>
-                <MyIcon role="img" aria-hidden="true">
-                  &gt;
-                </MyIcon>
-                <meta itemProp="position" content={`${index + 1}`} />
-              </>
-            ) : (
-              <>
-                <span itemProp="item" aria-current="location">
-                  <span itemProp="name">{string}</span>
+      <BaseContainer>
+        <MyList itemScope itemType="http://schema.org/BreadcrumbList">
+          <MyListItem itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
+            <Link href={'/'} passHref>
+              <MyLink itemProp="item">
+                <BaseIcon type={'home'} size={14} />
+                <span className="VisuallyHidden" itemProp="name">
+                  Home
                 </span>
-                <meta itemProp="position" content={`${index + 1}`} />
-              </>
-            )}
+              </MyLink>
+            </Link>
+            <MyIcon aria-hidden="true">&gt;</MyIcon>
+            <meta itemProp="position" content="1" />
           </MyListItem>
-        ))}
-      </MyList>
+          {items.map(({ string, path }, index: number) => (
+            <MyListItem key={index} itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
+              {items.length - 1 !== index ? (
+                <>
+                  <Link href={path} passHref>
+                    <MyLink itemProp="item">
+                      <span itemProp="name">{string}</span>
+                    </MyLink>
+                  </Link>
+                  <MyIcon aria-hidden="true">&gt;</MyIcon>
+                  <meta itemProp="position" content={`${index + 2}`} />
+                </>
+              ) : (
+                <>
+                  <span itemProp="item" aria-current="location">
+                    <span itemProp="name">{string}</span>
+                  </span>
+                  <meta itemProp="position" content={`${index + 2}`} />
+                </>
+              )}
+            </MyListItem>
+          ))}
+        </MyList>
+      </BaseContainer>
     </MyRoot>
   )
 }
 
 const MyRoot = styled.nav`
-  border-bottom: 1px dotted var(--boundary-color-strong);
-  color: var(--text-color-default);
-  font-size: var(--fsize-2);
-  padding-bottom: 16px;
-  padding-top: 16px;
+  font-size: var(--fontsize-1);
+  padding: 12px 0;
 `
 
 const MyList = styled.ol`
-  & > * + * {
-    margin-left: 1em;
-  }
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  margin: -0.1em -0.375em;
 `
 
 const MyListItem = styled.li`
-  display: inline;
+  margin: 0.1em 0.375em;
 `
 
 const MyIcon = styled.span`
-  margin-left: 1em;
+  margin-left: 0.75em;
 `
 
 const MyLink = styled.a`
+  border-bottom: 1px solid var(--color-primary);
+  transition: color 0.3s;
+
   ${hoverable(`
-    color: var(--text-color-link);
-    text-decoration: underline;
+    color: var(--color-primary);
   `)}
 `

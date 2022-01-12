@@ -1,7 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: [process.env.DOMAIN],
+    domains: ['https://tak-dcxi.microcms.io', 'images.microcms-assets.io'],
     formats: ['image/avif', 'image/webp'],
   },
   experimental: {

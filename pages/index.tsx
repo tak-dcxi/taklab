@@ -1,70 +1,91 @@
 import React from 'react'
-import { getEvents, getMedia, getPosts, getPage, getFeaturedMedia } from '~/libs/wordpress'
-import { EventCard, EventType } from '~/components/EventCard'
-import { PostCard, PostType } from '~/components/PostCard'
-import { HomeLayout } from '~/components/HomeLayout'
+import { NextPage } from 'next'
+import styled from 'styled-components'
+import { client, PostType, SEOType } from '~/libs/microCMS'
+import { BaseLinkButton } from '~/components/BaseLinkButton'
+import { HomeKeyVisual } from '~/components/HomeKeyVisual'
+import { BaseSection } from '~/components/BaseSection'
+import { PostGrid } from '~/components/PostGrid'
+import { PostCard } from '~/components/PostCard'
+import { SiteHeadTags } from '~/components/SiteHeadTags'
 
-type HomePropsType = {
-  posts: []
-  home: { acf?: { firstview_headline: string; firstview_image: { url: string } } }
-  events: []
-  media: []
+type HomeAPIType = {
+  id: 'home'
+  title: string
+  seo: SEOType
+  firstview: {
+    fieldId: 'firstview'
+    image: {
+      url: string
+      height: number
+      width: number
+    }
+    image_alt: string
+  }
 }
 
-const Home: React.VFC<HomePropsType> = ({ posts, events, media, home }) => {
-  const perPage: number = 3
+type HomePropsType = {
+  home: HomeAPIType
+  posts: PostType[]
+}
 
-  const MyPostCards = posts.slice(0, perPage).map((post: PostType & { id: number }) => {
-    const featuredMediaId: number = post['featured_media']
-    const featuredMedia: string = getFeaturedMedia(media, featuredMediaId)
-    return (
-      <div key={post.id}>
-        <PostCard post={post} featuredMedia={featuredMedia} lv={3} />
-      </div>
-    )
-  })
+const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
+  const perPage: number = 6
 
-  const MyEventCards = events.slice(0, perPage).map((event: EventType & { id: number }) => {
-    const featuredMediaId: number = event['featured_media']
-    const featuredMedia: string = getFeaturedMedia(media, featuredMediaId)
-    return (
-      <div key={event.id}>
-        <EventCard event={event} featuredMedia={featuredMedia} lv={3} />
-      </div>
-    )
+  const MyPostCards: JSX.Element[] = posts.slice(0, perPage).map((post) => {
+    return <PostCard key={post.id} api={post} lv={3} />
   })
 
   return (
-    <HomeLayout
-      title={home.acf.firstview_headline}
-      image={home.acf.firstview_image.url}
-      perPage={perPage}
-      postCards={MyPostCards}
-      eventCards={MyEventCards}
-    />
+    <>
+      <SiteHeadTags title={home.title} image={home.seo.image.url} />
+      <HomeKeyVisual image={home.firstview.image} alt={home.firstview.image_alt} />
+      <MySectionWrapper>
+        <BaseSection title={'posts'}>
+          <PostGrid>{MyPostCards}</PostGrid>
+          {MyPostCards.length === perPage && (
+            <MyButtonWrapper>
+              <BaseLinkButton href={'/blog/'}>投稿をもっと見る</BaseLinkButton>
+            </MyButtonWrapper>
+          )}
+        </BaseSection>
+      </MySectionWrapper>
+    </>
   )
 }
 
-export const getStaticProps = async ({
-  params,
-}): Promise<{
-  props: HomePropsType
-  revalidate: number
-}> => {
-  const posts: [] = await getPosts(3)
-  const home: {} = await getPage('home')
-  const events: [] = await getEvents()
-  const media: [] = await getMedia()
+const MySectionWrapper = styled.div`
+  position: relative;
+
+  &::after {
+    /* background-color: var(--theme-background-strong); */
+    background-image: var(--theme-background-pattern);
+    bottom: 0;
+    content: '';
+    left: 0;
+    position: absolute;
+    top: calc(max(200px, min(176px + 7.4074vw, 280px)) * -1);
+    width: max(50%, 296px);
+    z-index: -1;
+  }
+`
+
+const MyButtonWrapper = styled.p`
+  display: flex;
+  justify-content: center;
+`
+
+export const getStaticProps = async () => {
+  const home = await client.get({ endpoint: 'pages', contentId: 'home' })
+  const posts = await client.get({ endpoint: 'blog' })
 
   return {
     props: {
-      posts,
-      home,
-      events,
-      media,
+      home: home,
+      posts: posts.contents,
     },
     revalidate: 1,
   }
 }
 
-export default Home
+export default HomePage

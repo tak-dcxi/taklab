@@ -1,13 +1,13 @@
 import React from 'react'
 import { NextPage, NextPageContext } from 'next'
-import { ErrorLayout } from '~/components/ErrorLayout'
+import { ErrorPageTemplate } from '~/components/ErrorPageTemplate'
 
 type ErrorPagePropsType = {
   statusCode: number
 }
 
 const ErrorPage: NextPage<ErrorPagePropsType> = ({ statusCode }) => {
-  return <ErrorLayout statusCode={statusCode} />
+  return <ErrorPageTemplate statusCode={statusCode} />
 }
 
 ErrorPage.getInitialProps = async ({ res, err }: NextPageContext) => {

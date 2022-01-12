@@ -14,7 +14,6 @@ export const reset = css`
   h5,
   h6 {
     font-size: inherit;
-    font-weight: inherit;
   }
 
   h1 {
@@ -29,6 +28,10 @@ export const reset = css`
   a {
     color: inherit;
     text-decoration: none;
+
+    & svg {
+      pointer-events: none;
+    }
   }
 
   ul,

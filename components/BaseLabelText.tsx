@@ -22,9 +22,9 @@ const MyText = styled.span`
 `
 
 const MyRequiredIcon = styled.strong`
-  background-color: var(--grayscale-3);
+  background-color: var(--color-grayscale-3);
   border-radius: 2px;
-  font-size: var(--fsize-1);
+  font-size: var(--fontsize-1);
   letter-spacing: 0.08em;
   margin-left: 8px;
   padding: 4px 8px;

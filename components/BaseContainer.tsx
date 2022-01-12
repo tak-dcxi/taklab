@@ -13,7 +13,6 @@ const MyContainer = styled.div`
   box-sizing: content-box;
   margin-left: auto;
   margin-right: auto;
-  max-width: 960px;
-  padding-left: 16px;
-  padding-right: 16px;
+  max-width: 1200px;
+  padding: 0 max(16px, min(11px + 1.4815vw, 32px));
 `

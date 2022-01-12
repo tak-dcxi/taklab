@@ -3,21 +3,16 @@ import { hoverable } from '~/styles/tools/hoverable'
 
 export const buttonStyle = css`
   align-items: center;
-  appearance: none;
-  background-color: var(--grayscale-1);
-  border: 0;
-  border-radius: 0;
-  color: var(--text-color-lighten);
+  background-color: var(--theme-button-background);
+  color: var(--color-grayscale-7);
   display: inline-flex;
-  font-size: var(--fsize-2);
   justify-content: center;
-  max-width: 256px;
   min-height: 52px;
   padding: 1em 2em;
   transition: background-color 0.3s;
-  width: 100%;
+  width: min(100%, 280px);
 
   ${hoverable(`
-    background-color: var(--grayscale-2);
+    background-color: var(--color-primary);
 `)}
 `
