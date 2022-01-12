@@ -58,7 +58,7 @@ export const SiteFooter: React.VFC = () => {
         </MyFooterSocial>
         <MyCopyright>
           <small lang="en" translate="no">
-            © {new Date().getFullYear()} Takahiro Arai
+            © {new Date().getFullYear()} TAK / Web Creator
           </small>
         </MyCopyright>
       </BaseContainer>

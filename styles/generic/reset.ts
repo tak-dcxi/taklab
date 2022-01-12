@@ -14,7 +14,6 @@ export const reset = css`
   h5,
   h6 {
     font-size: inherit;
-    font-weight: inherit;
   }
 
   h1 {

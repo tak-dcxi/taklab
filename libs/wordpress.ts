@@ -3,7 +3,7 @@ const URL: string = process.env.REST_API
 // REST APIの一覧を取得する件数のデフォルト設定は10件なので、URLにパラメータを付与することで取得件数を指定します(最大100)
 // @see https://iwb.jp/wordpress-rest-api-json-context-url-param/
 export const getPosts = async (perPage: number = 100): Promise<[]> => {
-  const postsRes: Response = await fetch(`${URL}/posts?per_page=${perPage}&_embed`)
+  const postsRes: Response = await fetch(`${URL}/blog?per_page=${perPage}&_embed`)
   const posts: [] = await postsRes.json()
   return posts
 }

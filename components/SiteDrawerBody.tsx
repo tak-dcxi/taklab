@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { createPortal } from 'react-dom'
@@ -6,12 +6,11 @@ import styled, { keyframes } from 'styled-components'
 import { Transition } from 'react-transition-group'
 import { menu } from '~/constant/menu'
 import { social } from '~/constant/social'
-import { switchTheme } from '~/libs/theme'
-import { useGetCurrentThemeState } from '~/hooks/useGetCurrentThemeState'
 import { hoverable } from '~/styles/tools/hoverable'
 import { BaseIcon } from '~/components/BaseIcon'
 import { BaseSocialIcon } from '~/components/BaseSocialIcon'
 import { SiteDrawerButton } from '~/components/SiteDrawerToggler'
+import { useTheme } from '~/context/ThemeProvider'
 
 type SiteDrawerBodyPropsType = {
   expanded: boolean
@@ -24,12 +23,7 @@ const duration: number = 400
 export const SiteDrawerBody = React.forwardRef(
   ({ expanded, opener, onClose }: SiteDrawerBodyPropsType, ref: { current: HTMLDivElement }) => {
     const { asPath } = useRouter()
-    const { currentTheme, getCurrentThemeState } = useGetCurrentThemeState()
-
-    const handleTogglerClick = () => {
-      switchTheme()
-      getCurrentThemeState()
-    }
+    const { colorMode, setColorMode } = useTheme()
 
     const handleClose = async () => {
       await new Promise<void>((resolve) => {
@@ -117,10 +111,15 @@ export const SiteDrawerBody = React.forwardRef(
               <MyThemeTogglerWrapper>
                 <MyThemeToggler
                   type="button"
-                  title={`現在のテーマは${currentTheme === 'dark' ? 'ダークモード' : 'ライトモード'}です`}
-                  onClick={handleTogglerClick}
+                  title={`現在のテーマは${colorMode === 'dark' ? 'ダークモード' : 'ライトモード'}です`}
+                  onClick={setColorMode}
                 >
-                  {currentTheme === 'dark' ? <BaseIcon type="moon" size={20} /> : <BaseIcon type="sun" size={20} />}
+                  <MyThemeIcon data-type={colorMode === 'dark' ? 'dark' : 'light'}>
+                    <span>
+                      <BaseIcon type="sun" size={20} />
+                      <BaseIcon type="moon" size={20} />
+                    </span>
+                  </MyThemeIcon>
                   Theme
                 </MyThemeToggler>
               </MyThemeTogglerWrapper>
@@ -314,13 +313,34 @@ const MyThemeToggler = styled.button`
   transition: background-color 0.3s;
   width: 100%;
 
-  & > svg {
-    margin-right: 1em;
-  }
-
   ${hoverable(`
     background-color: var(--color-grayscale-5);
   `)}
+`
+
+const MyThemeIcon = styled.span`
+  display: inline-block;
+  height: ${20 / 16}em;
+  margin-right: 1em;
+  overflow: hidden;
+  width: ${20 / 16}em;
+
+  & > span {
+    display: block;
+    transition: transform 0.3s ease-out;
+  }
+
+  &[data-type='dark'] {
+    & > span {
+      transform: translateY(${(20 / 16) * -1}em);
+    }
+  }
+
+  & svg {
+    display: block;
+    height: ${20 / 16}em;
+    width: ${20 / 16}em;
+  }
 `
 
 const enterOverlay = keyframes`

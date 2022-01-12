@@ -12,7 +12,7 @@ export const SiteNavbar: React.VFC = () => {
           </Link>
         </li>
         <li>
-          <Link href="/posts" passHref>
+          <Link href="/blog" passHref>
             <MyLink>Posts</MyLink>
           </Link>
         </li>

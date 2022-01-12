@@ -1,7 +1,7 @@
 import React from 'react'
+import { NextPage } from 'next'
 import styled from 'styled-components'
-import { useRouter } from 'next/router'
-import { client, PostType } from '~/libs/microCMS'
+import { client, PostType, SEOType } from '~/libs/microCMS'
 import { BaseLinkButton } from '~/components/BaseLinkButton'
 import { HomeKeyVisual } from '~/components/HomeKeyVisual'
 import { BaseSection } from '~/components/BaseSection'
@@ -12,12 +12,16 @@ import { SiteHeadTags } from '~/components/SiteHeadTags'
 type HomeAPIType = {
   id: 'home'
   title: string
-  image: {
-    url: string
-    height: number
-    width: number
+  seo: SEOType
+  firstview: {
+    fieldId: 'firstview'
+    image: {
+      url: string
+      height: number
+      width: number
+    }
+    image_alt: string
   }
-  image_alt: string
 }
 
 type HomePropsType = {
@@ -25,7 +29,7 @@ type HomePropsType = {
   posts: PostType[]
 }
 
-const Home: React.VFC<HomePropsType> = ({ home, posts }) => {
+const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
   const perPage: number = 6
 
   const MyPostCards: JSX.Element[] = posts.slice(0, perPage).map((post) => {
@@ -34,14 +38,14 @@ const Home: React.VFC<HomePropsType> = ({ home, posts }) => {
 
   return (
     <>
-      <SiteHeadTags path={useRouter().pathname} type="website" />
-      <HomeKeyVisual image={home.image} alt={home.image_alt} />
+      <SiteHeadTags title={home.title} image={home.seo.image.url} />
+      <HomeKeyVisual image={home.firstview.image} alt={home.firstview.image_alt} />
       <MySectionWrapper>
         <BaseSection title={'posts'}>
           <PostGrid>{MyPostCards}</PostGrid>
           {MyPostCards.length === perPage && (
             <MyButtonWrapper>
-              <BaseLinkButton href={'/posts/'}>投稿をもっと見る</BaseLinkButton>
+              <BaseLinkButton href={'/blog/'}>投稿をもっと見る</BaseLinkButton>
             </MyButtonWrapper>
           )}
         </BaseSection>
@@ -54,13 +58,14 @@ const MySectionWrapper = styled.div`
   position: relative;
 
   &::after {
-    background-color: var(--theme-background-strong);
+    /* background-color: var(--theme-background-strong); */
+    background-image: var(--theme-background-pattern);
     bottom: 0;
     content: '';
     left: 0;
     position: absolute;
     top: calc(max(200px, min(176px + 7.4074vw, 280px)) * -1);
-    width: 50%;
+    width: max(50%, 296px);
     z-index: -1;
   }
 `
@@ -83,4 +88,4 @@ export const getStaticProps = async () => {
   }
 }
 
-export default Home
+export default HomePage

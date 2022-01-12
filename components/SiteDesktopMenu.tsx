@@ -1,22 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
 import { menu } from '~/constant/menu'
-import { switchTheme } from '~/libs/theme'
-import { useGetCurrentThemeState } from '~/hooks/useGetCurrentThemeState'
 import { hoverable } from '~/styles/tools/hoverable'
 import { BaseIcon } from '~/components/BaseIcon'
+import { useTheme } from '~/context/ThemeProvider'
 
 export const SiteDesktopMenu: React.VFC = () => {
   const { asPath } = useRouter()
-  const { currentTheme, getCurrentThemeState } = useGetCurrentThemeState()
-
-  const handleTogglerClick = () => {
-    switchTheme()
-    getCurrentThemeState()
-  }
+  const { colorMode, setColorMode } = useTheme()
 
   return (
     <MyRoot>
@@ -32,10 +26,15 @@ export const SiteDesktopMenu: React.VFC = () => {
       <li>
         <MyNavbarThemeToggler
           type="button"
-          title={`現在のテーマは${currentTheme === 'dark' ? 'ダークモード' : 'ライトモード'}です`}
-          onClick={handleTogglerClick}
+          title={`現在のテーマは${colorMode === 'dark' ? 'ダークモード' : 'ライトモード'}です`}
+          onClick={setColorMode}
         >
-          {currentTheme === 'dark' ? <BaseIcon type="moon" /> : <BaseIcon type="sun" size={14} />}
+          <MyThemeIcon data-type={colorMode === 'dark' ? 'dark' : 'light'}>
+            <span>
+              <BaseIcon type="sun" />
+              <BaseIcon type="moon" />
+            </span>
+          </MyThemeIcon>
           Theme
         </MyNavbarThemeToggler>
       </li>
@@ -88,10 +87,6 @@ const MyNavbarLink = styled.a`
     }
   }
 
-  & > svg {
-    margin-right: 0.25em;
-  }
-
   ${hoverable(`
     color: var(--color-primary);
 
@@ -99,6 +94,31 @@ const MyNavbarLink = styled.a`
       transform: scaleX(1);
     }
   `)}
+`
+
+const MyThemeIcon = styled.span`
+  display: inline-block;
+  height: 1em;
+  margin-right: 0.25em;
+  overflow: hidden;
+  width: 1em;
+
+  & > span {
+    display: block;
+    transition: transform 0.3s ease-out;
+  }
+
+  &[data-type='dark'] {
+    & > span {
+      transform: translateY(-1em);
+    }
+  }
+
+  & svg {
+    display: block;
+    height: 1em;
+    width: 1em;
+  }
 `
 
 const MyNavbarThemeToggler = MyNavbarLink.withComponent('button')

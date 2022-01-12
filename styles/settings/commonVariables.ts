@@ -33,6 +33,7 @@ export const commonVariables = css`
     * フォントファミリー
   */
     --font-montserrat: 'Montserrat', sans-serif;
+    --font-emoji: 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', 'Noto Emoji', sans-serif;
 
     /**
     * フォントサイズリスト
@@ -67,5 +68,6 @@ export const commonVariables = css`
     * コンポーネントのサイズ
   */
     --height-header: max(52px, min(3.1019rem + 0.7407vw, 60px));
+    --contents-block-padding: max(64px, min(56px + 2.3077vw, 100px)) 0;
   }
 `

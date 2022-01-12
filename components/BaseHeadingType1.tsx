@@ -7,7 +7,7 @@ type BaseHeadingPropsType = {
   id?: string
 }
 
-export const BaseHeading1: React.VFC<BaseHeadingPropsType> = ({ children, lv, id }) => {
+export const BaseHeadingType1: React.VFC<BaseHeadingPropsType> = ({ children, lv, id }) => {
   return (
     <>
       {lv === 1 && <MyH1 id={id}>{children}</MyH1>}
@@ -21,10 +21,9 @@ export const BaseHeading1: React.VFC<BaseHeadingPropsType> = ({ children, lv, id
 const MyH1 = styled.h1`
   font-family: var(--font-montserrat);
   font-size: max(var(--fontsize-6), min(1.3519rem + 0.7407vw, var(--fontsize-7))); /* clamp() */
-  font-weight: bold;
   letter-spacing: 0.02em;
   line-height: var(--leading-tight);
-  min-height: 0.1vw; /* Safariにてfont-size:clamp()がリサイズ時に動かないバグを解消する */
+  min-height: 0.01vw; /* Safariにてfont-size:clamp()がリサイズ時に動かないバグを解消する */
   text-align: center;
   text-transform: uppercase;
 

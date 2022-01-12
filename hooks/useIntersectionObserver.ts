@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react'
  * @return {boolean}
  */
 
-export const useIntersection = (ref: { current: HTMLElement }): boolean => {
+export const useIntersectionObserver = (ref: { current: HTMLElement }): boolean => {
   const [intersecting, setIntersecting] = useState<boolean>(false)
 
   useEffect(() => {

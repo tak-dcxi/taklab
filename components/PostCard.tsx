@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { BaseNoimage } from '~/components/BaseNoimage'
 import { hoverable } from '~/styles/tools/hoverable'
 import { getDate } from '~/utils/getDate'
+import { BaseIcon } from './BaseIcon'
 
 type PostCardPropsType = {
   api: PostType
@@ -14,7 +15,7 @@ type PostCardPropsType = {
 export const PostCard: React.VFC<PostCardPropsType> = ({ api, lv }) => {
   return (
     <article>
-      <Link href={`/posts/${api.id}`} passHref>
+      <Link href={`/blog/${api.id}`} passHref>
         <MyContents>
           {lv === 2 && <MyH2>{api.title}</MyH2>}
           {lv === 3 && <MyH3>{api.title}</MyH3>}
@@ -24,22 +25,15 @@ export const PostCard: React.VFC<PostCardPropsType> = ({ api, lv }) => {
           </MyImageWrapper>
           <MyCategory>
             <dt className="VisuallyHidden">カテゴリ</dt>
-            {api.category.map((item, index) => {
-              return <dd key={index}>{item}</dd>
-            })}
+            <dd>{api.category.name}</dd>
           </MyCategory>
           <MyDate>
             <dt className="VisuallyHidden">投稿日</dt>
             <dd>
-              <time dateTime={api.createdAt}>{getDate(api.createdAt)}</time>
+              <BaseIcon type={'calendar'} />
+              <time dateTime={api.createdAt}>{getDate(api.createdAt, 'en')}</time>
             </dd>
           </MyDate>
-          <MyTags>
-            <dt className="VisuallyHidden">タグ</dt>
-            {api.category.map((item, index) => {
-              return <dd key={index}>#{item}</dd>
-            })}
-          </MyTags>
         </MyContents>
       </Link>
     </article>
@@ -79,11 +73,10 @@ const MyImageWrapper = styled.div`
 
 const MyH2 = styled.h2`
   font-size: var(--fontsize-3);
-  font-weight: bold;
   grid-area: card-title;
   letter-spacing: 0.02em;
   line-height: var(--leading-relaxed);
-  margin-top: 8px;
+  margin-top: 4px;
 `
 
 const MyH3 = MyH2.withComponent('h3')
@@ -95,34 +88,22 @@ const MyCategory = styled.dl`
 
   & > dd {
     color: var(--color-primary);
-    display: inline-block;
-    font-family: var(--font-montserrat);
-    font-size: var(--fontsize-2);
     letter-spacing: 0.02em;
-    line-height: var(--leading-x-tight);
   }
 `
 
 const MyDate = styled.dl`
   margin-top: auto;
-  padding-top: 16px;
+  padding-top: 12px;
 
   & > dd {
+    align-items: center;
     color: var(--theme-text-weak);
+    display: inline-flex;
     font-family: var(--font-montserrat);
-    font-size: var(--fontsize-2);
-    line-height: var(--leading-x-tight);
   }
-`
 
-const MyTags = styled.dl`
-  display: flex;
-  margin: 4px -4px -4px;
-
-  & > dd {
-    color: var(--theme-text-weak);
-    font-size: var(--fontsize-2);
-    line-height: var(--leading-x-tight);
-    margin: 4px;
+  & svg {
+    margin-right: 0.5em;
   }
 `

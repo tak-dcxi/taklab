@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styled, { keyframes } from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
 import { BaseLogo } from '~/components/BaseLogo'
-import { debounce } from '~/utils/debounce'
+import { debounce } from 'lodash'
 
 type HomeKeyVisualPropsType = {
   image: {
@@ -18,13 +18,13 @@ export const HomeKeyVisual: React.VFC<HomeKeyVisualPropsType> = ({ image, alt })
   const ref = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    if (!ref.current) return
-
     let vw: number = window.innerWidth
 
     const setHeight = (): void => {
+      if (!ref.current) return
+
       const vh: number = window.innerHeight
-      ref.current.style.setProperty('--this-height', `calc(${vh}px - var(--height-header)`)
+      ref.current.style.height = `calc(${vh}px - var(--height-header)`
     }
 
     window.addEventListener(
@@ -62,73 +62,65 @@ export const HomeKeyVisual: React.VFC<HomeKeyVisualPropsType> = ({ image, alt })
             objectFit="cover"
             quality={75}
           />
+          <MyScrollSign aria-hidden="true">
+            <span>Scroll</span>
+          </MyScrollSign>
         </MyImage>
       </MyFirstView>
-      <MyScrollSign />
     </MyRoot>
   )
 }
 
-const spacer: string = 'max(48px, min(28px + 1.9608vw, 56px))'
-
 const MyRoot = styled.header`
-
-  --this-height: calc(100vh - var(--height-header));
-
-  height: max(320px, var(--this-height));
+  height: calc(100vh - var(--height-header));
   max-height: 920px;
-  position: relative;
+  min-height: 360px;
 `
 
 const MyFirstView = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: ${spacer} 1fr ${spacer};
+  grid-template-rows: 1fr;
   height: 100%;
   isolation: isolate;
   margin: auto;
   max-width: 1920px;
+  padding: max(40px, min(35px + 1.4815vmin, 56px)) 0;
+  position: relative;
+
+  & > * {
+    grid-row: 1;
+  }
 `
 
 const MyTitle = styled.h1`
   align-self: center;
   color: var(--color-grayscale-7);
   grid-column: 2 / 13;
-  grid-row: 2 / 3;
-  position: relative;
-  z-index: 1;
-
-  @media ${breakpoints.lgUntil} {
-    grid-column: 1 / 13;
-    justify-self: center;
-  }
 `
 
 const MyCloneTitle = styled.div`
   align-self: center;
-  grid-column: 2 / 4;
-  grid-row: 2 / 3;
+  grid-column: 2 / 3;
   overflow: hidden;
-  z-index: -1;
+  z-index: 1;
 
   & > svg {
     max-width: initial;
   }
 
   @media ${breakpoints.lg} {
-    z-index: 2;
+    grid-column: 2 / 4;
   }
 `
 
 const MyImage = styled.div`
-  grid-column: 1 / 13;
-  grid-row: 1 / 4;
+  grid-column: 3 / 13;
   position: relative;
-  z-index: 0;
+  z-index: -1;
 
   &::after {
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABAQMAAADO7O3JAAAAA3NCSVQICAjb4U/gAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlP/AOW3MEoAAAAJcEhZcwAAAuwAAALsAe0ztPoAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDQvMTMvMTGrW0T6AAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M1cbXjNgAAAApJREFUCJljcAAAAEIAQZXpNDgAAAAASUVORK5CYII=)
-      rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.3) radial-gradient(rgba(0, 0, 0, 0.5) 30%, transparent 0) center center / 4px 4px;
     bottom: 0;
     content: '';
     left: 0;
@@ -139,11 +131,6 @@ const MyImage = styled.div`
 
   @media ${breakpoints.lg} {
     grid-column: 4 / 13;
-    grid-row: 2 / 3;
-  }
-
-  @media (min-width: 1920px) {
-    margin-right: calc(50% - 50vw);
   }
 `
 
@@ -170,28 +157,32 @@ const scrollSignAnimation = keyframes`
 `
 
 const MyScrollSign = styled.div`
-  background-color: rgba(0, 0, 0, 0.3);
   bottom: 0;
-  height: 60px;
+  color: var(--color-grayscale-6);
   position: absolute;
-  right: max(24px, min(22px + 0.7407vw, 32px));
-  width: 2px;
+  right: 0;
+  z-index: 1;
 
   &::after {
     background-color: var(--color-grayscale-6);
-    bottom: 0;
     content: '';
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
+    display: block;
+    height: 48px;
+    margin: auto;
+    width: 2px;
   }
 
   &::after {
-    animation: ${scrollSignAnimation} 1.8s ease-in-out infinite;
+    animation: ${scrollSignAnimation} 1.4s ease-in-out infinite;
   }
 
-  @media ${breakpoints.lg} {
-    bottom: ${spacer};
+  & > span {
+    display: block;
+    font-family: var(--font-montserrat);
+    font-size: var(--fontsize-1);
+    letter-spacing: 0.04em;
+    margin-bottom: 2em;
+    text-transform: uppercase;
+    transform: rotate(90deg);
   }
 `

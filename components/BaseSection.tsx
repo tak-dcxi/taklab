@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { BaseContainer } from '~/components/BaseContainer'
-import { BaseHeading1 } from '~/components/BaseHeading1'
+import { BaseHeadingType1 } from '~/components/BaseHeadingType1'
 
 type BaseSectionPropsType = {
   title: string
@@ -12,9 +12,9 @@ export const BaseSection: React.VFC<BaseSectionPropsType> = ({ title, children }
   return (
     <MySection>
       <BaseContainer>
-        <BaseHeading1 id={`${title.toLowerCase().replace(/\s+/g, '_')}`} lv={2}>
+        <BaseHeadingType1 id={`${title.toLowerCase().replace(/\s+/g, '_')}`} lv={2}>
           {title}
-        </BaseHeading1>
+        </BaseHeadingType1>
         {children}
       </BaseContainer>
     </MySection>
@@ -22,7 +22,7 @@ export const BaseSection: React.VFC<BaseSectionPropsType> = ({ title, children }
 }
 
 const MySection = styled.section`
-  padding: max(64px, min(56px + 2.3077vw, 100px)) 0; /* clamp() */
+  padding: var(--contents-block-padding); /* clamp() */
 
   & > * > * + * {
     margin-top: 56px;

@@ -2,14 +2,15 @@ import React from 'react'
 import ReactPaginate from 'react-paginate'
 import styled from 'styled-components'
 import { BaseIcon } from '~/components/BaseIcon'
+import { hoverable } from '~/styles/tools/hoverable'
 
-type ArchivePaginationPropsType = {
+type PostPaginationPropsType = {
   perPage: number
   length: number
   onChange: (data: { [key: string]: number }) => void
 }
 
-export const ArchivePagination: React.VFC<ArchivePaginationPropsType> = ({ perPage, length, onChange }) => {
+export const PostPagination: React.VFC<PostPaginationPropsType> = ({ perPage, length, onChange }) => {
   const calculatePageCount = (): number => {
     return Math.ceil(length / perPage)
   }
@@ -38,29 +39,39 @@ export const ArchivePagination: React.VFC<ArchivePaginationPropsType> = ({ perPa
 
 const MyRoot = styled.nav`
   /* ReactPaginateで生成されるCSSを上書きします。 */
+  overflow: hidden;
 
   & .pagination {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
     justify-content: center;
+    margin: -2px;
+  }
+
+  & li {
+    margin: 2px;
   }
 
   & a {
     align-items: center;
-    background-color: var(--color-grayscale-6);
-    border: 1px solid var(--color-grayscale-3);
+    background-color: var(--theme-button-background);
+    color: var(--color-grayscale-7);
     display: inline-flex;
-    height: 40px;
+    height: 36px;
     justify-content: center;
-    width: 40px;
+    transition: background-color 0.3s;
+    width: 36px;
 
     &.is-active {
-      background-color: var(--color-grayscale-5);
+      background-color: var(--color-grayscale-3);
     }
 
     &:not(.is-active) {
       cursor: pointer;
+
+      ${hoverable(`
+        background-color: var(--color-primary);
+      `)}
     }
   }
 

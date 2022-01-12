@@ -30,7 +30,7 @@ export const SiteDrawerButton = React.forwardRef(
 
 const MyButton = styled.button`
   align-items: center;
-  background-color: var(--color-grayscale-1);
+  background-color: var(--theme-button-background);
   color: var(--color-grayscale-7);
   display: flex;
   height: var(--height-header);

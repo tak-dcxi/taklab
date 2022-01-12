@@ -27,7 +27,10 @@ export default class MyDocument extends Document<MyDocumentProps> {
   render() {
     return (
       <Html className="no-js" lang="ja">
-        <Head prefix="og: http://ogp.me/ns#">{this.props.styleTags}</Head>
+        <Head prefix="og: http://ogp.me/ns#">
+          <meta charSet="utf-8" />
+          {this.props.styleTags}
+        </Head>
         <body>
           <Main />
           <NextScript />

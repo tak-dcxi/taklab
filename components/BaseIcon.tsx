@@ -17,6 +17,9 @@ type BaseIconPropsType = {
     | 'search'
     | 'sun'
     | 'moon'
+    | 'home'
+    | 'refresh'
+    | 'calendar'
 }
 
 export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor', size = 16, label, type }) => {
@@ -71,6 +74,26 @@ export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor',
         </>
       )}
       {type === 'moon' && <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />}
+      {type === 'home' && (
+        <>
+          <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9" />
+          <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
+        </>
+      )}
+      {type === 'calendar' && (
+        <>
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+        </>
+      )}
+      {type === 'refresh' && (
+        <>
+          <path d="M2.5 2v6h6M21.5 22v-6h-6" />
+          <path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.2" />
+        </>
+      )}
     </MySVGtag>
   )
 }

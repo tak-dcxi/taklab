@@ -14,7 +14,25 @@ export type PostType = {
     width?: number
   }
   body: string
-  category: string[]
+  category: {
+    id: string
+    name: string
+  }
+}
+
+export type CategoriesType = {
+  id: string
+  name: string
+}
+
+export type SEOType = {
+  fieldId: string
+  description?: string
+  image: {
+    url?: string
+    height?: number
+    width?: number
+  }
 }
 
 export const client = createClient({

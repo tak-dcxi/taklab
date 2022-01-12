@@ -15,7 +15,7 @@ async function generatedRssFeed(): Promise<void> {
     link: baseURL,
     language: 'ja',
     image: `${baseURL}/favicon.png`, // image には OGP 画像でなくファビコンを指定
-    copyright: `© ${date.getFullYear()} Takahiro Arai`,
+    copyright: `© ${date.getFullYear()} TAK / Web Creator`,
     updated: date,
     feedLinks: {
       rss2: `${baseURL}/rss/feed.xml`,
@@ -38,7 +38,7 @@ async function generatedRssFeed(): Promise<void> {
       body: string
     }) => {
       // post のプロパティ情報は使用しているオブジェクトの形式に合わせる
-      const url: string = `${baseURL}/posts/${content.id}`
+      const url: string = `${baseURL}/blog/${content.id}`
       feed.addItem({
         title: content.title,
         description: content.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''),

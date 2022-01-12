@@ -5,8 +5,13 @@ export const menu = [
     path: '/',
   },
   {
+    title: 'Blog',
+    subtitle: 'ブログ',
+    path: '/blog',
+  },
+  {
     title: 'About',
-    subtitle: '自己紹介',
+    subtitle: '当サイトについて',
     path: '/pages/about',
   },
   {
