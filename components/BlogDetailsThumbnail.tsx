@@ -16,7 +16,7 @@ export const BlogDetailsThumbnail: React.VFC<BlogDetailsThumbnailPropsType> = ({
   const thumbnail: string = generateThumbnail(src)
 
   return (
-    <MyRoot>
+    <Root>
       <Image
         src={thumbnail}
         alt={`【サムネイル】${alt}`}
@@ -27,11 +27,11 @@ export const BlogDetailsThumbnail: React.VFC<BlogDetailsThumbnailPropsType> = ({
         objectFit="cover"
         quality={75}
       />
-    </MyRoot>
+    </Root>
   )
 }
 
-const MyRoot = styled.div`
+const Root = styled.div`
   background-color: var(--color-grayscale-3);
   height: ${clamp(220, 440)};
   margin: auto;

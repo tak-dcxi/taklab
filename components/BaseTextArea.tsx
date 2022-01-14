@@ -41,8 +41,8 @@ export const BaseTextArea = React.forwardRef<HTMLTextAreaElement, BaseTextAreaPr
     }
 
     return (
-      <MyWrapper>
-        <MyInput
+      <Wrapper>
+        <Input
           ref={ref}
           id={id}
           title={title}
@@ -55,18 +55,18 @@ export const BaseTextArea = React.forwardRef<HTMLTextAreaElement, BaseTextAreaPr
           {...(required && { 'aria-required': 'true' })}
           {...(disabled && { disabled, 'aria-disabled': 'true' })}
         />
-        <MyDummy ref={dummyRef} aria-hidden="true" />
-      </MyWrapper>
+        <Dummy ref={dummyRef} aria-hidden="true" />
+      </Wrapper>
     )
   }
 )
 
-const MyWrapper = styled.span`
+const Wrapper = styled.span`
   display: block;
   position: relative;
 `
 
-const MyInput = styled.textarea`
+const Input = styled.textarea`
   ${formFieldStyle}
 
   display: block;
@@ -77,7 +77,7 @@ const MyInput = styled.textarea`
   top: 0;
 `
 
-const MyDummy = styled.span`
+const Dummy = styled.span`
   border: 1px solid;
   display: block;
   font-size: max(var(--fontsize-2), 14px);

@@ -6,11 +6,11 @@ type BaseGutenbergPropsType = {
   children: string
 }
 
-export const BaseGutenberg: React.VFC<BaseGutenbergPropsType> = ({ children }) => {
-  return <MyRoot dangerouslySetInnerHTML={{ __html: children }} />
+export const WysiwygArea: React.VFC<BaseGutenbergPropsType> = ({ children }) => {
+  return <Area dangerouslySetInnerHTML={{ __html: children }} />
 }
 
-const MyRoot = styled.div`
+const Area = styled.div`
   & > * {
     margin-bottom: 16px;
     margin-top: 16px;

@@ -11,12 +11,12 @@ type BaseButtonPropsType = {
 
 export const BaseButton: React.VFC<BaseButtonPropsType> = ({ children, type = 'button', disabled, onClick }) => {
   return (
-    <MyButton type={type} onClick={onClick} {...(disabled && { disabled, 'aria-disabled': 'true' })}>
+    <Button type={type} onClick={onClick} {...(disabled && { disabled, 'aria-disabled': 'true' })}>
       {children}
-    </MyButton>
+    </Button>
   )
 }
 
-const MyButton = styled.button`
+const Button = styled.button`
   ${buttonStyle}
 `

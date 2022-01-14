@@ -9,14 +9,14 @@ type BaseAlertPropsType = {
 
 export const BaseAlert: React.VFC<BaseAlertPropsType> = ({ children, centering }) => {
   return (
-    <MyAlert role="alert" centering={centering}>
+    <Alert role="alert" centering={centering}>
       <BaseIcon type={'alert'} size={14} />
       {children}
-    </MyAlert>
+    </Alert>
   )
 }
 
-const MyAlert = styled.p<{ centering: boolean }>`
+const Alert = styled.p<{ centering: boolean }>`
   align-items: center;
   background-color: var(--color-accent-2);
   border-radius: 4px;

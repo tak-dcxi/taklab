@@ -44,14 +44,14 @@ export const HomeKeyVisual: React.VFC<HomeKeyVisualPropsType> = ({ image, alt })
   }, [ref])
 
   return (
-    <MyRoot ref={ref}>
-      <MyFirstView>
-        <MyTitle>
+    <Root ref={ref}>
+      <FirstView>
+        <Title>
           <BaseLogo size={clamp(280, 560, true, 320, 1920)} />
-        </MyTitle>
-        <MyCloneTitle>
+        </Title>
+        <CloneTitle>
           <BaseLogo size={clamp(280, 560, true, 320, 1920)} presentation />
-        </MyCloneTitle>
+        </CloneTitle>
         <MyImage>
           <Image
             src={image.url}
@@ -63,22 +63,22 @@ export const HomeKeyVisual: React.VFC<HomeKeyVisualPropsType> = ({ image, alt })
             objectFit="cover"
             quality={75}
           />
-          <MyScrollSign aria-hidden="true">
+          <ScrollSign aria-hidden="true">
             <span>Scroll</span>
-          </MyScrollSign>
+          </ScrollSign>
         </MyImage>
-      </MyFirstView>
-    </MyRoot>
+      </FirstView>
+    </Root>
   )
 }
 
-const MyRoot = styled.header`
+const Root = styled.header`
   height: calc(100vh - var(--height-header));
   max-height: 920px;
   min-height: 360px;
 `
 
-const MyFirstView = styled.div`
+const FirstView = styled.div`
   display: grid;
   grid-template-columns: 5% min(10%, 240px) 1fr;
   grid-template-rows: 1fr;
@@ -92,13 +92,13 @@ const MyFirstView = styled.div`
   }
 `
 
-const MyTitle = styled.h1`
+const Title = styled.h1`
   align-self: center;
   color: var(--color-grayscale-7);
   grid-column: 2 / 4;
 `
 
-const MyCloneTitle = styled.div`
+const CloneTitle = styled.div`
   align-self: center;
   grid-column: 2 / 3;
   overflow: hidden;
@@ -147,7 +147,7 @@ const scrollSignAnimation = keyframes`
   }
 `
 
-const MyScrollSign = styled.div`
+const ScrollSign = styled.div`
   bottom: 0;
   color: var(--color-grayscale-6);
   position: absolute;

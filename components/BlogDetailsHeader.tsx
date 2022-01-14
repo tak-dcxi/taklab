@@ -30,11 +30,11 @@ export const BlogDetailsHeader: React.VFC<BlogDetailsHeaderPropsType> = ({
   image,
 }) => {
   return (
-    <MyRoot>
-      <MyDescription>
-        <MyHeadline>{title}</MyHeadline>
-        <MyDateWrapper>
-          <MyDate>
+    <Root>
+      <Description>
+        <Headline>{title}</Headline>
+        <DateWrapper>
+          <Date>
             <dt className="VisuallyHidden">公開日</dt>
             <dd>
               <BaseIcon type={'clock'} />
@@ -59,17 +59,17 @@ export const BlogDetailsHeader: React.VFC<BlogDetailsHeaderPropsType> = ({
                 {getDate(updatedAt, 'en')}
               </time>
             </dd>
-          </MyDate>
-        </MyDateWrapper>
+          </Date>
+        </DateWrapper>
         <dl>
           <dt className="VisuallyHidden">カテゴリ</dt>
           <dd>
             <Link href={`/blog/${category.id}`} passHref>
-              <MyCategory>{category.name}</MyCategory>
+              <Category>{category.name}</Category>
             </Link>
           </dd>
         </dl>
-      </MyDescription>
+      </Description>
       <MyImageWrapper>
         <Image
           src={image.url}
@@ -82,11 +82,11 @@ export const BlogDetailsHeader: React.VFC<BlogDetailsHeaderPropsType> = ({
           quality={75}
         />
       </MyImageWrapper>
-    </MyRoot>
+    </Root>
   )
 }
 
-const MyRoot = styled.header`
+const Root = styled.header`
   background-image: var(--theme-background-pattern);
   border-bottom: 1px solid var(--theme-divider);
   border-top: 1px solid var(--theme-divider);
@@ -100,7 +100,7 @@ const MyRoot = styled.header`
   }
 `
 
-const MyDescription = styled.div`
+const Description = styled.div`
   align-items: center;
   color: var(--color-grayscale-7);
   display: flex;
@@ -113,13 +113,13 @@ const MyDescription = styled.div`
   }
 `
 
-const MyHeadline = styled.h1`
+const Headline = styled.h1`
   font-size: clamp(1.125rem, 1.0139rem + 0.5556vw, 1.5rem);
   line-height: var(--leading-relaxed);
   margin-bottom: 24px;
 `
 
-const MyCategory = styled.a`
+const Category = styled.a`
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
   display: inline-block;
@@ -133,11 +133,11 @@ const MyCategory = styled.a`
   `)}
 `
 
-const MyDateWrapper = styled.div`
+const DateWrapper = styled.div`
   overflow: hidden;
 `
 
-const MyDate = styled.dl`
+const Date = styled.dl`
   display: flex;
   flex-wrap: wrap;
   font-family: var(--font-montserrat);

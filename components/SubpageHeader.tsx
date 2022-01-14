@@ -8,13 +8,13 @@ type SubpageHeaderPropsType = {
 
 export const SubpageHeader: React.VFC<SubpageHeaderPropsType> = ({ headline }) => {
   return (
-    <MyRoot>
-      <MyHeadline>{headline}</MyHeadline>
-    </MyRoot>
+    <Root>
+      <Headline>{headline}</Headline>
+    </Root>
   )
 }
 
-const MyRoot = styled.header`
+const Root = styled.header`
   background-image: var(--theme-background-pattern);
   border-bottom: 1px solid var(--theme-divider);
   border-top: 1px solid var(--theme-divider);
@@ -24,7 +24,7 @@ const MyRoot = styled.header`
   place-items: center;
 `
 
-const MyHeadline = styled.h1`
+const Headline = styled.h1`
   font-size: ${clamp(28, 44, true)};
   font-weight: bold;
   padding: 32px;

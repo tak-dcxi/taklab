@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 export const SiteAdSence: React.VFC = () => {
-  return <MyRoot aria-label="Sponsored Link"></MyRoot>
+  return <Wrapper aria-label="Sponsored Link"></Wrapper>
 }
 
-const MyRoot = styled.aside`
+const Wrapper = styled.aside`
   background-color: var(--theme-background-strong);
   border: 1px solid var(--theme-divider);
   isolation: isolate;

@@ -35,7 +35,7 @@ type HomePropsType = {
 const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
   const perPage: number = 6
 
-  const MyPostCards: JSX.Element[] = posts.slice(0, perPage).map((post) => {
+  const PostCards: JSX.Element[] = posts.slice(0, perPage).map((post) => {
     return <PostCard key={post.id} api={post} lv={3} />
   })
 
@@ -43,13 +43,13 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
     <>
       <SiteHeadTags title={home.title} image={home.seo.image.url} />
       <HomeKeyVisual image={home.firstview.image} alt={home.firstview.image_alt} />
-      <MySectionWrapper>
+      <SectionWrapper>
         <BaseSection title={'posts'}>
-          <PostGrid>{MyPostCards}</PostGrid>
-          {MyPostCards.length === perPage && (
-            <MyButtonWrapper>
+          <PostGrid>{PostCards}</PostGrid>
+          {PostCards.length === perPage && (
+            <ButtonWrapper>
               <BaseLinkButton href={'/blog/'}>投稿をもっと見る</BaseLinkButton>
-            </MyButtonWrapper>
+            </ButtonWrapper>
           )}
         </BaseSection>
         <SiteMarqueeBlock />
@@ -57,12 +57,12 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
           <div></div>
         </BaseSection>
         <HomeRequestForm />
-      </MySectionWrapper>
+      </SectionWrapper>
     </>
   )
 }
 
-const MySectionWrapper = styled.div`
+const SectionWrapper = styled.div`
   position: relative;
 
   &::after {
@@ -78,7 +78,7 @@ const MySectionWrapper = styled.div`
   }
 `
 
-const MyButtonWrapper = styled.p`
+const ButtonWrapper = styled.p`
   display: flex;
   justify-content: center;
 `

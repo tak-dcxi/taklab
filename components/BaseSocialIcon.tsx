@@ -9,11 +9,16 @@ type BaseSocialIconPropsType = {
   presentation?: boolean
 }
 
+type SVGTagPropsType = {
+  width: number
+  height: number
+}
+
 export const BaseSocialIcon: React.VFC<BaseSocialIconPropsType> = ({ color, size = 100, type, presentation }) => {
   const randomID: string = uuidv4()
 
   return (
-    <MySVGtag
+    <SVGtag
       width={size}
       height={size}
       viewBox="0 0 100 100"
@@ -113,16 +118,11 @@ export const BaseSocialIcon: React.VFC<BaseSocialIconPropsType> = ({ color, size
           />
         </>
       )}
-    </MySVGtag>
+    </SVGtag>
   )
 }
 
-type MySVGTagPropsType = {
-  width: number
-  height: number
-}
-
-const MySVGtag = styled.svg<MySVGTagPropsType>`
+const SVGtag = styled.svg<SVGTagPropsType>`
   height: ${(props) => props.height / 16}rem;
   width: ${(props) => props.width / 16}rem;
 `

@@ -16,7 +16,7 @@ export const PostPagination: React.VFC<PostPaginationPropsType> = ({ perPage, le
   }
 
   return (
-    <MyRoot aria-label="ページ送り">
+    <Root aria-label="ページ送り">
       <ReactPaginate
         pageCount={calculatePageCount()}
         marginPagesDisplayed={2}
@@ -33,11 +33,11 @@ export const PostPagination: React.VFC<PostPaginationPropsType> = ({ perPage, le
         nextLabel={<BaseIcon type="chevron-right" />}
         disabledClassName={'is-disabled'}
       />
-    </MyRoot>
+    </Root>
   )
 }
 
-const MyRoot = styled.nav`
+const Root = styled.nav`
   /* ReactPaginateで生成されるCSSを上書きします。 */
   overflow: hidden;
 

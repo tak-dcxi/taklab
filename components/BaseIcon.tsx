@@ -24,11 +24,16 @@ type BaseIconPropsType = {
     | 'alert'
 }
 
+type SVGTagPropsType = {
+  width: number
+  height: number
+}
+
 export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor', size = 16, label, type }) => {
   const randomID: string = uuidv4()
 
   return (
-    <MySVGtag
+    <SVGTag
       width={size}
       height={size}
       viewBox="0 0 24 24"
@@ -109,16 +114,11 @@ export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor',
           <line x1="12" y1="17" x2="12.01" y2="17" />
         </>
       )}
-    </MySVGtag>
+    </SVGTag>
   )
 }
 
-type MySVGTagPropsType = {
-  width: number
-  height: number
-}
-
-const MySVGtag = styled.svg<MySVGTagPropsType>`
+const SVGTag = styled.svg<SVGTagPropsType>`
   height: ${(props) => props.height / 16}rem;
   width: ${(props) => props.width / 16}rem;
 `

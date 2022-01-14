@@ -39,9 +39,9 @@ export const HomeRequestForm: React.VFC = () => {
 
   return (
     <BaseContainer>
-      <MyForm onSubmit={handleSubmit(onSubmit)}>
-        <MyStack1>
-          <MyDescription>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Stack1>
+          <Description>
             <p>
               お仕事のご依頼やご相談、イベントでの登壇依頼、当サイトおよび私に対するご要望・ご感想・クレームやメッセージはこちらのお問い合わせフォームよりお気軽にお問い合わせください。
             </p>
@@ -49,9 +49,9 @@ export const HomeRequestForm: React.VFC = () => {
               また、当サイトへの広告掲載依頼や記事投稿で紹介して欲しいサービスやコンテンツなどがありましたらご連絡ください。内容を厳選した上でご紹介させていただきます。
             </p>
             <p>お問い合わせの内容によっては返信を控えさせていただく場合がございます。あらかじめご了承ください。</p>
-          </MyDescription>
-          <MyStack2>
-            <MyItem>
+          </Description>
+          <Stack2>
+            <Item>
               <p>
                 <label htmlFor="form_name">
                   <BaseLabelText required>お名前</BaseLabelText>
@@ -68,8 +68,8 @@ export const HomeRequestForm: React.VFC = () => {
                 />
               </p>
               {errors.name && <BaseAlert>{errors.name?.message}</BaseAlert>}
-            </MyItem>
-            <MyItem>
+            </Item>
+            <Item>
               <p>
                 <label htmlFor="form_email">
                   <BaseLabelText required>ご連絡先メールアドレス</BaseLabelText>
@@ -86,8 +86,8 @@ export const HomeRequestForm: React.VFC = () => {
                 />
               </p>
               {errors.email && <BaseAlert>{errors.email?.message}</BaseAlert>}
-            </MyItem>
-            <MyItem>
+            </Item>
+            <Item>
               <p>
                 <label htmlFor="form_email">
                   <BaseLabelText required>件名</BaseLabelText>
@@ -104,8 +104,8 @@ export const HomeRequestForm: React.VFC = () => {
                 />
               </p>
               {errors.subject && <BaseAlert>{errors.subject?.message}</BaseAlert>}
-            </MyItem>
-            <MyItem>
+            </Item>
+            <Item>
               <p>
                 <label htmlFor="form_message">
                   <BaseLabelText required>メッセージ</BaseLabelText>
@@ -115,36 +115,36 @@ export const HomeRequestForm: React.VFC = () => {
                 <FormTextArea control={control} id="form_message" name="message" required error={'message' in errors} />
               </p>
               {errors.message && <BaseAlert>{errors.message?.message}</BaseAlert>}
-            </MyItem>
-          </MyStack2>
-        </MyStack1>
-        <MyButtonWrapper>
+            </Item>
+          </Stack2>
+        </Stack1>
+        <ButtonWrapper>
           <BaseButton type="submit">Submit</BaseButton>
-        </MyButtonWrapper>
-      </MyForm>
+        </ButtonWrapper>
+      </Form>
     </BaseContainer>
   )
 }
 
-const MyForm = styled.form`
+const Form = styled.form`
   margin-left: auto;
   margin-right: auto;
   max-width: 600px;
 `
 
-const MyStack1 = styled.div`
+const Stack1 = styled.div`
   & > * + * {
     margin-top: 48px;
   }
 `
 
-const MyStack2 = styled.div`
+const Stack2 = styled.div`
   & > * + * {
     margin-top: 32px;
   }
 `
 
-const MyDescription = styled.div`
+const Description = styled.div`
   line-height: var(--leading-loose);
 
   & > * + * {
@@ -152,13 +152,13 @@ const MyDescription = styled.div`
   }
 `
 
-const MyItem = styled.div`
+const Item = styled.div`
   & > * + * {
     margin-top: 8px;
   }
 `
 
-const MyButtonWrapper = styled.p`
+const ButtonWrapper = styled.p`
   display: flex;
   justify-content: center;
   margin-top: 48px;

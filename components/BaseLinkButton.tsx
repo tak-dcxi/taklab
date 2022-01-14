@@ -14,24 +14,24 @@ type BaseLinkButtonPropsType = {
 export const BaseLinkButton: React.VFC<BaseLinkButtonPropsType> = ({ children, href, blank, onClick }) => {
   if (/^http/.test(href)) {
     return (
-      <MyButton href={href} onClick={onClick} {...(blank && { target: '_blank', rel: 'noopener noreferrer' })}>
+      <Button href={href} onClick={onClick} {...(blank && { target: '_blank', rel: 'noopener noreferrer' })}>
         {children}
         <BaseIcon type={'chevron-right'} size={18} />
-      </MyButton>
+      </Button>
     )
   }
 
   return (
     <Link href={href} passHref>
-      <MyButton onClick={onClick} {...(blank && { target: '_blank', rel: 'noopener noreferrer' })}>
+      <Button onClick={onClick} {...(blank && { target: '_blank', rel: 'noopener noreferrer' })}>
         {children}
         <BaseIcon type={'chevron-right'} size={18} />
-      </MyButton>
+      </Button>
     </Link>
   )
 }
 
-const MyButton = styled.a`
+const Button = styled.a`
   align-items: center;
   background-color: var(--theme-button-background);
   color: var(--color-grayscale-7);

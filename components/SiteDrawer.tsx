@@ -44,16 +44,16 @@ export const SiteDrawer: React.VFC = () => {
   return (
     <>
       {!media.lg && (
-        <MyButtonWrapper>
+        <ButtonWrapper>
           <SiteDrawerButton type="open" onClick={handleButtonClick} setExpanded={setExpanded} ref={buttonRef} />
-        </MyButtonWrapper>
+        </ButtonWrapper>
       )}
       <SiteDrawerBody expanded={expanded} onClose={onClose} opener={buttonRef} ref={bodyRef} />
     </>
   )
 }
 
-const MyButtonWrapper = styled.p`
+const ButtonWrapper = styled.p`
   display: contents;
 
   @media ${breakpoints.lg} {

@@ -1,44 +1,51 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
-type GridPropsType = {
+type GridCommonType = {
   min: string
-  isWide: string
-  space: string
+  gap: string
+  wide?: boolean
 }
 
-const GridDefaultProps = {
-  min: '250px',
-  isWide: false,
-  space: 'var(--s0)',
-}
+type BaseGridPropsType = {
+  children: React.ReactNode
+} & GridCommonType
 
-const Grid: React.FC<GridProps> & { defaultProps: Partial<GridProps> } = (props) => {
+export const BaseGrid: React.VFC<BaseGridPropsType> = ({ children, min = '256px', gap = '16px', wide }) => {
   const gridRef = useRef<HTMLDivElement>(null)
-  const [isWide, setIsWide] = useState(props.isWide)
+  const [isWide, setIsWide] = useState<boolean>(wide)
 
-  useResize(gridRef, () => {
-    const element = gridRef.current
+  useEffect(() => {
+    const handleResize = () => {
+      const element: HTMLDivElement = gridRef.current
 
-    if (element) {
-      const test = document.createElement('div')
-      test.style.width = props.min!
-      element.appendChild(test)
-      const minToPixels = test.offsetWidth
-      element.removeChild(test)
+      if (!element) return
+
+      const testDiv: HTMLDivElement = document.createElement('div')
+      testDiv.style.width = min!
+      element.appendChild(testDiv)
+      const minToPixels: number = testDiv.offsetWidth
+      element.removeChild(testDiv)
 
       setIsWide(element.scrollWidth > minToPixels)
     }
-  })
 
-  return <MyGrid {...props} isWide={isWide} ref={gridRef} />
+    window.addEventListener('resize', handleResize, false)
+    handleResize()
+
+    return () => window.removeEventListener('resize', handleResize)
+  }, [min, gridRef])
+
+  return (
+    <Wrapper min={min} gap={gap} wide={isWide} ref={gridRef}>
+      {children}
+    </Wrapper>
+  )
 }
 
-const MyGrid = styled.div<GridProps>`
+const Wrapper = styled.div<GridCommonType>`
   align-content: start;
   display: grid;
-  gap: ${(props) => props.space};
-  grid-template-columns: ${(props) => (props.isWide ? `repeat(auto-fit, minmax(${props.min}, 1fr)) ` : '100%')};
+  gap: ${(props) => props.gap};
+  grid-template-columns: ${(props) => (props.wide ? `repeat(auto-fit, minmax(${props.min}, 1fr)) ` : '100%')};
 `
-
-export default Grid

@@ -13,36 +13,36 @@ export const SiteDesktopMenu: React.VFC = () => {
   const { colorMode, setColorMode } = useTheme()
 
   return (
-    <MyRoot>
+    <Root>
       {menu.map((item, index) => {
         return (
           <li key={index}>
             <Link href={item.path} passHref>
-              <MyNavbarLink {...(item.path === asPath && { 'aria-current': 'page' })}>{item.title}</MyNavbarLink>
+              <NavbarLink {...(item.path === asPath && { 'aria-current': 'page' })}>{item.title}</NavbarLink>
             </Link>
           </li>
         )
       })}
       <li>
-        <MyNavbarThemeToggler
+        <NavbarThemeToggler
           type="button"
           title={`現在のテーマは${colorMode === 'dark' ? 'ダークモード' : 'ライトモード'}です`}
           onClick={setColorMode}
         >
-          <MyThemeIcon data-type={colorMode === 'dark' ? 'dark' : 'light'}>
+          <ThemeIcon data-type={colorMode === 'dark' ? 'dark' : 'light'}>
             <span>
               <BaseIcon type="sun" />
               <BaseIcon type="moon" />
             </span>
-          </MyThemeIcon>
+          </ThemeIcon>
           Theme
-        </MyNavbarThemeToggler>
+        </NavbarThemeToggler>
       </li>
-    </MyRoot>
+    </Root>
   )
 }
 
-const MyRoot = styled.ul`
+const Root = styled.ul`
   align-items: center;
   display: flex;
 
@@ -55,7 +55,7 @@ const MyRoot = styled.ul`
   }
 `
 
-const MyNavbarLink = styled.a`
+const NavbarLink = styled.a`
   align-items: center;
   display: inline-flex;
   font-family: var(--font-montserrat);
@@ -96,7 +96,7 @@ const MyNavbarLink = styled.a`
   `)}
 `
 
-const MyThemeIcon = styled.span`
+const ThemeIcon = styled.span`
   display: inline-block;
   height: 1em;
   margin-right: 0.25em;
@@ -121,4 +121,4 @@ const MyThemeIcon = styled.span`
   }
 `
 
-const MyNavbarThemeToggler = MyNavbarLink.withComponent('button')
+const NavbarThemeToggler = NavbarLink.withComponent('button')

@@ -8,10 +8,10 @@ type BaseContainerPropsType = {
 }
 
 export const BaseContainer: React.VFC<BaseContainerPropsType> = ({ children, size = 'default' }) => {
-  return <MyContainer size={size}>{children}</MyContainer>
+  return <Container size={size}>{children}</Container>
 }
 
-const MyContainer = styled.div<{ size: 'default' | 'narrow' | 'wide' }>`
+const Container = styled.div<{ size: 'default' | 'narrow' | 'wide' }>`
   box-sizing: content-box;
   margin-left: auto;
   margin-right: auto;

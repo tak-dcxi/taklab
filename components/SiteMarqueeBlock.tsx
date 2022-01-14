@@ -5,23 +5,23 @@ import { BaseLogo } from './BaseLogo'
 
 export const SiteMarqueeBlock: React.VFC = () => {
   return (
-    <MyRoot>
-      <MyItem>
+    <Root>
+      <Item>
         <BaseLogo size={'100%'} presentation />
-      </MyItem>
-      <MyItem>
+      </Item>
+      <Item>
         <BaseLogo size={'100%'} presentation />
-      </MyItem>
-      <MyItem>
+      </Item>
+      <Item>
         <BaseLogo size={'100%'} presentation />
-      </MyItem>
-      <MyItem>
+      </Item>
+      <Item>
         <BaseLogo size={'100%'} presentation />
-      </MyItem>
-      <MyItem>
+      </Item>
+      <Item>
         <BaseLogo size={'100%'} presentation />
-      </MyItem>
-    </MyRoot>
+      </Item>
+    </Root>
   )
 }
 
@@ -35,11 +35,11 @@ const LoopAnimationFirst = keyframes`
   }
 `
 
-const MyRoot = styled.div`
+const Root = styled.div`
   display: flex;
 `
 
-const MyItem = styled.div`
+const Item = styled.div`
   animation: ${LoopAnimationFirst} 14s linear infinite;
   color: var(--theme-text-x-muted);
   flex-shrink: 0;

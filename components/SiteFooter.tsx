@@ -15,66 +15,66 @@ export const SiteFooter: React.VFC = () => {
   const { asPath } = useRouter()
 
   return (
-    <MyRoot aria-label="サイトフッター">
+    <Root aria-label="サイトフッター">
       <BaseContainer>
-        <MyLogoWrapper>
+        <LogoWrapper>
           <BaseLogo size={clamp(184, 220, true)} />
-        </MyLogoWrapper>
-        <MyFooterMenu>
+        </LogoWrapper>
+        <FooterMenu>
           <ul>
             {menu.map((item, index) => {
               return (
                 <li key={index}>
                   <Link href={item.path} passHref>
-                    <MyFooterLink {...(item.path === asPath && { 'aria-current': 'page' })}>{item.title}</MyFooterLink>
+                    <FooterLink {...(item.path === asPath && { 'aria-current': 'page' })}>{item.title}</FooterLink>
                   </Link>
                 </li>
               )
             })}
           </ul>
-        </MyFooterMenu>
-        <MyFooterSocial>
+        </FooterMenu>
+        <FooterSocial>
           <ul>
             <li>
-              <MySocialLink href={social.twitter.url} target="_blank" rel="noopener noreferrer">
+              <SocialLink href={social.twitter.url} target="_blank" rel="noopener noreferrer">
                 <BaseSocialIcon size={20} type="twitter" />
-              </MySocialLink>
+              </SocialLink>
             </li>
             <li>
-              <MySocialLink href={social.zenn.url} target="_blank" rel="noopener noreferrer">
+              <SocialLink href={social.zenn.url} target="_blank" rel="noopener noreferrer">
                 <BaseSocialIcon size={20} type="zenn" />
-              </MySocialLink>
+              </SocialLink>
             </li>
             <li>
-              <MySocialLink href={social.note.url} target="_blank" rel="noopener noreferrer">
+              <SocialLink href={social.note.url} target="_blank" rel="noopener noreferrer">
                 <BaseSocialIcon size={20} type="note" />
-              </MySocialLink>
+              </SocialLink>
             </li>
             <li>
-              <MySocialLink href={social.rss.url} target="_blank" rel="noopener noreferrer">
+              <SocialLink href={social.rss.url} target="_blank" rel="noopener noreferrer">
                 <BaseSocialIcon size={20} type="rss" />
-              </MySocialLink>
+              </SocialLink>
             </li>
           </ul>
-        </MyFooterSocial>
-        <MyCopyright>
+        </FooterSocial>
+        <Copyright>
           <small lang="en" translate="no">
             © {new Date().getFullYear()} TAK / Web Creator
           </small>
-        </MyCopyright>
+        </Copyright>
       </BaseContainer>
-    </MyRoot>
+    </Root>
   )
 }
 
-const MyRoot = styled.footer`
+const Root = styled.footer`
   background-color: var(--color-grayscale-1);
   border-top: 1px solid var(--theme-divider);
   color: var(--color-grayscale-7);
   padding: ${clamp(48, 64)} 0;
 `
 
-const MyLogoWrapper = styled.p`
+const LogoWrapper = styled.p`
   text-align: center;
 
   &::after {
@@ -87,7 +87,7 @@ const MyLogoWrapper = styled.p`
   }
 `
 
-const MyFooterMenu = styled.div`
+const FooterMenu = styled.div`
   margin-top: 28px;
   overflow: hidden;
 
@@ -110,7 +110,7 @@ const MyFooterMenu = styled.div`
   }
 `
 
-const MyFooterSocial = styled.div`
+const FooterSocial = styled.div`
   margin-top: 20px;
   overflow: hidden;
 
@@ -126,7 +126,7 @@ const MyFooterSocial = styled.div`
   }
 `
 
-const MyFooterLink = styled.a`
+const FooterLink = styled.a`
   display: inline-block;
   font-family: var(--font-montserrat);
   padding: 4px;
@@ -165,7 +165,7 @@ const MyFooterLink = styled.a`
   `)}
 `
 
-const MySocialLink = styled.a`
+const SocialLink = styled.a`
   display: inline-block;
   isolation: isolate;
   padding: 4px;
@@ -192,7 +192,7 @@ const MySocialLink = styled.a`
   `)}
 `
 
-const MyCopyright = styled.p`
+const Copyright = styled.p`
   font-family: var(--font-montserrat);
   font-size: var(--fontsize-1);
   margin-top: 48px;

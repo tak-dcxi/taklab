@@ -42,8 +42,8 @@ export const BaseTextField = React.forwardRef<HTMLInputElement, BaseTextFieldPro
     if (type === 'password') autoFill = 'password'
 
     return (
-      <MyWrapper>
-        <MyInput
+      <Wrapper>
+        <Input
           ref={ref}
           id={id}
           type={type}
@@ -59,16 +59,16 @@ export const BaseTextField = React.forwardRef<HTMLInputElement, BaseTextFieldPro
           {...(required && { 'aria-required': 'true' })}
           {...(disabled && { disabled, 'aria-disabled': 'true' })}
         />
-      </MyWrapper>
+      </Wrapper>
     )
   }
 )
 
-const MyWrapper = styled.span`
+const Wrapper = styled.span`
   display: block;
   overflow: hidden;
 `
 
-const MyInput = styled.input`
+const Input = styled.input`
   ${formFieldStyle}
 `

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 export const SiteNavbar: React.VFC = () => {
   return (
     <nav aria-label="サイト内メニュー">
-      <MyList>
+      <List>
         <li>
           <Link href="/" passHref>
             <MyLink>Home</MyLink>
@@ -21,12 +21,12 @@ export const SiteNavbar: React.VFC = () => {
             <MyLink>Events</MyLink>
           </Link>
         </li>
-      </MyList>
+      </List>
     </nav>
   )
 }
 
-const MyList = styled.ul`
+const List = styled.ul`
   align-items: center;
   display: flex;
   justify-content: flex-end;

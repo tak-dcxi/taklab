@@ -11,13 +11,13 @@ export const BaseTweetEmbed: React.VFC<BaseTweetEmbeddedPropsType> = ({ id }) =>
   const { colorMode } = useTheme()
 
   return (
-    <MyWrapper>
+    <Wrapper>
       {colorMode === 'dark' ? <Tweet tweetId={id} options={{ theme: 'dark' }} /> : <Tweet tweetId={id} />}
-    </MyWrapper>
+    </Wrapper>
   )
 }
 
-const MyWrapper = styled.blockquote`
+const Wrapper = styled.blockquote`
   & > div {
     background-color: var(--theme-background-strong);
     border: 1px solid var(--theme-divider);

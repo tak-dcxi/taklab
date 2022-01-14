@@ -24,11 +24,11 @@ export const SubpageTemplate: React.VFC<SubpageLayoutPropsType> = ({ title, desc
       <SiteBreadcrumbs items={breadcrumbs} />
       <SiteHeadTags title={title} description={description} image={image} />
       <SubpageHeader headline={title} />
-      <MyContents>{children}</MyContents>
+      <Contents>{children}</Contents>
     </>
   )
 }
 
-const MyContents = styled.div`
+const Contents = styled.div`
   padding: var(--contents-block-padding);
 `

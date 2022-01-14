@@ -54,44 +54,44 @@ const CategoryPage: NextPage<CategoryPagePropsType> = ({
             記事一覧
           </h2>
           {posts.length ? (
-            <MyPostsList>
+            <PostsList>
               {posts.slice(offset, offset + perPage).map((post: PostType) => {
                 return <PostCard key={post.id} api={post} lv={3} />
               })}
-            </MyPostsList>
+            </PostsList>
           ) : (
-            <MyNoPosts>
+            <NoPosts>
               <p className="emoji" role="img" aria-label="ごめんなさい">
                 🙇‍♂️
               </p>
               <p>まだ記事が存在しません</p>
-            </MyNoPosts>
+            </NoPosts>
           )}
         </section>
         {posts.length > perPage && (
-          <MyPagination>
+          <Pagination>
             <PostPagination perPage={perPage} length={posts.length} onChange={handlePageChange} />
-          </MyPagination>
+          </Pagination>
         )}
-        <MyShareButton>
+        <ShareButton>
           <SiteShareButton title={'Blog'} />
-        </MyShareButton>
+        </ShareButton>
       </BlogCommonTemplate>
     </>
   )
 }
 
-const MyPostsList = styled.div`
+const PostsList = styled.div`
   display: grid;
   gap: ${clamp(16, 24)};
   grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
 `
 
-const MyPagination = styled.div`
+const Pagination = styled.div`
   margin-top: ${clamp(48, 64)};
 `
 
-const MyNoPosts = styled.div`
+const NoPosts = styled.div`
   text-align: center;
 
   & > * + * {
@@ -104,7 +104,7 @@ const MyNoPosts = styled.div`
   }
 `
 
-const MyShareButton = styled.div`
+const ShareButton = styled.div`
   margin-top: 64px;
 `
 

@@ -17,10 +17,10 @@ export const PostCard: React.VFC<PostCardPropsType> = ({ api, lv }) => {
   return (
     <article>
       <Link href={`/blog/[id]`} as={`/blog/${api.id}`} passHref>
-        <MyContents>
-          {lv === 2 && <MyH2>{api.title}</MyH2>}
-          {lv === 3 && <MyH3>{api.title}</MyH3>}
-          {lv === 4 && <MyH4>{api.title}</MyH4>}
+        <Contents>
+          {lv === 2 && <H2>{api.title}</H2>}
+          {lv === 3 && <H3>{api.title}</H3>}
+          {lv === 4 && <H4>{api.title}</H4>}
           <MyImageWrapper>
             <Image
               src={thumbnail}
@@ -34,23 +34,23 @@ export const PostCard: React.VFC<PostCardPropsType> = ({ api, lv }) => {
               quality={75}
             />
           </MyImageWrapper>
-          <MyCategory>
+          <Category>
             <dt className="VisuallyHidden">カテゴリ</dt>
             <dd>{api.category.name}</dd>
-          </MyCategory>
-          <MyDate>
+          </Category>
+          <Date>
             <dt className="VisuallyHidden">投稿日</dt>
             <dd>
               <time dateTime={api.createdAt}>{getDate(api.createdAt, 'en')}</time>
             </dd>
-          </MyDate>
-        </MyContents>
+          </Date>
+        </Contents>
       </Link>
     </article>
   )
 }
 
-const MyContents = styled.a`
+const Contents = styled.a`
   background-color: var(--theme-background-muted);
   display: flex;
   flex-direction: column;
@@ -92,11 +92,11 @@ const MyImageWrapper = styled.div`
       transform: scale(1.1);
     }
   `,
-    MyContents
+    Contents
   )}
 `
 
-const MyH2 = styled.h2`
+const H2 = styled.h2`
   font-size: var(--fontsize-3);
   grid-area: card-title;
   letter-spacing: 0.02em;
@@ -104,10 +104,10 @@ const MyH2 = styled.h2`
   margin-top: 4px;
 `
 
-const MyH3 = MyH2.withComponent('h3')
-const MyH4 = MyH2.withComponent('h4')
+const H3 = H2.withComponent('h3')
+const H4 = H2.withComponent('h4')
 
-const MyCategory = styled.dl`
+const Category = styled.dl`
   margin-top: 20px;
   order: -1;
 
@@ -117,7 +117,7 @@ const MyCategory = styled.dl`
   }
 `
 
-const MyDate = styled.dl`
+const Date = styled.dl`
   margin-top: auto;
   padding-top: 12px;
 

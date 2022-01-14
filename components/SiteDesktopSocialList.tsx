@@ -8,32 +8,32 @@ import { clamp } from '~/styles/tools/clamp'
 
 export const SiteDesktopSocialList: React.VFC = () => {
   return (
-    <MyRoot>
+    <Root>
       <li>
-        <MySocialLink href={social.twitter.url}>
+        <MyLink href={social.twitter.url}>
           <BaseSocialIcon size={20} type="twitter" />
-        </MySocialLink>
+        </MyLink>
       </li>
       <li>
-        <MySocialLink href={social.zenn.url}>
+        <MyLink href={social.zenn.url}>
           <BaseSocialIcon size={20} type="zenn" />
-        </MySocialLink>
+        </MyLink>
       </li>
       <li>
-        <MySocialLink href={social.note.url}>
+        <MyLink href={social.note.url}>
           <BaseSocialIcon size={20} type="note" />
-        </MySocialLink>
+        </MyLink>
       </li>
       <li>
-        <MySocialLink href={social.rss.url}>
+        <MyLink href={social.rss.url}>
           <BaseSocialIcon size={20} type="rss" />
-        </MySocialLink>
+        </MyLink>
       </li>
-    </MyRoot>
+    </Root>
   )
 }
 
-const MyRoot = styled.ul`
+const Root = styled.ul`
   align-items: center;
   display: flex;
   grid-area: header-social;
@@ -49,7 +49,7 @@ const MyRoot = styled.ul`
   }
 `
 
-const MySocialLink = styled.a`
+const MyLink = styled.a`
   display: inline-block;
   padding: 4px;
   position: relative;

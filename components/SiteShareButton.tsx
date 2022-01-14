@@ -69,16 +69,16 @@ export const SiteShareButton: React.VFC<SiteShareButtonPropsType> = ({ title }) 
   }
 
   return (
-    <MyRoot>
-      <MyHeader>
+    <Root>
+      <Header>
         <span aria-hidden="true">＼</span>Share<span aria-hidden="true">／</span>
-      </MyHeader>
+      </Header>
       <dd>
-        <MyList>
+        <List>
           {items.map((item) => {
             return (
               <li key={item.id}>
-                <MyButton
+                <Button
                   type="button"
                   aria-label={item.label}
                   onClick={(event) => {
@@ -88,23 +88,23 @@ export const SiteShareButton: React.VFC<SiteShareButtonPropsType> = ({ title }) 
                   backgroundColor={item.color}
                 >
                   <BaseSocialIcon type={item.id} size={18} color={'currentColor'} presentation />
-                </MyButton>
+                </Button>
               </li>
             )
           })}
-        </MyList>
+        </List>
       </dd>
-    </MyRoot>
+    </Root>
   )
 }
 
-const MyRoot = styled.dl`
+const Root = styled.dl`
   & > * + * {
     margin-top: 16px;
   }
 `
 
-const MyHeader = styled.dt`
+const Header = styled.dt`
   font-family: var(--font-montserrat);
   text-align: center;
   text-transform: uppercase;
@@ -114,7 +114,7 @@ const MyHeader = styled.dt`
   }
 `
 
-const MyList = styled.ul`
+const List = styled.ul`
   display: grid;
   gap: 2px;
   grid-template-columns: repeat(3, 1fr);
@@ -124,7 +124,7 @@ const MyList = styled.ul`
   }
 `
 
-const MyButton = styled.button<{ backgroundColor: string }>`
+const Button = styled.button<{ backgroundColor: string }>`
   align-items: center;
   background-color: ${(props) => props.backgroundColor};
   color: var(--color-grayscale-7);

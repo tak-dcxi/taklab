@@ -14,26 +14,26 @@ export const SiteHeader: React.VFC = () => {
   const media: { [key: string]: boolean } = useMatchMedia()
 
   return (
-    <MyRoot aria-label="サイトヘッダー">
-      <MyContainer>
-        <MyLogo>
+    <Root aria-label="サイトヘッダー">
+      <Container>
+        <Logo>
           <Link href={'/'} passHref>
-            <MyLogoLink title={'トップページ'}>
+            <LogoLink title={'トップページ'}>
               <BaseLogo size={`${144 / 16}rem`} />
-            </MyLogoLink>
+            </LogoLink>
           </Link>
-        </MyLogo>
-        <MyMenu id="menu" tabIndex={-1} aria-label="サイト内メニュー">
+        </Logo>
+        <Menu id="menu" tabIndex={-1} aria-label="サイト内メニュー">
           {media.lg && <SiteDesktopMenu />}
           <SiteDrawer />
-        </MyMenu>
+        </Menu>
         {media.lg && <SiteDesktopSocialList />}
-      </MyContainer>
-    </MyRoot>
+      </Container>
+    </Root>
   )
 }
 
-const MyRoot = styled.header`
+const Root = styled.header`
   background-color: var(--theme-header-background);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   height: var(--height-header);
@@ -42,7 +42,7 @@ const MyRoot = styled.header`
   z-index: var(--context-fixed-object);
 `
 
-const MyContainer = styled.div`
+const Container = styled.div`
   align-items: center;
   display: grid;
   grid-template-areas: 'header-logo header-nav';
@@ -57,12 +57,12 @@ const MyContainer = styled.div`
   }
 `
 
-const MyLogo = styled.p`
+const Logo = styled.p`
   grid-area: header-logo;
   padding: 0 ${clamp(16, 32, false, 320, 1920)};
 `
 
-const MyLogoLink = styled.a`
+const LogoLink = styled.a`
   display: inline-block;
   position: relative;
 
@@ -87,7 +87,7 @@ const MyLogoLink = styled.a`
   `)}
 `
 
-const MyMenu = styled.nav`
+const Menu = styled.nav`
   grid-area: header-nav;
   justify-self: end;
 `

@@ -9,18 +9,18 @@ type SiteTemplatePropsType = {
 
 export const SiteTemplate: React.VFC<SiteTemplatePropsType> = ({ children }) => {
   return (
-    <MyRoot>
+    <Root>
       <SiteSkipLink />
       <SiteHeader />
-      <MyMain id="main" aria-label="メインコンテンツ" tabIndex={-1}>
+      <Main id="main" aria-label="メインコンテンツ" tabIndex={-1}>
         {children}
-      </MyMain>
+      </Main>
       <SiteFooter />
-    </MyRoot>
+    </Root>
   )
 }
 
-const MyRoot = styled.div`
+const Root = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -31,7 +31,7 @@ const MyRoot = styled.div`
   }
 `
 
-const MyMain = styled.main`
+const Main = styled.main`
   flex-grow: 1;
   overflow-x: hidden;
 `

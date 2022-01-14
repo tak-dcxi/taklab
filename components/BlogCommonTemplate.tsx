@@ -17,31 +17,31 @@ type BlogCommonTemplatePropsType = {
 export const BlogCommonTemplate: React.VFC<BlogCommonTemplatePropsType> = ({ children, categories }) => {
   return (
     <BaseContainer>
-      <MySidebarWrapper>
-        <MySidebar>
-          <MyMain>{children}</MyMain>
-          <MyAside>
-            <MyAsideSection>
+      <SidebarWrapper>
+        <Sidebar>
+          <Main>{children}</Main>
+          <Aside>
+            <AsideSection>
               <BaseHeadingType2 lv={2}>Category</BaseHeadingType2>
-              <MyCategoryList>
+              <CategoryList>
                 {categories.map((category, index) => {
                   return (
                     <li key={index}>
                       <Link href={`/blog/${category.id}`} passHref>
-                        <MyCategoryLink>
+                        <CategoryLink>
                           {category.name}
                           <BaseIcon type={'chevron-right'} size={14} />
-                        </MyCategoryLink>
+                        </CategoryLink>
                       </Link>
                     </li>
                   )
                 })}
-              </MyCategoryList>
-            </MyAsideSection>
+              </CategoryList>
+            </AsideSection>
             <SiteAdSence />
-          </MyAside>
-        </MySidebar>
-      </MySidebarWrapper>
+          </Aside>
+        </Sidebar>
+      </SidebarWrapper>
     </BaseContainer>
   )
 }
@@ -51,17 +51,17 @@ const size: { [key: string]: string } = {
   aside: '280px',
 }
 
-const MySidebarWrapper = styled.div`
+const SidebarWrapper = styled.div`
   padding: var(--contents-block-padding);
 `
 
-const MySidebar = styled.div`
+const Sidebar = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: calc((${size.gap} / 2) * -1);
 `
 
-const MyMain = styled.div`
+const Main = styled.div`
   flex-basis: 0;
   flex-grow: 9999;
   margin: calc(${size.gap} / 2);
@@ -76,7 +76,7 @@ const MyMain = styled.div`
   }
 `
 
-const MyAside = styled.div`
+const Aside = styled.div`
   flex-basis: ${size.aside};
   flex-grow: 1;
   margin: calc(${size.gap} / 2);
@@ -86,19 +86,19 @@ const MyAside = styled.div`
   }
 `
 
-const MyAsideSection = styled.section`
+const AsideSection = styled.section`
   & > * + * {
     margin-top: 16px;
   }
 `
 
-const MyCategoryList = styled.ul`
+const CategoryList = styled.ul`
   display: grid;
   gap: 0 16px;
   grid-template-columns: repeat(auto-fit, minmax(152px, 1fr));
 `
 
-const MyCategoryLink = styled.a`
+const CategoryLink = styled.a`
   align-items: center;
   border-bottom: 1px dotted;
   display: flex;
