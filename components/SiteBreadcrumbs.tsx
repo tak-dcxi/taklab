@@ -23,9 +23,7 @@ export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) 
             <Link href={'/'} passHref>
               <MyLink itemProp="item">
                 <BaseIcon type={'home'} size={14} />
-                <span className="VisuallyHidden" itemProp="name">
-                  Home
-                </span>
+                <span itemProp="name">Home</span>
               </MyLink>
             </Link>
             <MyIcon aria-hidden="true">&gt;</MyIcon>
@@ -61,7 +59,7 @@ export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) 
 
 const MyRoot = styled.nav`
   font-size: var(--fontsize-1);
-  padding: 12px 0;
+  padding: 1em 0;
 `
 
 const MyList = styled.ol`
@@ -80,8 +78,16 @@ const MyIcon = styled.span`
 `
 
 const MyLink = styled.a`
+  align-items: baseline;
   border-bottom: 1px solid var(--color-primary);
+  display: inline-flex;
   transition: color 0.3s;
+
+  & > svg {
+    margin-right: 0.25em;
+    position: relative;
+    top: ${2 / 16}rem;
+  }
 
   ${hoverable(`
     color: var(--color-primary);

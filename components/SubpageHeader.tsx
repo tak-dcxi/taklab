@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { clamp } from '~/styles/tools/clamp'
 
 type SubpageHeaderPropsType = {
   headline: string
@@ -19,12 +20,12 @@ const MyRoot = styled.header`
   border-top: 1px solid var(--theme-divider);
   display: grid;
   font-family: var(--font-montserrat);
-  min-height: max(220px, min(8.0556rem + 22.2222vw, 440px));
+  min-height: ${clamp(220, 440)};
   place-items: center;
 `
 
 const MyHeadline = styled.h1`
-  font-size: max(1.75rem, min(1.4537rem + 1.4815vw, 2.75rem));
+  font-size: ${clamp(28, 44, true)};
   font-weight: bold;
   padding: 32px;
   text-transform: uppercase;

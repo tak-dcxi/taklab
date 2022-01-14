@@ -18,7 +18,7 @@ const MyRoot = styled.aside`
   &::after {
     align-items: center;
     bottom: 0;
-    color: var(--theme-text-weak);
+    color: var(--theme-text-muted);
     content: attr(aria-label) '';
     display: flex;
     justify-content: center;

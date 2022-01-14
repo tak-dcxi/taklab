@@ -1,11 +1,10 @@
 import React from 'react'
+import Image from 'next/image'
 import { PostType } from '~/libs/microCMS'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { BaseNoimage } from '~/components/BaseNoimage'
 import { hoverable } from '~/styles/tools/hoverable'
 import { getDate } from '~/utils/getDate'
-import { BaseIcon } from './BaseIcon'
 
 type PostCardPropsType = {
   api: PostType
@@ -13,15 +12,27 @@ type PostCardPropsType = {
 }
 
 export const PostCard: React.VFC<PostCardPropsType> = ({ api, lv }) => {
+  const thumbnail: string = api.thumbnail ? api.thumbnail.url : api.category.image.url
+
   return (
     <article>
-      <Link href={`/blog/${api.id}`} passHref>
+      <Link href={`/blog/[id]`} as={`/blog/${api.id}`} passHref>
         <MyContents>
           {lv === 2 && <MyH2>{api.title}</MyH2>}
           {lv === 3 && <MyH3>{api.title}</MyH3>}
           {lv === 4 && <MyH4>{api.title}</MyH4>}
           <MyImageWrapper>
-            <BaseNoimage />
+            <Image
+              src={thumbnail}
+              layout={'responsive'}
+              width={3}
+              height={2}
+              decoding={'async'}
+              loading={'lazy'}
+              alt={''}
+              objectFit={'cover'}
+              quality={75}
+            />
           </MyImageWrapper>
           <MyCategory>
             <dt className="VisuallyHidden">カテゴリ</dt>
@@ -30,7 +41,6 @@ export const PostCard: React.VFC<PostCardPropsType> = ({ api, lv }) => {
           <MyDate>
             <dt className="VisuallyHidden">投稿日</dt>
             <dd>
-              <BaseIcon type={'calendar'} />
               <time dateTime={api.createdAt}>{getDate(api.createdAt, 'en')}</time>
             </dd>
           </MyDate>
@@ -41,7 +51,7 @@ export const PostCard: React.VFC<PostCardPropsType> = ({ api, lv }) => {
 }
 
 const MyContents = styled.a`
-  background-color: var(--theme-background-weak);
+  background-color: var(--theme-background-muted);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -66,9 +76,24 @@ const MyContents = styled.a`
 `
 
 const MyImageWrapper = styled.div`
+  background-color: var(--color-grayscale-3);
   grid-area: card-image;
   margin: -24px -24px 0;
   order: -2;
+  overflow: hidden;
+
+  & > * {
+    transition: transform 0.3s;
+  }
+
+  ${hoverable(
+    `
+    & > * {
+      transform: scale(1.1);
+    }
+  `,
+    MyContents
+  )}
 `
 
 const MyH2 = styled.h2`
@@ -98,7 +123,7 @@ const MyDate = styled.dl`
 
   & > dd {
     align-items: center;
-    color: var(--theme-text-weak);
+    color: var(--theme-text-muted);
     display: inline-flex;
     font-family: var(--font-montserrat);
   }

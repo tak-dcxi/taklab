@@ -17,12 +17,22 @@ export type PostType = {
   category: {
     id: string
     name: string
+    image: {
+      url: string
+      height: number
+      width: number
+    }
   }
 }
 
 export type CategoriesType = {
   id: string
   name: string
+  image: {
+    url: string
+    height: number
+    width: number
+  }
 }
 
 export type SEOType = {

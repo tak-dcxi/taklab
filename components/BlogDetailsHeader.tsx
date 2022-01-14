@@ -1,9 +1,11 @@
-import Link from 'next/link'
 import React from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
 import styled from 'styled-components'
 import { hoverable } from '~/styles/tools/hoverable'
 import { getDate } from '~/utils/getDate'
 import { BaseIcon } from './BaseIcon'
+import { clamp } from '~/styles/tools/clamp'
 
 type BlogDetailsHeaderPropsType = {
   title: string
@@ -13,6 +15,11 @@ type BlogDetailsHeaderPropsType = {
   }
   publishedAt: string
   updatedAt: string
+  image: {
+    url: string
+    height: number
+    width: number
+  }
 }
 
 export const BlogDetailsHeader: React.VFC<BlogDetailsHeaderPropsType> = ({
@@ -20,60 +27,86 @@ export const BlogDetailsHeader: React.VFC<BlogDetailsHeaderPropsType> = ({
   category,
   publishedAt,
   updatedAt,
+  image,
 }) => {
   return (
     <MyRoot>
-      <MyHeadline>{title}</MyHeadline>
-      <MyDateWrapper>
-        <MyDate>
-          <dt className="VisuallyHidden">公開日</dt>
+      <MyDescription>
+        <MyHeadline>{title}</MyHeadline>
+        <MyDateWrapper>
+          <MyDate>
+            <dt className="VisuallyHidden">公開日</dt>
+            <dd>
+              <BaseIcon type={'clock'} />
+              <time
+                itemProp="datePublished"
+                // @ts-ignore
+                content={publishedAt}
+                dateTime={publishedAt}
+              >
+                {getDate(publishedAt, 'en')}
+              </time>
+            </dd>
+            <dt className="VisuallyHidden">最終更新日</dt>
+            <dd>
+              <BaseIcon type={'refresh'} />
+              <time
+                itemProp="dateModified"
+                // @ts-ignore
+                content={updatedAt}
+                dateTime={updatedAt}
+              >
+                {getDate(updatedAt, 'en')}
+              </time>
+            </dd>
+          </MyDate>
+        </MyDateWrapper>
+        <dl>
+          <dt className="VisuallyHidden">カテゴリ</dt>
           <dd>
-            <BaseIcon type={'calendar'} />
-            <time
-              itemProp="datePublished"
-              // @ts-ignore
-              content={publishedAt}
-              dateTime={publishedAt}
-            >
-              {getDate(publishedAt, 'en')}
-            </time>
+            <Link href={`/blog/${category.id}`} passHref>
+              <MyCategory>{category.name}</MyCategory>
+            </Link>
           </dd>
-          <dt className="VisuallyHidden">最終更新日</dt>
-          <dd>
-            <BaseIcon type={'refresh'} />
-            <time
-              itemProp="dateModified"
-              // @ts-ignore
-              content={updatedAt}
-              dateTime={updatedAt}
-            >
-              {getDate(updatedAt, 'en')}
-            </time>
-          </dd>
-        </MyDate>
-      </MyDateWrapper>
-      <dl>
-        <dt className="VisuallyHidden">カテゴリ</dt>
-        <dd>
-          <Link href={`/blog/${category.id}`} passHref>
-            <MyCategory>{category.name}</MyCategory>
-          </Link>
-        </dd>
-      </dl>
+        </dl>
+      </MyDescription>
+      <MyImageWrapper>
+        <Image
+          src={image.url}
+          alt=""
+          layout="fill"
+          decoding="async"
+          loading="eager"
+          priority
+          objectFit="cover"
+          quality={75}
+        />
+      </MyImageWrapper>
     </MyRoot>
   )
 }
 
 const MyRoot = styled.header`
-  align-items: center;
   background-image: var(--theme-background-pattern);
   border-bottom: 1px solid var(--theme-divider);
   border-top: 1px solid var(--theme-divider);
+  display: grid;
+  isolation: isolate;
+  min-height: ${clamp(220, 440)};
+  place-items: center;
+
+  & > * {
+    grid-area: 1 / -1;
+  }
+`
+
+const MyDescription = styled.div`
+  align-items: center;
+  color: var(--color-grayscale-7);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: max(220px, min(8.0556rem + 22.2222vw, 440px));
-  padding: 48px max(16px, min(11px + 1.4815vw, 32px));
+  padding: 48px ${clamp(16, 32)};
 
   & > * + * {
     margin-top: 16px;
@@ -83,10 +116,10 @@ const MyRoot = styled.header`
 const MyHeadline = styled.h1`
   font-size: clamp(1.125rem, 1.0139rem + 0.5556vw, 1.5rem);
   line-height: var(--leading-relaxed);
+  margin-bottom: 24px;
 `
 
 const MyCategory = styled.a`
-  background-color: var(--theme-background-default);
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
   display: inline-block;
@@ -105,7 +138,6 @@ const MyDateWrapper = styled.div`
 `
 
 const MyDate = styled.dl`
-  color: var(--theme-text-weak);
   display: flex;
   flex-wrap: wrap;
   font-family: var(--font-montserrat);
@@ -120,5 +152,22 @@ const MyDate = styled.dl`
 
   & svg {
     margin-right: 0.5em;
+  }
+`
+
+const MyImageWrapper = styled.div`
+  height: 100%;
+  position: relative;
+  width: 100%;
+  z-index: -1;
+
+  &::after {
+    background: rgba(0, 0, 0, 0.5) radial-gradient(rgba(0, 0, 0, 0.75) 30%, transparent 0) center center / 4px 4px;
+    bottom: 0;
+    content: '';
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 `

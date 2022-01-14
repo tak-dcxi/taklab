@@ -4,6 +4,7 @@ import { breakpoints } from '~/constant/breakpoints'
 import { social } from '~/constant/social'
 import { BaseSocialIcon } from '~/components/BaseSocialIcon'
 import { hoverable } from '~/styles/tools/hoverable'
+import { clamp } from '~/styles/tools/clamp'
 
 export const SiteDesktopSocialList: React.VFC = () => {
   return (
@@ -37,7 +38,7 @@ const MyRoot = styled.ul`
   display: flex;
   grid-area: header-social;
   justify-self: end;
-  padding: 0 max(16px, min(11px + 1.4815vw, 32px));
+  padding: 0 ${clamp(16, 32, false, 320, 1920)};
 
   & > li + li {
     margin-left: 12px;

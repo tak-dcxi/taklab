@@ -130,7 +130,7 @@ const MyButton = styled.button<{ backgroundColor: string }>`
   color: var(--color-grayscale-7);
   display: inline-flex;
   justify-content: center;
-  padding: 12px 0;
+  padding: ${12 / 16}rem;
   transition: opacity 0.3s;
   width: 100%;
 

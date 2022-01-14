@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import styled from 'styled-components'
+import { formFieldStyle } from '~/styles/object/formFieldStyle'
 
 export type BaseTextAreaPropsType = {
   id?: string
@@ -34,6 +35,8 @@ export const BaseTextArea = React.forwardRef<HTMLTextAreaElement, BaseTextAreaPr
     const dummyRef = useRef<HTMLSpanElement>(null)
 
     const handleInput = (event: React.FormEvent<HTMLTextAreaElement>) => {
+      if (!dummyRef.current) return
+
       dummyRef.current.textContent = event.currentTarget.value + '\u200b'
     }
 
@@ -60,43 +63,28 @@ export const BaseTextArea = React.forwardRef<HTMLTextAreaElement, BaseTextAreaPr
 
 const MyWrapper = styled.span`
   display: block;
-  font-size: max(var(--fontsize-3), 16px);
   position: relative;
 `
 
 const MyInput = styled.textarea`
-  appearance: none;
-  background-color: var(--color-grayscale-7);
-  border: 1px solid var(--color-grayscale-5);
-  border-radius: 0;
+  ${formFieldStyle}
+
   display: block;
-  font: inherit;
-  height: 100%;
   left: 0;
   overflow: hidden;
-  padding: 12px;
   position: absolute;
   resize: none;
   top: 0;
-  width: 100%;
-
-  &[aria-invalid='true'] {
-    border-color: var(--invalid-color);
-  }
-
-  &:focus {
-    border-color: var(--active-color);
-    outline: 0;
-  }
 `
 
 const MyDummy = styled.span`
   border: 1px solid;
   display: block;
+  font-size: max(var(--fontsize-2), 14px);
   min-height: ${240 / 16}rem;
   overflow: hidden;
   overflow-wrap: break-word;
-  padding: 12px;
+  padding: 1em;
   visibility: hidden;
   white-space: pre-wrap;
   word-wrap: break-word;

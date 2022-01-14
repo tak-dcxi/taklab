@@ -8,6 +8,7 @@ import { SiteDesktopMenu } from '~/components/SiteDesktopMenu'
 import { SiteDesktopSocialList } from './SiteDesktopSocialList'
 import { SiteDrawer } from '~/components/SiteDrawer'
 import { useMatchMedia } from '~/hooks/useMatchMedia'
+import { clamp } from '~/styles/tools/clamp'
 
 export const SiteHeader: React.VFC = () => {
   const media: { [key: string]: boolean } = useMatchMedia()
@@ -48,7 +49,7 @@ const MyContainer = styled.div`
   grid-template-columns: 1fr auto;
   height: inherit;
   margin: auto;
-  max-width: 1920px;
+  max-width: var(--max-width-wide);
 
   @media ${breakpoints.lg} {
     grid-template-areas: 'header-logo header-nav header-social';
@@ -58,7 +59,7 @@ const MyContainer = styled.div`
 
 const MyLogo = styled.p`
   grid-area: header-logo;
-  padding: 0 max(16px, min(11px + 1.4815vw, 32px));
+  padding: 0 ${clamp(16, 32, false, 320, 1920)};
 `
 
 const MyLogoLink = styled.a`

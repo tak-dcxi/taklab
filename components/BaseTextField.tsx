@@ -42,7 +42,7 @@ export const BaseTextField = React.forwardRef<HTMLInputElement, BaseTextFieldPro
     if (type === 'password') autoFill = 'password'
 
     return (
-      <span>
+      <MyWrapper>
         <MyInput
           ref={ref}
           id={id}
@@ -59,20 +59,16 @@ export const BaseTextField = React.forwardRef<HTMLInputElement, BaseTextFieldPro
           {...(required && { 'aria-required': 'true' })}
           {...(disabled && { disabled, 'aria-disabled': 'true' })}
         />
-      </span>
+      </MyWrapper>
     )
   }
 )
 
+const MyWrapper = styled.span`
+  display: block;
+  overflow: hidden;
+`
+
 const MyInput = styled.input`
   ${formFieldStyle}
-
-  &[aria-invalid='true'] {
-    border-color: var(--invalid-color);
-  }
-
-  &:focus {
-    border-color: var(--active-color);
-    outline: 0;
-  }
 `

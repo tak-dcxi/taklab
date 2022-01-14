@@ -1,4 +1,5 @@
 import { css } from 'styled-components'
+import { clamp } from '../tools/clamp'
 
 export const globalFontSize: number = 16
 
@@ -14,7 +15,8 @@ export const commonVariables = css`
     * アクセントカラー
     * プライマリカラーとは区別して強調したい要素に使用する色です。
   */
-    --color-accent: #cd5c5c;
+    --color-accent-1: #cd5c5c;
+    --color-accent-2: #f8d7da;
 
     /**
     * グレースケール
@@ -67,7 +69,10 @@ export const commonVariables = css`
     /**
     * コンポーネントのサイズ
   */
-    --height-header: max(52px, min(3.1019rem + 0.7407vw, 60px));
-    --contents-block-padding: max(64px, min(56px + 2.3077vw, 100px)) 0;
+    --max-width-default: 1200px;
+    --max-width-narrow: 960px;
+    --max-width-wide: 1920px;
+    --height-header: ${clamp(52, 64, true)};
+    --contents-block-padding: ${clamp(64, 100)} 0;
   }
 `

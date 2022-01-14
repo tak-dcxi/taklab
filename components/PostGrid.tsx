@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { clamp } from '~/styles/tools/clamp'
 
 type PostGridPropsType = {
   children: React.ReactNode
@@ -11,6 +12,6 @@ export const PostGrid: React.VFC<PostGridPropsType> = ({ children }) => {
 
 const MyRoot = styled.div`
   display: grid;
-  gap: max(16px, min(0.8519rem + 0.7407vw, 24px));
+  gap: ${clamp(16, 32)};
   grid-template-columns: repeat(auto-fill, minmax(296px, 1fr));
 `

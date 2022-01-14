@@ -20,6 +20,8 @@ type BaseIconPropsType = {
     | 'home'
     | 'refresh'
     | 'calendar'
+    | 'clock'
+    | 'alert'
 }
 
 export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor', size = 16, label, type }) => {
@@ -92,6 +94,19 @@ export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor',
         <>
           <path d="M2.5 2v6h6M21.5 22v-6h-6" />
           <path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.2" />
+        </>
+      )}
+      {type === 'clock' && (
+        <>
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </>
+      )}
+      {type === 'alert' && (
+        <>
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
         </>
       )}
     </MySVGtag>

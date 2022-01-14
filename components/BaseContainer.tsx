@@ -1,18 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
+import { clamp } from '~/styles/tools/clamp'
 
 type BaseContainerPropsType = {
   children: React.ReactNode
+  size?: 'default' | 'narrow' | 'wide'
 }
 
-export const BaseContainer: React.VFC<BaseContainerPropsType> = ({ children }) => {
-  return <MyContainer>{children}</MyContainer>
+export const BaseContainer: React.VFC<BaseContainerPropsType> = ({ children, size = 'default' }) => {
+  return <MyContainer size={size}>{children}</MyContainer>
 }
 
-const MyContainer = styled.div`
+const MyContainer = styled.div<{ size: 'default' | 'narrow' | 'wide' }>`
   box-sizing: content-box;
   margin-left: auto;
   margin-right: auto;
-  max-width: 1200px;
-  padding: 0 max(16px, min(11px + 1.4815vw, 32px));
+  max-width: ${(props) =>
+    props.size === 'narrow'
+      ? 'var(--max-width-narrow)'
+        ? 'wide'
+        : 'var(--max-width-wide)'
+      : 'var(--max-width-default)'};
+  padding: 0 ${clamp(16, 32)};
 `

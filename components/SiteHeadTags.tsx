@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { NextRouter, useRouter } from 'next/router'
 import { meta } from '~/constant/meta'
 import { debounce } from 'lodash'
+import { useTheme } from '~/context/ThemeProvider'
 
 type SiteHeadTagsPropsType = {
   title?: string
@@ -10,6 +11,10 @@ type SiteHeadTagsPropsType = {
   image?: string
   isErrorPage?: boolean
 }
+
+type ViewportType = 'width=device-width,initial-scale=1' | 'width=360'
+
+type ColorShemeType = 'light' | 'dark' | 'light dark'
 
 export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
   title = meta.siteName,
@@ -20,11 +25,14 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
   const router: NextRouter = useRouter()
   const path: string = router.asPath
   const currentURL: string = meta.baseURL + path
-  const [viewport, setViewport] = useState<string>('width=device-width,initial-scale=1')
+
+  const [viewport, setViewport] = useState<ViewportType>('width=device-width,initial-scale=1')
+  const [colorScheme, setColorScheme] = useState<ColorShemeType>('light dark')
+  const { colorMode } = useTheme()
 
   useEffect(() => {
     const handleResize = (): void => {
-      const value: string = window.outerWidth > 360 ? 'width=device-width,initial-scale=1' : 'width=360'
+      const value: ViewportType = window.outerWidth > 360 ? 'width=device-width,initial-scale=1' : 'width=360'
       if (viewport !== value) setViewport(value)
     }
 
@@ -36,6 +44,10 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
 
     return () => window.removeEventListener('resize', handleResize)
   }, [viewport])
+
+  useEffect(() => {
+    setColorScheme(colorMode === 'dark' ? 'dark' : 'light')
+  }, [colorMode])
 
   return (
     <Head>
@@ -67,6 +79,7 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
       <link rel="manifest" href="/site.webmanifest" />
       <meta name="msapplication-TileColor" content="#2f2f2f" />
       <meta name="theme-color" content="#019bb6" />
+      <meta name="color-scheme" content={colorScheme} />
 
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

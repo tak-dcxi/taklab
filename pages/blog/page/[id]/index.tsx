@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { GetStaticProps, NextPage } from 'next'
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext, NextPage, PreviewData } from 'next'
 import styled from 'styled-components'
 import { client, PostType, CategoriesType } from '~/libs/microCMS'
 import { SiteHeadTags } from '~/components/SiteHeadTags'
@@ -10,16 +10,27 @@ import { PostPagination } from '~/components/PostPagination'
 import { SiteShareButton } from '~/components/SiteShareButton'
 import { BlogCommonTemplate } from '~/components/BlogCommonTemplate'
 import { clamp } from '~/styles/tools/clamp'
+import { toNumberID } from '~/utils/convertID'
+import { PER_PAGE } from '~/constant/archive'
+import { ParsedUrlQuery } from 'querystring'
 
-type BlogArchivePagePropsType = {
+type CategoryPagePropsType = {
   posts: PostType[]
   totalCounts: number
+  currentPage: number
   categories: CategoriesType[]
+  currentCategory: string
 }
 
-const BlogArchivePage: NextPage<BlogArchivePagePropsType> = ({ posts, totalCounts, categories }) => {
+const CategoryPage: NextPage<CategoryPagePropsType> = ({
+  posts,
+  totalCounts,
+  currentPage,
+  categories,
+  currentCategory,
+}) => {
   const [offset, setOffset] = useState(0)
-  const perPage: number = 12
+  const perPage: number = PER_PAGE
 
   const breadcrumbs: BreadcrumbsType[] = [
     {
@@ -97,24 +108,66 @@ const MyShareButton = styled.div`
   margin-top: 64px;
 `
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getAllCategoryPagePaths = async () => {
+  const resCategory = await client.get({ endpoint: 'category' })
+
+  const paths: string[] = await Promise.all(
+    resCategory.contents.map((item) => {
+      const result = client
+        .get({
+          endpoint: 'blog',
+          queries: {
+            filters: `category[equals]${item.id}`,
+          },
+        })
+        .then(({ totalCount }) => {
+          const range = (start: number, end: number) => [...Array(end - start + 1)].map((_, i) => start + i)
+
+          return range(1, Math.ceil(totalCount / PER_PAGE)).map((repo) => `/blog/${item.id}/page/${repo}`)
+        })
+      return result
+    })
+  )
+
+  return paths.flat()
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths: string[] = await getAllCategoryPagePaths()
+
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+export const getStaticProps: GetStaticProps = async (context: GetStaticPropsContext<ParsedUrlQuery, PreviewData>) => {
+  const { params, previewData } = context
+
+  if (!params?.category || !params?.id) throw new Error('Error: ID not found')
+
+  const id: number = toNumberID(params.id)
+
   const data = await client.get({
     endpoint: 'blog',
-    queries: { limit: 12, offset: 0 },
+    queries: {
+      limit: PER_PAGE,
+      offset: (id - 1) * PER_PAGE,
+      filters: `category[equals]${params.category}`,
+    },
   })
 
-  const categories = await client.get({
-    endpoint: 'category',
-  })
+  const categories = await client.get({ endpoint: 'category' })
 
   return {
     props: {
       posts: data.contents,
       totalCounts: data.totalCount,
+      currentPage: id,
       categories: categories.contents,
+      currentCategory: params.category,
     },
-    revalidate: 1,
   }
 }
 
-export default BlogArchivePage
+export default CategoryPage

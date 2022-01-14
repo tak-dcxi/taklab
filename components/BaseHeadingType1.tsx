@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { clamp } from '~/styles/tools/clamp'
 
 type BaseHeadingPropsType = {
   children: string
@@ -20,7 +21,7 @@ export const BaseHeadingType1: React.VFC<BaseHeadingPropsType> = ({ children, lv
 
 const MyH1 = styled.h1`
   font-family: var(--font-montserrat);
-  font-size: max(var(--fontsize-6), min(1.3519rem + 0.7407vw, var(--fontsize-7))); /* clamp() */
+  font-size: ${clamp(24, 32, true)};
   letter-spacing: 0.02em;
   line-height: var(--leading-tight);
   min-height: 0.01vw; /* Safariにてfont-size:clamp()がリサイズ時に動かないバグを解消する */

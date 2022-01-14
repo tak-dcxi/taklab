@@ -8,6 +8,9 @@ import { BaseSection } from '~/components/BaseSection'
 import { PostGrid } from '~/components/PostGrid'
 import { PostCard } from '~/components/PostCard'
 import { SiteHeadTags } from '~/components/SiteHeadTags'
+import { clamp } from '~/styles/tools/clamp'
+import { SiteMarqueeBlock } from '~/components/SiteMarqueeBlock'
+import { HomeRequestForm } from '~/components/HomeRequestForm'
 
 type HomeAPIType = {
   id: 'home'
@@ -49,6 +52,11 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
             </MyButtonWrapper>
           )}
         </BaseSection>
+        <SiteMarqueeBlock />
+        <BaseSection title={'Categories'}>
+          <div></div>
+        </BaseSection>
+        <HomeRequestForm />
       </MySectionWrapper>
     </>
   )
@@ -64,7 +72,7 @@ const MySectionWrapper = styled.div`
     content: '';
     left: 0;
     position: absolute;
-    top: calc(max(200px, min(176px + 7.4074vw, 280px)) * -1);
+    top: ${`calc(${clamp(200, 280)} * -1) `};
     width: max(50%, 296px);
     z-index: -1;
   }

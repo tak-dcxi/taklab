@@ -3,9 +3,9 @@ import type { AppProps } from 'next/app'
 import 'wicg-inert'
 import smoothscroll from 'smoothscroll-polyfill'
 import { scrollBehavior } from '~/libs/scrollBehavior'
-import { SiteLayout } from '~/components/SiteLayout'
 import { SiteScriptTags } from '~/components/SiteScriptTags'
 import { ThemeProvider } from '~/context/ThemeProvider'
+import { SiteTemplate } from '~/components/SiteTemplate'
 
 const App: React.VFC<AppProps> = ({ Component, pageProps, router }) => {
   useEffect(() => {
@@ -46,10 +46,10 @@ const App: React.VFC<AppProps> = ({ Component, pageProps, router }) => {
 
   return (
     <ThemeProvider>
-      <SiteScriptTags />
-      <SiteLayout>
+      <SiteTemplate>
+        <SiteScriptTags />
         <Component {...pageProps} />
-      </SiteLayout>
+      </SiteTemplate>
     </ThemeProvider>
   )
 }

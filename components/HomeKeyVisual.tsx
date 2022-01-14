@@ -4,6 +4,7 @@ import styled, { keyframes } from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
 import { BaseLogo } from '~/components/BaseLogo'
 import { debounce } from 'lodash'
+import { clamp } from '~/styles/tools/clamp'
 
 type HomeKeyVisualPropsType = {
   image: {
@@ -46,10 +47,10 @@ export const HomeKeyVisual: React.VFC<HomeKeyVisualPropsType> = ({ image, alt })
     <MyRoot ref={ref}>
       <MyFirstView>
         <MyTitle>
-          <BaseLogo size={`max(${280 / 16}rem, min(14.6154rem + 12.8205vw, ${480 / 16}rem))`} />
+          <BaseLogo size={clamp(280, 560, true, 320, 1920)} />
         </MyTitle>
         <MyCloneTitle>
-          <BaseLogo size={`max(${280 / 16}rem, min(14.6154rem + 12.8205vw, ${480 / 16}rem))`} presentation />
+          <BaseLogo size={clamp(280, 560, true, 320, 1920)} presentation />
         </MyCloneTitle>
         <MyImage>
           <Image
@@ -79,13 +80,11 @@ const MyRoot = styled.header`
 
 const MyFirstView = styled.div`
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: 5% min(10%, 240px) 1fr;
   grid-template-rows: 1fr;
   height: 100%;
   isolation: isolate;
-  margin: auto;
-  max-width: 1920px;
-  padding: max(40px, min(35px + 1.4815vmin, 56px)) 0;
+  padding: ${clamp(40, 56, false, 320, 1920)} 0;
   position: relative;
 
   & > * {
@@ -96,7 +95,7 @@ const MyFirstView = styled.div`
 const MyTitle = styled.h1`
   align-self: center;
   color: var(--color-grayscale-7);
-  grid-column: 2 / 13;
+  grid-column: 2 / 4;
 `
 
 const MyCloneTitle = styled.div`
@@ -108,14 +107,10 @@ const MyCloneTitle = styled.div`
   & > svg {
     max-width: initial;
   }
-
-  @media ${breakpoints.lg} {
-    grid-column: 2 / 4;
-  }
 `
 
 const MyImage = styled.div`
-  grid-column: 3 / 13;
+  grid-column: 3 / 4;
   position: relative;
   z-index: -1;
 
@@ -127,10 +122,6 @@ const MyImage = styled.div`
     position: absolute;
     right: 0;
     top: 0;
-  }
-
-  @media ${breakpoints.lg} {
-    grid-column: 4 / 13;
   }
 `
 

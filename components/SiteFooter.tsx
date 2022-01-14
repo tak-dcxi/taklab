@@ -9,6 +9,7 @@ import { hoverable } from '~/styles/tools/hoverable'
 import { BaseContainer } from '~/components/BaseContainer'
 import { BaseLogo } from '~/components/BaseLogo'
 import { BaseSocialIcon } from '~/components/BaseSocialIcon'
+import { clamp } from '~/styles/tools/clamp'
 
 export const SiteFooter: React.VFC = () => {
   const { asPath } = useRouter()
@@ -17,7 +18,7 @@ export const SiteFooter: React.VFC = () => {
     <MyRoot aria-label="サイトフッター">
       <BaseContainer>
         <MyLogoWrapper>
-          <BaseLogo size={'max(11.5rem, min(10.8333rem + 3.3333vw, 13.75rem))'} />
+          <BaseLogo size={clamp(184, 220, true)} />
         </MyLogoWrapper>
         <MyFooterMenu>
           <ul>
@@ -70,7 +71,7 @@ const MyRoot = styled.footer`
   background-color: var(--color-grayscale-1);
   border-top: 1px solid var(--theme-divider);
   color: var(--color-grayscale-7);
-  padding: max(48px, min(44px + 1.4815vw, 64px)) 0;
+  padding: ${clamp(48, 64)} 0;
 `
 
 const MyLogoWrapper = styled.p`

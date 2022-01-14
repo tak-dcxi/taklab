@@ -3,10 +3,11 @@ import { css } from 'styled-components'
 const variables = css`
 
   --theme-text-default: var(--color-grayscale-7);
-  --theme-text-weak: var(--color-grayscale-4);
+  --theme-text-muted: var(--color-grayscale-4);
+  --theme-text-x-muted: var(--color-grayscale-2);
   --theme-text-difference: var(--color-grayscale-1);
   --theme-background-default: var(--color-grayscale-1);
-  --theme-background-weak: var(--color-grayscale-2);
+  --theme-background-muted: var(--color-grayscale-2);
   --theme-background-strong: var(--color-grayscale-0);
   --theme-background-pattern: repeating-linear-gradient(
     -45deg,

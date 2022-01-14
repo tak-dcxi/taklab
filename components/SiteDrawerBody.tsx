@@ -11,6 +11,7 @@ import { BaseIcon } from '~/components/BaseIcon'
 import { BaseSocialIcon } from '~/components/BaseSocialIcon'
 import { SiteDrawerButton } from '~/components/SiteDrawerToggler'
 import { useTheme } from '~/context/ThemeProvider'
+import { clamp } from '~/styles/tools/clamp'
 
 type SiteDrawerBodyPropsType = {
   expanded: boolean
@@ -178,7 +179,7 @@ const MyContainer = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-  width: max(280px, min(14.537rem + 14.8148vw, 440px));
+  width: ${clamp(280, 440)};
   z-index: 1;
 
   [data-drawer-transition='enter'] & {
@@ -217,8 +218,8 @@ const MyLink = styled.a`
     transition: background-color 0.3s;
 
     &::after {
-      border-right: 2px solid var(--theme-text-weak);
-      border-top: 2px solid var(--theme-text-weak);
+      border-right: 2px solid var(--theme-text-muted);
+      border-top: 2px solid var(--theme-text-muted);
       bottom: 0;
       content: '';
       display: inline-block;
@@ -243,7 +244,7 @@ const MyPrimaryLabel = styled.span`
 `
 
 const MySecondaryLabel = styled.span`
-  color: var(--theme-text-weak);
+  color: var(--theme-text-muted);
   display: block;
   font-size: max(var(--fontsize-1), 10px);
 `
@@ -281,8 +282,8 @@ const MySocialLink = styled.a`
   }
 
   &::after {
-    border-right: 2px solid var(--theme-text-weak);
-    border-top: 2px solid var(--theme-text-weak);
+    border-right: 2px solid var(--theme-text-muted);
+    border-top: 2px solid var(--theme-text-muted);
     bottom: 0;
     content: '';
     display: inline-block;

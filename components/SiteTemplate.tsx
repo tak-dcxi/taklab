@@ -3,11 +3,11 @@ import { SiteHeader } from '~/components/SiteHeader'
 import { SiteFooter } from '~/components/SiteFooter'
 import { SiteSkipLink } from '~/components/SiteSkipLink'
 
-type SiteLayoutPropsType = {
+type SiteTemplatePropsType = {
   children: React.ReactNode
 }
 
-export const SiteLayout: React.VFC<SiteLayoutPropsType> = ({ children }) => {
+export const SiteTemplate: React.VFC<SiteTemplatePropsType> = ({ children }) => {
   return (
     <MyRoot>
       <SiteSkipLink />
