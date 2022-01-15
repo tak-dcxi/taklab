@@ -1,13 +1,13 @@
 import React from 'react'
 import { NextRouter, useRouter } from 'next/router'
 import { client } from '~/libs/microCMS'
-import { BlogCommonTemplate } from '~/components/BlogCommonTemplate'
+import { BlogPageCommonTemplate } from '~/components/BlogPageCommonTemplate'
 import { SiteHeadTags } from '~/components/SiteHeadTags'
 import { SiteBreadcrumbs, BreadcrumbsType } from '~/components/SiteBreadcrumbs'
 import ErrorPage from '~/pages/_error'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { generateOgImage } from '~/libs/generateOGP'
-import { BlogDetailsThumbnail } from '~/components/BlogDetailsThumbnail'
+import { BlogArticlePageThumbnail } from '~/components/BlogArticlePageThumbnail'
 import { toStringID } from '~/utils/convertID'
 import { CategoriesType, PostType } from '~/types/microCMS'
 
@@ -40,14 +40,14 @@ const BlogDetailsPage: React.VFC<PostDetailsPagePropsType> = ({ post, categories
     <>
       <SiteHeadTags title={post.title} image={ogImage} />
       <SiteBreadcrumbs items={breadcrumbs} />
-      <BlogDetailsThumbnail src={thumbnail} alt={post.title} />
-      <BlogCommonTemplate categories={categories}>
+      <BlogArticlePageThumbnail src={thumbnail} />
+      <BlogPageCommonTemplate categories={categories}>
         <div
           dangerouslySetInnerHTML={{
             __html: post.body,
           }}
         />
-      </BlogCommonTemplate>
+      </BlogPageCommonTemplate>
     </>
   )
 }

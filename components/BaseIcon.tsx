@@ -2,9 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 
+type BaseIconCommonType = {
+  size?: string
+}
+
 type BaseIconPropsType = {
   color?: string
-  size?: number
   label?: string
   type:
     | 'arrow-up'
@@ -24,23 +27,19 @@ type BaseIconPropsType = {
     | 'clock'
     | 'alert'
     | 'hash'
-}
+} & BaseIconCommonType
 
-type SVGTagPropsType = {
-  width: number
-  height: number
-}
-
-export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor', size = 16, label, type }) => {
+export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor', label, size = '1em', type }) => {
   const randomID: string = uuid()
 
   return (
     <SVGTag
       className="BaseIcon"
-      width={size}
-      height={size}
+      width="16"
+      height="16"
       viewBox="0 0 24 24"
       fill="none"
+      size={size}
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
@@ -130,7 +129,6 @@ export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor',
   )
 }
 
-const SVGTag = styled.svg<SVGTagPropsType>`
-  height: ${(props) => props.height / 16}rem;
-  width: ${(props) => props.width / 16}rem;
+const SVGTag = styled.svg<BaseIconCommonType>`
+  width: ${(props) => props.size};
 `

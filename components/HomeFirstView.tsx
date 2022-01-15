@@ -6,7 +6,7 @@ import { BaseLogo } from '~/components/BaseLogo'
 import { debounce } from 'lodash'
 import { clamp } from '~/styles/tools/clamp'
 
-type HomeKeyVisualPropsType = {
+type HomeFirstViewPropsType = {
   image: {
     url: string
     height: number
@@ -15,17 +15,17 @@ type HomeKeyVisualPropsType = {
   alt: string
 }
 
-export const HomeKeyVisual: React.VFC<HomeKeyVisualPropsType> = ({ image, alt }) => {
-  const ref = useRef<HTMLElement>(null)
+export const HomeFirstView: React.VFC<HomeFirstViewPropsType> = ({ image, alt }) => {
+  const headerRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     let vw: number = window.innerWidth
 
     const setHeight = (): void => {
-      if (!ref.current) return
+      if (!headerRef.current) return
 
       const vh: number = window.innerHeight
-      ref.current.style.setProperty('--this-height', `calc(${vh}px - var(--height-header)`)
+      headerRef.current.style.setProperty('--this-height', `calc(${vh}px - var(--height-header)`)
     }
 
     window.addEventListener(
@@ -41,10 +41,18 @@ export const HomeKeyVisual: React.VFC<HomeKeyVisualPropsType> = ({ image, alt })
     )
 
     setHeight()
-  }, [ref])
+  }, [headerRef])
+
+  const scrollSignText = 'SCROLL→SCROLL→'
+  const scrollSignTextArray = []
+
+  scrollSignText
+    .replace(/\s+/g, '')
+    .split('')
+    .forEach((character: string) => scrollSignTextArray.push(character))
 
   return (
-    <FirstView ref={ref}>
+    <FirstView ref={headerRef}>
       <Title>
         <BaseLogo size={clamp(280, 560, true, 320, 1920)} />
       </Title>
@@ -63,7 +71,20 @@ export const HomeKeyVisual: React.VFC<HomeKeyVisualPropsType> = ({ image, alt })
           quality={75}
         />
         <ScrollSign>
-          <span aria-hidden="true">Scroll</span>
+          <ScrollSignInner>
+            {scrollSignTextArray.map((character: string, index: number) => {
+              return (
+                <ScrollSignCharacter
+                  key={index}
+                  className="character"
+                  aria-hidden="true"
+                  style={{ transform: `rotate(${index * (360 / scrollSignTextArray.length)}deg)` }}
+                >
+                  {character}
+                </ScrollSignCharacter>
+              )
+            })}
+          </ScrollSignInner>
         </ScrollSign>
       </MyImage>
     </FirstView>
@@ -71,12 +92,13 @@ export const HomeKeyVisual: React.VFC<HomeKeyVisualPropsType> = ({ image, alt })
 }
 
 const FirstView = styled.header`
+
   --this-height: calc(100vh - var(--height-header));
 
   display: grid;
   grid-template-columns: 5% min(10%, 240px) 1fr;
   grid-template-rows: 1fr;
-  height: max(360px, var(--this-height));
+  height: max(480px, var(--this-height));
   isolation: isolate;
   padding: ${clamp(40, 56, false, 320, 1920)} 0;
   position: relative;
@@ -109,7 +131,7 @@ const MyImage = styled.div`
   z-index: -1;
 
   &::after {
-    background: rgba(0, 0, 0, 0.3) radial-gradient(rgba(0, 0, 0, 0.5) 30%, transparent 0) center center / 4px 4px;
+    background: rgba(0, 0, 0, 0.3) radial-gradient(rgba(0, 0, 0, 0.6) 30%, transparent 0) center center / 4px 4px;
     bottom: 0;
     content: '';
     left: 0;
@@ -121,53 +143,50 @@ const MyImage = styled.div`
 
 const scrollSignAnimation = keyframes`
   0% {
-    transform: scaleY(1);
-    transform-origin: bottom;
-  }
-
-  50% {
-    transform: scaleY(0);
-    transform-origin: bottom;
-  }
-
-  51% {
-    transform: scaleY(0);
-    transform-origin: top;
+    transform: rotate(0deg);
   }
 
   100% {
-    transform: scaleY(1);
-    transform-origin: top;
+    transform: rotate(360deg);
   }
 `
 
 const ScrollSign = styled.div`
-  bottom: 0;
+
+  --this-radius: 52px;
+  --this-offset: ${clamp(4, 32)};
+  --this-scale: 0.7;
+
+  bottom: calc(var(--this-radius) + var(--this-offset));
   color: var(--color-grayscale-6);
+  font-family: var(--font-montserrat);
+  font-weight: bold;
+  line-height: 1;
   position: absolute;
-  right: 0;
+  right: calc(var(--this-radius) + var(--this-offset));
+  transform: scale(var(--this-scale));
   z-index: 1;
 
-  &::after {
-    background-color: var(--color-grayscale-6);
-    content: '';
-    display: block;
-    height: 48px;
-    margin: auto;
-    width: 2px;
+  @media ${breakpoints.sm} {
+    --this-scale: 0.85;
   }
 
-  &::after {
-    animation: ${scrollSignAnimation} 1.4s ease-in-out infinite;
+  @media ${breakpoints.lg} {
+    --this-scale: 1;
   }
+`
 
-  & > span {
-    display: block;
-    font-family: var(--font-montserrat);
-    font-size: var(--fontsize-1);
-    letter-spacing: 0.04em;
-    margin-bottom: 2em;
-    text-transform: uppercase;
-    transform: rotate(90deg);
-  }
+const ScrollSignInner = styled.div`
+  animation: ${scrollSignAnimation} 8s linear infinite;
+`
+
+const ScrollSignCharacter = styled.span`
+  bottom: 0;
+  color: var(--color-grayscale-7);
+  display: inline-block;
+  font-size: 10px;
+  height: var(--this-radius);
+  left: 0;
+  position: absolute;
+  transform-origin: bottom center;
 `

@@ -9,38 +9,39 @@ import { clamp } from '~/styles/tools/clamp'
 export const SiteNavbarSocialList: React.VFC = () => {
   return (
     <Root>
-      <li>
+      <dt className="VisuallyHidden">Follow Me</dt>
+      <dd>
         <MyLink href={social.twitter.url}>
           <BaseSocialIcon size={20} type="twitter" />
         </MyLink>
-      </li>
-      <li>
+      </dd>
+      <dd>
         <MyLink href={social.zenn.url}>
           <BaseSocialIcon size={20} type="zenn" />
         </MyLink>
-      </li>
-      <li>
+      </dd>
+      <dd>
         <MyLink href={social.note.url}>
           <BaseSocialIcon size={20} type="note" />
         </MyLink>
-      </li>
-      <li>
+      </dd>
+      <dd>
         <MyLink href={social.rss.url}>
           <BaseSocialIcon size={20} type="rss" />
         </MyLink>
-      </li>
+      </dd>
     </Root>
   )
 }
 
-const Root = styled.ul`
+const Root = styled.dl`
   align-items: center;
   display: flex;
   grid-area: header-social;
   justify-self: end;
   padding: 0 ${clamp(16, 32, false, 320, 1920)};
 
-  & > li + li {
+  & > dd + dd {
     margin-left: 12px;
   }
 

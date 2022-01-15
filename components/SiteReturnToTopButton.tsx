@@ -22,11 +22,11 @@ export const SiteReturnToTopButton: React.VFC = () => {
       setVisible(target <= scroll)
     }
 
-    window.addEventListener('scroll', throttle(handleScroll, 500))
+    window.addEventListener('scroll', throttle(handleScroll, 1000))
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleClick = (event: React.MouseEvent) => {
+  const handleClick = (event: React.MouseEvent): void => {
     event.preventDefault()
     window.scrollTo({
       top: 0,
@@ -37,7 +37,7 @@ export const SiteReturnToTopButton: React.VFC = () => {
   return (
     <Transition in={visible} timeout={duration} unmountOnExit nodeRef={buttonRef}>
       <Button type="button" aria-label="ページトップに戻る" visible={visible} onClick={handleClick} ref={buttonRef}>
-        <BaseIcon type="arrow-up" />
+        <BaseIcon type="arrow-up" size={'max(40%, 16px)'} />
       </Button>
     </Transition>
   )
@@ -64,25 +64,28 @@ const exitButton = keyframes`
 `
 
 const Button = styled.button<{ visible: boolean }>`
+
+  --this-size: ${clamp(40, 48)};
+  --this-offset: ${clamp(16, 32)};
+
   align-items: center;
   background-color: var(--theme-button-background);
   border-radius: 4px;
-  bottom: ${clamp(16, 32)};
+  bottom: var(--this-offset);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: var(--color-grayscale-7);
   display: inline-flex;
-  height: ${clamp(32, 48)};
+  height: var(--this-size);
   justify-content: center;
   padding: 0;
   position: fixed;
-  right: ${clamp(16, 32)};
+  right: var(--this-offset);
   transition: background-color 0.3s;
-  width: ${clamp(32, 48)};
+  width: var(--this-size);
   z-index: var(--context-fixed-object);
 
-  & > svg {
-    height: auto;
-    width: max(40%, 16px);
+  @supports (bottom: env(safe-area-inset-bottom)) {
+    bottom: calc(var(--this-offset) + env(safe-area-inset-bottom));
   }
 
   ${(props) =>

@@ -9,12 +9,12 @@ import { BaseHeadingType2 } from './BaseHeadingType2'
 import { BaseIcon } from './BaseIcon'
 import { SiteAdSence } from './SiteAdSence'
 
-type BlogCommonTemplatePropsType = {
+type BlogPageCommonTemplatePropsType = {
   children: React.ReactNode
   categories: CategoriesType[]
 }
 
-export const BlogCommonTemplate: React.VFC<BlogCommonTemplatePropsType> = ({ children, categories }) => {
+export const BlogPageCommonTemplate: React.VFC<BlogPageCommonTemplatePropsType> = ({ children, categories }) => {
   return (
     <BaseContainer>
       <SidebarWrapper>
@@ -30,7 +30,7 @@ export const BlogCommonTemplate: React.VFC<BlogCommonTemplatePropsType> = ({ chi
                       <Link href={`/blog/${category.id}`} passHref>
                         <CategoryLink>
                           {category.name}
-                          <BaseIcon type={'chevron-right'} size={14} />
+                          <BaseIcon type={'chevron-right'} size={`${14 / 16}rem`} />
                         </CategoryLink>
                       </Link>
                     </li>

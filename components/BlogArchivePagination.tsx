@@ -31,7 +31,7 @@ export const BlogArchivePagination: React.VFC<BlogArchivePaginationPropsType> = 
           <ListItem>
             <Link href={`${paginationPath}/${currentPage - 1}`} passHref>
               <Button aria-label="前のページに戻る">
-                <BaseIcon type={'chevron-left'} />
+                <BaseIcon type={'chevron-left'} size={'1rem'} />
               </Button>
             </Link>
           </ListItem>
@@ -69,7 +69,7 @@ export const BlogArchivePagination: React.VFC<BlogArchivePaginationPropsType> = 
           <ListItem>
             <Link href={`${paginationPath}/${currentPage + 1}`} passHref>
               <Button aria-label="次のページへ進む">
-                <BaseIcon type={'chevron-right'} />
+                <BaseIcon type={'chevron-right'} size={'1rem'} />
               </Button>
             </Link>
           </ListItem>

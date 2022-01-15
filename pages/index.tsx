@@ -3,9 +3,8 @@ import { NextPage } from 'next'
 import styled from 'styled-components'
 import { client } from '~/libs/microCMS'
 import { BaseLinkButton } from '~/components/BaseLinkButton'
-import { HomeKeyVisual } from '~/components/HomeKeyVisual'
+import { HomeFirstView } from '~/components/HomeFirstView'
 import { BaseSection } from '~/components/BaseSection'
-import { PostGrid } from '~/components/PostGrid'
 import { BlogArticleCard } from '~/components/BlogArticleCard'
 import { SiteHeadTags } from '~/components/SiteHeadTags'
 import { clamp } from '~/styles/tools/clamp'
@@ -43,7 +42,7 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
   return (
     <>
       <SiteHeadTags title={home.title} image={home.seo.image.url} />
-      <HomeKeyVisual image={home.firstview.image} alt={home.firstview.image_alt} />
+      <HomeFirstView image={home.firstview.image} alt={home.firstview.image_alt} />
       <SectionWrapper>
         <BaseSection title={'Posts'}>
           <BaseGrid gap={clamp(16, 32)} columnMin={'296px'} track={'fill'}>
@@ -68,7 +67,6 @@ const SectionWrapper = styled.div`
   position: relative;
 
   &::after {
-    /* background-color: var(--theme-background-strong); */
     background-image: var(--theme-background-pattern);
     bottom: ${clamp(200, 280)};
     content: '';

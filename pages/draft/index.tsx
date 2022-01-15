@@ -1,6 +1,6 @@
 import React from 'react'
-import { BlogCommonTemplate } from '~/components/BlogCommonTemplate'
-import { BlogDetailsThumbnail } from '~/components/BlogDetailsThumbnail'
+import { BlogPageCommonTemplate } from '~/components/BlogPageCommonTemplate'
+import { BlogArticlePageThumbnail } from '~/components/BlogArticlePageThumbnail'
 import { BreadcrumbsType, SiteBreadcrumbs } from '~/components/SiteBreadcrumbs'
 import { SiteHeadTags } from '~/components/SiteHeadTags'
 import { SiteLoader } from '~/components/SiteLoader'
@@ -37,14 +37,14 @@ const DraftPage: React.VFC<PostDetailsPagePropsType> = ({ post, categories }) =>
     <>
       <SiteHeadTags title={data.post.title} image={ogImage} />
       <SiteBreadcrumbs items={breadcrumbs} />
-      <BlogDetailsThumbnail src={thumbnail} alt={data.post.title} />
-      <BlogCommonTemplate categories={categories}>
+      <BlogArticlePageThumbnail src={thumbnail} />
+      <BlogPageCommonTemplate categories={categories}>
         <div
           dangerouslySetInnerHTML={{
             __html: data.post.body,
           }}
         />
-      </BlogCommonTemplate>
+      </BlogPageCommonTemplate>
     </>
   )
 }

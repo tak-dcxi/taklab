@@ -135,7 +135,7 @@ export const ContactSubmitForm: React.VFC = () => {
         </FormPartsContainer>
 
         <ButtonWrapper>
-          <BaseButton type="submit" icon={<BaseIcon type={'chevron-right'} />}>
+          <BaseButton type="submit" icon={<BaseIcon type={'chevron-right'} size={'1rem'} />}>
             入力内容確認へ
           </BaseButton>
         </ButtonWrapper>

@@ -7,7 +7,7 @@ import { getDate } from '~/utils/getDate'
 import { BaseIcon } from './BaseIcon'
 import { clamp } from '~/styles/tools/clamp'
 
-type BlogDetailsHeaderPropsType = {
+type BlogArticlePageHeaderPropsType = {
   title: string
   category: {
     id: string
@@ -22,7 +22,7 @@ type BlogDetailsHeaderPropsType = {
   }
 }
 
-export const BlogDetailsHeader: React.VFC<BlogDetailsHeaderPropsType> = ({
+export const BlogArticlePageHeader: React.VFC<BlogArticlePageHeaderPropsType> = ({
   title,
   category,
   publishedAt,

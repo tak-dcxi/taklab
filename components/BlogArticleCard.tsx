@@ -38,7 +38,7 @@ export const BlogArticleCard: React.VFC<BlogArticleCardPropsType> = ({ api, lv }
           <Category>
             <dt className="VisuallyHidden">カテゴリ</dt>
             <dd>
-              <BaseIcon type={'hash'} size={14} />
+              <BaseIcon type={'hash'} size={`${14 / 16}rem`} />
               {api.category.name}
             </dd>
           </Category>

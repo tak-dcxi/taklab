@@ -128,8 +128,8 @@ export const SiteDrawerBody = React.forwardRef(
                 >
                   <ThemeIcon iconType={colorMode === 'dark' ? 'dark' : 'light'}>
                     <span>
-                      <BaseIcon type="sun" size={20} />
-                      <BaseIcon type="moon" size={20} />
+                      <BaseIcon type="sun" size={`${20 / 16}rem`} />
+                      <BaseIcon type="moon" size={`${20 / 16}rem`} />
                     </span>
                   </ThemeIcon>
                   Theme

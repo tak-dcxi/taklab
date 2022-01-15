@@ -16,7 +16,7 @@ export const BaseLinkButton: React.VFC<BaseLinkButtonPropsType> = ({ children, h
     return (
       <Button href={href} onClick={onClick} {...(blank && { target: '_blank', rel: 'noopener noreferrer' })}>
         {children}
-        <BaseIcon type={'chevron-right'} size={18} />
+        <BaseIcon type={'chevron-right'} size={`${18 / 16}rem`} />
       </Button>
     )
   }
@@ -25,7 +25,7 @@ export const BaseLinkButton: React.VFC<BaseLinkButtonPropsType> = ({ children, h
     <Link href={href} passHref>
       <Button onClick={onClick} {...(blank && { target: '_blank', rel: 'noopener noreferrer' })}>
         {children}
-        <BaseIcon type={'chevron-right'} size={18} />
+        <BaseIcon type={'chevron-right'} size={`${18 / 16}rem`} />
       </Button>
     </Link>
   )

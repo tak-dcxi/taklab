@@ -7,7 +7,7 @@ import { BaseGrid } from './BaseGrid'
 import { BaseStack } from './BaseStack'
 import { BlogArchivePagination } from './BlogArchivePagination'
 import { BlogArticleCard } from './BlogArticleCard'
-import { BlogCommonTemplate } from './BlogCommonTemplate'
+import { BlogPageCommonTemplate } from './BlogPageCommonTemplate'
 import { BreadcrumbsType, SiteBreadcrumbs } from './SiteBreadcrumbs'
 import { SiteHeadTags } from './SiteHeadTags'
 import { SubpageHeader } from './SubpageHeader'
@@ -50,7 +50,7 @@ export const BlogArchivePageTemplate: React.VFC<BlogArchivePageTemplatePropsType
       <SiteHeadTags title={categoryLabel} />
       <SiteBreadcrumbs items={breadcrumbs} />
       <SubpageHeader headline={categoryLabel} />
-      <BlogCommonTemplate categories={categories}>
+      <BlogPageCommonTemplate categories={categories}>
         <BaseStack gap={clamp(48, 64)}>
           <section>
             <h2 id="postsList" className="VisuallyHidden">
@@ -79,7 +79,7 @@ export const BlogArchivePageTemplate: React.VFC<BlogArchivePageTemplatePropsType
             />
           )}
         </BaseStack>
-      </BlogCommonTemplate>
+      </BlogPageCommonTemplate>
     </>
   )
 }

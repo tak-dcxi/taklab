@@ -69,6 +69,7 @@ const Wrapper = styled.span`
 `
 
 const Input = styled.textarea`
+
   --this-scale: 0.875;
 
   appearance: none;

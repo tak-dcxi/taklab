@@ -3,23 +3,18 @@ import Image from 'next/image'
 import styled from 'styled-components'
 import { clamp } from '~/styles/tools/clamp'
 
-type BlogDetailsThumbnailPropsType = {
+type BlogArticlePageThumbnailPropsType = {
   src: string
-  alt: string
 }
 
-export const BlogDetailsThumbnail: React.VFC<BlogDetailsThumbnailPropsType> = ({ src, alt }) => {
-  const generateThumbnail = (url: string): string => {
-    return `${url}?fit=crop&w=1200&h=440`
-  }
-
-  const thumbnail: string = generateThumbnail(src)
+export const BlogArticlePageThumbnail: React.VFC<BlogArticlePageThumbnailPropsType> = ({ src }) => {
+  const image: string = `${src}?fit=crop&w=1200&h=440`
 
   return (
     <Root>
       <Image
-        src={thumbnail}
-        alt={`【サムネイル】${alt}`}
+        src={image}
+        alt={''}
         layout="fill"
         decoding="async"
         loading="eager"

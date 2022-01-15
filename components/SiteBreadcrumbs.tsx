@@ -22,7 +22,7 @@ export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) 
           <ListItem itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
             <Link href={'/'} passHref>
               <MyLink itemProp="item">
-                <BaseIcon type={'home'} size={14} />
+                <BaseIcon type={'home'} size={`${14 / 16}rem`} />
                 <span itemProp="name">Home</span>
               </MyLink>
             </Link>

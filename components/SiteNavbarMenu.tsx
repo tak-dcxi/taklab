@@ -114,10 +114,8 @@ const ThemeIcon = styled.span<{ iconType: 'dark' | 'light' }>`
     transition: transform 0.3s ease-out;
   }
 
-  & svg {
+  & .BaseIcon {
     display: block;
-    height: 1em;
-    width: 1em;
   }
 
   ${(props) =>

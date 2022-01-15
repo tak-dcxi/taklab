@@ -123,6 +123,5 @@ export const BaseSocialIcon: React.VFC<BaseSocialIconPropsType> = ({ color, size
 }
 
 const SVGtag = styled.svg<SVGTagPropsType>`
-  height: ${(props) => props.height / 16}rem;
   width: ${(props) => props.width / 16}rem;
 `
