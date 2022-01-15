@@ -23,8 +23,8 @@ export const ErrorPageTemplate: React.VFC<ErrorPageTemplatePropsType> = ({ statu
   return (
     <>
       <SiteHeadTags title={title} isErrorPage />
-      <SubpageHeader headline={title} />
       <SiteBreadcrumbs items={breadcrumbs} />
+      <SubpageHeader headline={title} />
       <BaseContainer>
         <Contents>
           <Sentence>
@@ -49,7 +49,7 @@ export const ErrorPageTemplate: React.VFC<ErrorPageTemplatePropsType> = ({ statu
 }
 
 const Contents = styled.div`
-  padding: var(--contents-block-padding);
+  padding: var(--padding-block-contents) 0;
 
   & > * + * {
     margin-top: 48px;

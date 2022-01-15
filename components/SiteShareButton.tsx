@@ -2,7 +2,7 @@ import { NextRouter, useRouter } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
-import { meta } from '~/constant/meta'
+import { config } from '~/site.config'
 import { hoverable } from '~/styles/tools/hoverable'
 import { BaseSocialIcon } from './BaseSocialIcon'
 
@@ -20,7 +20,7 @@ type ItemsType = {
 export const SiteShareButton: React.VFC<SiteShareButtonPropsType> = ({ title }) => {
   const router: NextRouter = useRouter()
   const path: string = router.asPath
-  const currentURL: string = meta.baseURL + path
+  const currentURL: string = config.baseURL + path
 
   const items: ItemsType = [
     {

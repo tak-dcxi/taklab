@@ -15,11 +15,6 @@ const Container = styled.div<{ size: 'default' | 'narrow' | 'wide' }>`
   box-sizing: content-box;
   margin-left: auto;
   margin-right: auto;
-  max-width: ${(props) =>
-    props.size === 'narrow'
-      ? 'var(--max-width-narrow)'
-        ? 'wide'
-        : 'var(--max-width-wide)'
-      : 'var(--max-width-default)'};
+  max-width: ${(props) => `var(--max-width-${props.size}) `};
   padding: 0 ${clamp(16, 32)};
 `

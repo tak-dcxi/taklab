@@ -1,0 +1,4 @@
+Sitemap: https://tak-dcxi.com/sitemap.xml
+User-agent: *
+Allow: /*
+Disallow: /api/*

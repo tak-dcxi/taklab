@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { NextRouter, useRouter } from 'next/router'
-import { meta } from '~/constant/meta'
 import { debounce } from 'lodash'
 import { useTheme } from '~/context/ThemeProvider'
+import { config } from '~/site.config'
 
 type SiteHeadTagsPropsType = {
   title?: string
@@ -17,14 +17,14 @@ type ViewportType = 'width=device-width,initial-scale=1' | 'width=360'
 type ColorShemeType = 'light' | 'dark' | 'light dark'
 
 export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
-  title = meta.siteName,
-  description = meta.description,
-  image = `${meta.baseURL}/ogp.png`,
+  title = config.siteMeta.title,
+  description = config.siteMeta.description,
+  image = `${config.baseURL}/ogp.png`,
   isErrorPage,
 }) => {
   const router: NextRouter = useRouter()
   const path: string = router.asPath
-  const currentURL: string = meta.baseURL + path
+  const currentURL: string = config.baseURL + path
 
   const [viewport, setViewport] = useState<ViewportType>('width=device-width,initial-scale=1')
   const [colorScheme, setColorScheme] = useState<ColorShemeType>('light dark')
@@ -38,7 +38,7 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
 
     window.addEventListener(
       'resize',
-      debounce(() => handleResize())
+      debounce(() => handleResize(), 300)
     )
     handleResize()
 
@@ -51,7 +51,7 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
 
   return (
     <Head>
-      <title>{title}</title>
+      <title>{path === '/' ? title : `${title} | ${config.siteMeta.title}`}</title>
       <meta name="viewport" content={viewport} />
       <meta name="description" content={description} />
       <meta name="format-detection" content="email=no,telephone=no,address=no" />
@@ -65,7 +65,7 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
           <meta property="og:title" content={title} />
           <meta property="og:url" content={currentURL} />
           <meta property="og:description" content={description} />
-          <meta property="og:site_name" content={meta.siteName} />
+          <meta property="og:site_name" content={config.siteMeta.title} />
           <meta property="og:image" content={image} />
           <meta property="og:locale" content="ja_JP" />
           <meta name="twitter:card" content="summary" />

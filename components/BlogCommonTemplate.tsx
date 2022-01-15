@@ -2,8 +2,8 @@ import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
-import { CategoriesType } from '~/libs/microCMS'
 import { hoverable } from '~/styles/tools/hoverable'
+import { CategoriesType } from '~/types/microCMS'
 import { BaseContainer } from './BaseContainer'
 import { BaseHeadingType2 } from './BaseHeadingType2'
 import { BaseIcon } from './BaseIcon'
@@ -52,7 +52,7 @@ const size: { [key: string]: string } = {
 }
 
 const SidebarWrapper = styled.div`
-  padding: var(--contents-block-padding);
+  padding: var(--padding-block-contents) 0;
 `
 
 const Sidebar = styled.div`

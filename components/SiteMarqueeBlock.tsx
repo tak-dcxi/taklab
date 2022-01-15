@@ -5,7 +5,7 @@ import { BaseLogo } from './BaseLogo'
 
 export const SiteMarqueeBlock: React.VFC = () => {
   return (
-    <Root>
+    <Wrapper>
       <Item>
         <BaseLogo size={'100%'} presentation />
       </Item>
@@ -21,7 +21,7 @@ export const SiteMarqueeBlock: React.VFC = () => {
       <Item>
         <BaseLogo size={'100%'} presentation />
       </Item>
-    </Root>
+    </Wrapper>
   )
 }
 
@@ -35,7 +35,7 @@ const LoopAnimationFirst = keyframes`
   }
 `
 
-const Root = styled.div`
+const Wrapper = styled.div`
   display: flex;
 `
 
@@ -44,5 +44,5 @@ const Item = styled.div`
   color: var(--theme-text-x-muted);
   flex-shrink: 0;
   padding: 0 max(1.5%, 16px);
-  width: ${clamp(400, 1080, false, 320, 1920)};
+  width: ${clamp(480, 1080, false, 320, 1920)};
 `

@@ -73,6 +73,6 @@ export const commonVariables = css`
     --max-width-narrow: 960px;
     --max-width-wide: 1920px;
     --height-header: ${clamp(52, 64, true)};
-    --contents-block-padding: ${clamp(64, 100)} 0;
+    --padding-block-contents: ${clamp(64, 100)};
   }
 `

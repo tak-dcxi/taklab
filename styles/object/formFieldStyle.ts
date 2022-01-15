@@ -2,13 +2,12 @@ import { css } from 'styled-components'
 
 export const formFieldStyle = css`
   appearance: none;
-  background-color: var(--color-grayscale-7);
+  background-color: transparent;
   border: 0;
   border-radius: 0;
-  box-shadow: inset 0 0 0 2px var(--color-grayscale-5);
+  box-shadow: inset 0 0 0 2px var(--theme-divider);
   font-size: max(1rem, 16px);
   height: calc(100% / 0.875);
-  padding: 1em;
   transform: scale(0.875);
   transform-origin: top left;
   width: calc(100% / 0.875);

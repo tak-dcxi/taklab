@@ -62,26 +62,58 @@ export const BaseTextArea = React.forwardRef<HTMLTextAreaElement, BaseTextAreaPr
 )
 
 const Wrapper = styled.span`
+  background-color: var(--theme-textfield-background);
   display: block;
+  min-height: ${240 / 16}rem;
   position: relative;
 `
 
 const Input = styled.textarea`
-  ${formFieldStyle}
+  --this-scale: 0.875;
 
+  appearance: none;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: inset 0 0 0 2px var(--theme-divider);
   display: block;
-  left: 0;
+  font-size: max(1rem, 16px);
+  height: calc(100% / var(--this-scale));
   overflow: hidden;
-  position: absolute;
-  resize: none;
-  top: 0;
+  padding: 1em;
+  transform: scale(var(--this-scale));
+  transform-origin: top left;
+  width: calc(100% / var(--this-scale));
+
+  &:not(:only-child) {
+    left: 0;
+    position: absolute;
+    resize: none;
+    top: 0;
+  }
+
+  &::-webkit-input-placeholder {
+    color: var(--color-grayscale-3);
+  }
+
+  &::placeholder {
+    color: var(--color-grayscale-3);
+  }
+
+  &[aria-invalid='true'] {
+    box-shadow: inset 0 0 0 2px var(--color-accent-1);
+  }
+
+  &:focus {
+    box-shadow: inset 0 0 0 2px var(--color-primary);
+    outline: 0;
+  }
 `
 
 const Dummy = styled.span`
   border: 1px solid;
   display: block;
   font-size: max(var(--fontsize-2), 14px);
-  min-height: ${240 / 16}rem;
   overflow: hidden;
   overflow-wrap: break-word;
   padding: 1em;

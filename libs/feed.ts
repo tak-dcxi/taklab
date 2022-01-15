@@ -1,16 +1,16 @@
 import fs from 'fs'
 import { Feed } from 'feed'
-import { meta } from '~/constant/meta'
 import { client } from '~/libs/microCMS'
+import { config } from '~/site.config'
 
 async function generatedRssFeed(): Promise<void> {
-  const baseURL: string = meta.baseURL || ''
+  const baseURL: string = config.baseURL || ''
   const date: Date = new Date()
 
   // デフォルトになる feed の情報
   const feed = new Feed({
-    title: meta.siteName || '',
-    description: meta.description,
+    title: config.siteMeta.title || '',
+    description: config.siteMeta.description,
     id: baseURL,
     link: baseURL,
     language: 'ja',
@@ -36,14 +36,18 @@ async function generatedRssFeed(): Promise<void> {
       content: string
       publishedAt: string
       body: string
+      category: {
+        id: string
+      }
     }) => {
       // post のプロパティ情報は使用しているオブジェクトの形式に合わせる
-      const url: string = `${baseURL}/blog/${content.id}`
+      const postURL: string = `${baseURL}/blog/${content.category.id}/${content.id}`
+
       feed.addItem({
         title: content.title,
         description: content.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''),
-        id: url,
-        link: url,
+        id: postURL,
+        link: postURL,
         content: content.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''),
         date: new Date(content.publishedAt),
       })

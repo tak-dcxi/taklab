@@ -25,7 +25,7 @@ export const HomeKeyVisual: React.VFC<HomeKeyVisualPropsType> = ({ image, alt })
       if (!ref.current) return
 
       const vh: number = window.innerHeight
-      ref.current.style.height = `calc(${vh}px - var(--height-header)`
+      ref.current.style.setProperty('--this-height', `calc(${vh}px - var(--height-header)`)
     }
 
     window.addEventListener(
@@ -37,52 +37,46 @@ export const HomeKeyVisual: React.VFC<HomeKeyVisualPropsType> = ({ image, alt })
         // 画面の横幅のサイズ変動があった時場合hは高さを再計算する
         vw = window.innerWidth
         setHeight()
-      })
+      }, 100)
     )
 
     setHeight()
   }, [ref])
 
   return (
-    <Root ref={ref}>
-      <FirstView>
-        <Title>
-          <BaseLogo size={clamp(280, 560, true, 320, 1920)} />
-        </Title>
-        <CloneTitle>
-          <BaseLogo size={clamp(280, 560, true, 320, 1920)} presentation />
-        </CloneTitle>
-        <MyImage>
-          <Image
-            src={image.url}
-            alt={alt}
-            layout="fill"
-            decoding="async"
-            loading="eager"
-            priority
-            objectFit="cover"
-            quality={75}
-          />
-          <ScrollSign aria-hidden="true">
-            <span>Scroll</span>
-          </ScrollSign>
-        </MyImage>
-      </FirstView>
-    </Root>
+    <FirstView ref={ref}>
+      <Title>
+        <BaseLogo size={clamp(280, 560, true, 320, 1920)} />
+      </Title>
+      <CloneTitle>
+        <BaseLogo size={clamp(280, 560, true, 320, 1920)} presentation />
+      </CloneTitle>
+      <MyImage>
+        <Image
+          src={image.url}
+          alt={alt}
+          layout="fill"
+          decoding="async"
+          loading="eager"
+          priority
+          objectFit="cover"
+          quality={75}
+        />
+        <ScrollSign>
+          <span aria-hidden="true">Scroll</span>
+        </ScrollSign>
+      </MyImage>
+    </FirstView>
   )
 }
 
-const Root = styled.header`
-  height: calc(100vh - var(--height-header));
-  max-height: 920px;
-  min-height: 360px;
-`
+const FirstView = styled.header`
+  --this-height: calc(100vh - var(--height-header));
 
-const FirstView = styled.div`
   display: grid;
   grid-template-columns: 5% min(10%, 240px) 1fr;
   grid-template-rows: 1fr;
-  height: 100%;
+  height: max(360px, var(--this-height));
   isolation: isolate;
   padding: ${clamp(40, 56, false, 320, 1920)} 0;
   position: relative;

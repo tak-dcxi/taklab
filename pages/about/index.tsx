@@ -1,9 +1,9 @@
 import React from 'react'
 import { NextPage } from 'next'
-import styled from 'styled-components'
-import { client, SEOType } from '~/libs/microCMS'
+import { client } from '~/libs/microCMS'
 import { SubpageTemplate } from '~/components/SubpageTemplate'
 import { BaseContainer } from '~/components/BaseContainer'
+import { SEOType } from '~/types/microCMS'
 
 type AboutAPIType = {
   id: 'about'

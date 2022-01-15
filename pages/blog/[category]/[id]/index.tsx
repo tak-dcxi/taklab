@@ -1,20 +1,23 @@
 import React from 'react'
 import { NextRouter, useRouter } from 'next/router'
-import { client, PostType, CategoriesType } from '~/libs/microCMS'
+import { client } from '~/libs/microCMS'
 import { BlogCommonTemplate } from '~/components/BlogCommonTemplate'
 import { SiteHeadTags } from '~/components/SiteHeadTags'
 import { SiteBreadcrumbs, BreadcrumbsType } from '~/components/SiteBreadcrumbs'
 import ErrorPage from '~/pages/_error'
-import { GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import { generateOgImage } from '~/libs/generateOGP'
 import { BlogDetailsThumbnail } from '~/components/BlogDetailsThumbnail'
+import { toStringID } from '~/utils/convertID'
+import { CategoriesType, PostType } from '~/types/microCMS'
 
 type PostDetailsPagePropsType = {
   post: PostType
   categories: CategoriesType[]
+  currentCategory: string
 }
 
-const PostDetailsPage: React.VFC<PostDetailsPagePropsType> = ({ post, categories }) => {
+const BlogDetailsPage: React.VFC<PostDetailsPagePropsType> = ({ post, categories }) => {
   const router: NextRouter = useRouter()
 
   if (!router.isFallback && !post?.id) return <ErrorPage statusCode={404} />
@@ -49,28 +52,33 @@ const PostDetailsPage: React.VFC<PostDetailsPagePropsType> = ({ post, categories
   )
 }
 
-export const getStaticPaths = async () => {
-  const post = await client.get({ endpoint: 'blog' })
-  const paths = post.contents.map((content: { id: string }) => `/blog/${content.id}`)
-
+export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths,
-    fallback: false,
+    fallback: 'blocking',
+    paths: [],
   }
 }
 
-export const getStaticProps: GetStaticProps = async (context: { params: { id: string } }) => {
-  const id = context.params?.id
-  const post = await client.get({ endpoint: 'blog', contentId: id })
-  const categories = await client.get({ endpoint: 'category' })
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { params, previewData } = context
 
-  return {
-    props: {
-      post: post,
-      categories: categories.contents,
-    },
-    revalidate: 1,
+  if (!params?.category || !params?.id) throw new Error('Error: ID not found')
+
+  try {
+    const id: string = toStringID(params.id)
+    const data = await client.get({ endpoint: 'blog', contentId: id })
+    const category = await client.get({ endpoint: 'blog-category' })
+
+    return {
+      props: {
+        post: data,
+        categories: category.contents,
+        currentCategory: toStringID(params.category),
+      },
+    }
+  } catch (error) {
+    return { notFound: true }
   }
 }
 
-export default PostDetailsPage
+export default BlogDetailsPage

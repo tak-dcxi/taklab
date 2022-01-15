@@ -1,17 +1,17 @@
 import styled from 'styled-components'
-import { SiteHeader } from '~/components/SiteHeader'
+import { SiteNavbar } from '~/components/SIteNavbar'
 import { SiteFooter } from '~/components/SiteFooter'
 import { SiteSkipLink } from '~/components/SiteSkipLink'
 
-type SiteTemplatePropsType = {
+type SiteStructureTemplatePropsType = {
   children: React.ReactNode
 }
 
-export const SiteTemplate: React.VFC<SiteTemplatePropsType> = ({ children }) => {
+export const SiteStructureTemplate: React.VFC<SiteStructureTemplatePropsType> = ({ children }) => {
   return (
     <Root>
       <SiteSkipLink />
-      <SiteHeader />
+      <SiteNavbar />
       <Main id="main" aria-label="メインコンテンツ" tabIndex={-1}>
         {children}
       </Main>

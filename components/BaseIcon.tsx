@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuid } from 'uuid'
 
 type BaseIconPropsType = {
   color?: string
   size?: number
   label?: string
   type:
+    | 'arrow-up'
     | 'chevron-up'
     | 'chevron-right'
     | 'chevron-down'
@@ -22,6 +23,7 @@ type BaseIconPropsType = {
     | 'calendar'
     | 'clock'
     | 'alert'
+    | 'hash'
 }
 
 type SVGTagPropsType = {
@@ -30,10 +32,11 @@ type SVGTagPropsType = {
 }
 
 export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor', size = 16, label, type }) => {
-  const randomID: string = uuidv4()
+  const randomID: string = uuid()
 
   return (
     <SVGTag
+      className="BaseIcon"
       width={size}
       height={size}
       viewBox="0 0 24 24"
@@ -45,6 +48,7 @@ export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor',
       {...(label ? { role: 'img', 'aria-labelledby': randomID } : { 'aria-hidden': 'true' })}
     >
       {label && <title id={randomID}>{label}</title>}
+      {type === 'arrow-up' && <path d="M12 19V6M5 12l7-7 7 7" />}
       {type === 'chevron-up' && <path d="M18 15l-6-6-6 6" />}
       {type === 'chevron-right' && <path d="M9 18l6-6-6-6" />}
       {type === 'chevron-down' && <path d="M6 9l6 6 6-6" />}
@@ -112,6 +116,14 @@ export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor',
           <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
           <line x1="12" y1="9" x2="12" y2="13" />
           <line x1="12" y1="17" x2="12.01" y2="17" />
+        </>
+      )}
+      {type === 'hash' && (
+        <>
+          <line x1="4" y1="9" x2="20" y2="9" />
+          <line x1="4" y1="15" x2="20" y2="15" />
+          <line x1="10" y1="3" x2="8" y2="21" />
+          <line x1="16" y1="3" x2="14" y2="21" />
         </>
       )}
     </SVGTag>

@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { createPortal } from 'react-dom'
-import styled, { keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import { Transition } from 'react-transition-group'
-import { menu } from '~/constant/menu'
+import { menu, MenuType } from '~/constant/menu'
 import { social } from '~/constant/social'
 import { hoverable } from '~/styles/tools/hoverable'
 import { BaseIcon } from '~/components/BaseIcon'
@@ -67,16 +67,27 @@ export const SiteDrawerBody = React.forwardRef(
           <Container>
             <Contents>
               <List>
-                {menu.map((item, index) => {
+                {menu.map((item: MenuType, index: number) => {
+                  const isBlogPage = /\/blog\/.+$/.test(asPath) || item.path === asPath
+
                   return (
                     <li key={index}>
                       <Link href={item.path} passHref>
-                        <MyLink onClick={() => onClose()} {...(item.path === asPath && { 'aria-current': 'page' })}>
-                          <PrimaryLabel style={{ textTransform: 'uppercase' }} lang="en" translate="no">
-                            {item.title}
-                          </PrimaryLabel>
-                          <SecondaryLabel>{item.subtitle}</SecondaryLabel>
-                        </MyLink>
+                        {item.id === 'blog' ? (
+                          <MyLink onClick={() => onClose()} {...(isBlogPage && { 'aria-current': 'page' })}>
+                            <PrimaryLabel style={{ textTransform: 'uppercase' }} lang="en" translate="no">
+                              {item.title}
+                            </PrimaryLabel>
+                            <SecondaryLabel>{item.subtitle}</SecondaryLabel>
+                          </MyLink>
+                        ) : (
+                          <MyLink onClick={() => onClose()} {...(item.path === asPath && { 'aria-current': 'page' })}>
+                            <PrimaryLabel style={{ textTransform: 'uppercase' }} lang="en" translate="no">
+                              {item.title}
+                            </PrimaryLabel>
+                            <SecondaryLabel>{item.subtitle}</SecondaryLabel>
+                          </MyLink>
+                        )}
                       </Link>
                     </li>
                   )
@@ -115,7 +126,7 @@ export const SiteDrawerBody = React.forwardRef(
                   title={`現在のテーマは${colorMode === 'dark' ? 'ダークモード' : 'ライトモード'}です`}
                   onClick={setColorMode}
                 >
-                  <ThemeIcon data-type={colorMode === 'dark' ? 'dark' : 'light'}>
+                  <ThemeIcon iconType={colorMode === 'dark' ? 'dark' : 'light'}>
                     <span>
                       <BaseIcon type="sun" size={20} />
                       <BaseIcon type="moon" size={20} />
@@ -319,7 +330,7 @@ const ThemeToggler = styled.button`
   `)}
 `
 
-const ThemeIcon = styled.span`
+const ThemeIcon = styled.span<{ iconType: 'dark' | 'light' }>`
   display: inline-block;
   height: ${20 / 16}em;
   margin-right: 1em;
@@ -331,17 +342,19 @@ const ThemeIcon = styled.span`
     transition: transform 0.3s ease-out;
   }
 
-  &[data-type='dark'] {
-    & > span {
-      transform: translateY(${(20 / 16) * -1}em);
-    }
-  }
-
   & svg {
     display: block;
     height: ${20 / 16}em;
     width: ${20 / 16}em;
   }
+
+  ${(props) =>
+    props.iconType === 'dark' &&
+    css`
+      & > span {
+        transform: translateY(${(20 / 16) * -1}em);
+      }
+    `}
 `
 
 const enterOverlay = keyframes`

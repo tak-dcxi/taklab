@@ -53,7 +53,7 @@ export const SiteDrawer: React.VFC = () => {
   )
 }
 
-const ButtonWrapper = styled.p`
+const ButtonWrapper = styled.div`
   display: contents;
 
   @media ${breakpoints.lg} {

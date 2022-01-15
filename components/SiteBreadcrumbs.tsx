@@ -26,7 +26,7 @@ export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) 
                 <span itemProp="name">Home</span>
               </MyLink>
             </Link>
-            <Icon aria-hidden="true">&gt;</Icon>
+            <Chevron aria-hidden="true">&gt;</Chevron>
             <meta itemProp="position" content="1" />
           </ListItem>
           {items.map(({ string, path }, index: number) => (
@@ -38,15 +38,15 @@ export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) 
                       <span itemProp="name">{string}</span>
                     </MyLink>
                   </Link>
-                  <Icon aria-hidden="true">&gt;</Icon>
-                  <meta itemProp="position" content={`${index + 2}`} />
+                  <Chevron aria-hidden="true">&gt;</Chevron>
+                  <meta itemProp="position" content={`${index - 1 + 1}`} />
                 </>
               ) : (
                 <>
                   <span itemProp="item" aria-current="location">
                     <span itemProp="name">{string}</span>
                   </span>
-                  <meta itemProp="position" content={`${index + 2}`} />
+                  <meta itemProp="position" content={`${index - 1 + 1}`} />
                 </>
               )}
             </ListItem>
@@ -73,7 +73,7 @@ const ListItem = styled.li`
   margin: 0.1em 0.375em;
 `
 
-const Icon = styled.span`
+const Chevron = styled.span`
   margin-left: 0.75em;
 `
 

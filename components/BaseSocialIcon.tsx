@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuid } from 'uuid'
 
 type BaseSocialIconPropsType = {
   color?: string
@@ -15,7 +15,7 @@ type SVGTagPropsType = {
 }
 
 export const BaseSocialIcon: React.VFC<BaseSocialIconPropsType> = ({ color, size = 100, type, presentation }) => {
-  const randomID: string = uuidv4()
+  const randomID: string = uuid()
 
   return (
     <SVGtag

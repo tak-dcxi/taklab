@@ -1,4 +1,4 @@
-import { meta } from '~/constant/meta'
+import { config } from '~/site.config'
 
 type SocialType = {
   name: string
@@ -24,6 +24,6 @@ export const social: { [key: string]: SocialType } = {
   },
   rss: {
     name: 'RSS',
-    url: `${meta.baseURL}/rss/feed.xml`,
+    url: `${config.baseURL}/rss/feed.xml`,
   },
 }

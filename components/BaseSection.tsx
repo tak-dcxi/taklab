@@ -22,7 +22,7 @@ export const BaseSection: React.VFC<BaseSectionPropsType> = ({ title, children }
 }
 
 const Section = styled.section`
-  padding: var(--contents-block-padding); /* clamp() */
+  padding: var(--padding-block-contents) 0; /* clamp() */
 
   & > * > * + * {
     margin-top: 56px;

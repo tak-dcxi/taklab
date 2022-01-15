@@ -1,24 +1,30 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
-import { menu } from '~/constant/menu'
+import { menu, MenuType } from '~/constant/menu'
 import { hoverable } from '~/styles/tools/hoverable'
 import { BaseIcon } from '~/components/BaseIcon'
 import { useTheme } from '~/context/ThemeProvider'
 
-export const SiteDesktopMenu: React.VFC = () => {
+export const SiteNavbarMenu: React.VFC = () => {
   const { asPath } = useRouter()
   const { colorMode, setColorMode } = useTheme()
 
   return (
     <Root>
-      {menu.map((item, index) => {
+      {menu.map((item: MenuType, index: number) => {
+        const isBlogPage = /\/blog\/.+$/.test(asPath) || item.path === asPath
+
         return (
           <li key={index}>
             <Link href={item.path} passHref>
-              <NavbarLink {...(item.path === asPath && { 'aria-current': 'page' })}>{item.title}</NavbarLink>
+              {item.id === 'blog' ? (
+                <NavbarLink {...(isBlogPage && { 'aria-current': 'page' })}>{item.title}</NavbarLink>
+              ) : (
+                <NavbarLink {...(item.path === asPath && { 'aria-current': 'page' })}>{item.title}</NavbarLink>
+              )}
             </Link>
           </li>
         )
@@ -29,7 +35,7 @@ export const SiteDesktopMenu: React.VFC = () => {
           title={`現在のテーマは${colorMode === 'dark' ? 'ダークモード' : 'ライトモード'}です`}
           onClick={setColorMode}
         >
-          <ThemeIcon data-type={colorMode === 'dark' ? 'dark' : 'light'}>
+          <ThemeIcon iconType={colorMode === 'dark' ? 'dark' : 'light'}>
             <span>
               <BaseIcon type="sun" />
               <BaseIcon type="moon" />
@@ -96,7 +102,7 @@ const NavbarLink = styled.a`
   `)}
 `
 
-const ThemeIcon = styled.span`
+const ThemeIcon = styled.span<{ iconType: 'dark' | 'light' }>`
   display: inline-block;
   height: 1em;
   margin-right: 0.25em;
@@ -108,17 +114,19 @@ const ThemeIcon = styled.span`
     transition: transform 0.3s ease-out;
   }
 
-  &[data-type='dark'] {
-    & > span {
-      transform: translateY(-1em);
-    }
-  }
-
   & svg {
     display: block;
     height: 1em;
     width: 1em;
   }
+
+  ${(props) =>
+    props.iconType === 'dark' &&
+    css`
+      & > span {
+        transform: translateY(-1em);
+      }
+    `}
 `
 
 const NavbarThemeToggler = NavbarLink.withComponent('button')

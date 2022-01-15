@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { client, SEOType } from '~/libs/microCMS'
 import { SiteHeadTags } from '~/components/SiteHeadTags'
 import { BreadcrumbsType, SiteBreadcrumbs } from '~/components/SiteBreadcrumbs'
 import { SubpageHeader } from '~/components/SubpageHeader'
@@ -30,5 +29,5 @@ export const SubpageTemplate: React.VFC<SubpageLayoutPropsType> = ({ title, desc
 }
 
 const Contents = styled.div`
-  padding: var(--contents-block-padding);
+  padding: var(--padding-block-contents) 0;
 `

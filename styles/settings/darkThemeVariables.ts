@@ -18,6 +18,7 @@ const variables = css`
   );
   --theme-divider: #111;
   --theme-button-background: var(--color-grayscale-2);
+  --theme-textfield-background: var(--color-grayscale-0);
   --theme-header-background: var(--color-grayscale-0);
   --theme-drawer-divider: var(--color-grayscale-2);
   --theme-drawer-background: var(--color-grayscale-1);

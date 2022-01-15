@@ -1,51 +1,60 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
+import { debounce } from 'lodash'
 
 type GridCommonType = {
-  min: string
+  columnMin: string
   gap: string
-  wide?: boolean
+  track?: 'fit' | 'fill'
 }
 
 type BaseGridPropsType = {
   children: React.ReactNode
 } & GridCommonType
 
-export const BaseGrid: React.VFC<BaseGridPropsType> = ({ children, min = '256px', gap = '16px', wide }) => {
+export const BaseGrid: React.VFC<BaseGridPropsType> = ({
+  children,
+  columnMin = '256px',
+  gap = '16px',
+  track = 'fit',
+}) => {
   const gridRef = useRef<HTMLDivElement>(null)
-  const [isWide, setIsWide] = useState<boolean>(wide)
+  const [isOverflowing, setIsOverflowing] = useState<boolean>(false)
 
   useEffect(() => {
-    const handleResize = () => {
+    const handleResize = (): void => {
       const element: HTMLDivElement = gridRef.current
 
       if (!element) return
 
-      const testDiv: HTMLDivElement = document.createElement('div')
-      testDiv.style.width = min!
-      element.appendChild(testDiv)
-      const minToPixels: number = testDiv.offsetWidth
-      element.removeChild(testDiv)
+      const test: HTMLDivElement = document.createElement('div')
+      test.style.width = columnMin!
+      element.appendChild(test)
+      const minToPixels: number = test.offsetWidth
+      element.removeChild(test)
 
-      setIsWide(element.scrollWidth > minToPixels)
+      setIsOverflowing(element.scrollWidth > minToPixels)
     }
 
-    window.addEventListener('resize', handleResize, false)
+    window.addEventListener('resize', debounce(handleResize, 300), false)
     handleResize()
 
     return () => window.removeEventListener('resize', handleResize)
-  }, [min, gridRef])
+  }, [columnMin, gridRef])
 
   return (
-    <Wrapper min={min} gap={gap} wide={isWide} ref={gridRef}>
+    <Wrapper columnMin={columnMin} gap={gap} track={track} isOverflowing={isOverflowing} ref={gridRef}>
       {children}
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div<GridCommonType>`
+const Wrapper = styled.div<GridCommonType & { isOverflowing: boolean }>`
   align-content: start;
   display: grid;
   gap: ${(props) => props.gap};
-  grid-template-columns: ${(props) => (props.wide ? `repeat(auto-fit, minmax(${props.min}, 1fr)) ` : '100%')};
+  grid-template-columns: ${(props) =>
+    props.isOverflowing
+      ? `repeat(${props.track === 'fit' ? 'auto-fit' : 'auto-fill'}, minmax(${props.columnMin}, 1fr)) `
+      : '100%'};
 `

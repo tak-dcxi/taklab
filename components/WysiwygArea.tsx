@@ -11,9 +11,8 @@ export const WysiwygArea: React.VFC<BaseGutenbergPropsType> = ({ children }) => 
 }
 
 const Area = styled.div`
-  & > * {
-    margin-bottom: 16px;
-    margin-top: 16px;
+  & > * + * {
+    margin-top: ${24 / 16}rem;
   }
 
   & > :first-child {
@@ -28,9 +27,12 @@ const Area = styled.div`
     line-height: var(--leading-loose);
   }
 
-  & *:is(h2, h3, h4, h5, h6):not([class]) {
-    font-weight: bold;
-    margin-top: 48px;
+  & h2:not([class]),
+  & h3:not([class]),
+  & h4:not([class]),
+  & h5:not([class]),
+  & h6:not([class]) {
+    margin-top: ${48 / 16}rem;
   }
 
   & h2:not([class]) {

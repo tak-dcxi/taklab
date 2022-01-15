@@ -3,13 +3,14 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
-import { menu } from '~/constant/menu'
+import { menu, MenuType } from '~/constant/menu'
 import { social } from '~/constant/social'
 import { hoverable } from '~/styles/tools/hoverable'
 import { BaseContainer } from '~/components/BaseContainer'
 import { BaseLogo } from '~/components/BaseLogo'
 import { BaseSocialIcon } from '~/components/BaseSocialIcon'
 import { clamp } from '~/styles/tools/clamp'
+import { SiteReturnToTopButton } from './SiteReturnToTopButton'
 
 export const SiteFooter: React.VFC = () => {
   const { asPath } = useRouter()
@@ -22,11 +23,17 @@ export const SiteFooter: React.VFC = () => {
         </LogoWrapper>
         <FooterMenu>
           <ul>
-            {menu.map((item, index) => {
+            {menu.map((item: MenuType, index: number) => {
+              const isBlogPage = /\/blog\/.+$/.test(asPath) || item.path === asPath
+
               return (
                 <li key={index}>
                   <Link href={item.path} passHref>
-                    <FooterLink {...(item.path === asPath && { 'aria-current': 'page' })}>{item.title}</FooterLink>
+                    {item.id === 'blog' ? (
+                      <FooterLink {...(isBlogPage && { 'aria-current': 'page' })}>{item.title}</FooterLink>
+                    ) : (
+                      <FooterLink {...(item.path === asPath && { 'aria-current': 'page' })}>{item.title}</FooterLink>
+                    )}
                   </Link>
                 </li>
               )
@@ -63,6 +70,7 @@ export const SiteFooter: React.VFC = () => {
           </small>
         </Copyright>
       </BaseContainer>
+      <SiteReturnToTopButton />
     </Root>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { hoverable } from '~/styles/tools/hoverable'
 
 type SiteDrawerButtonPropsType = {
@@ -13,18 +13,16 @@ export const SiteDrawerButton = React.forwardRef(
     if (type === 'open') {
       return (
         <Button ref={ref} type="button" aria-label="メニューを開く" aria-haspopup="true" onClick={onClick}>
-          <ButtonIcon data-type={type} />
+          <ButtonIcon iconType={type} />
         </Button>
       )
     }
 
-    if (type === 'close') {
-      return (
-        <Button type="button" aria-label="メニューを閉じる" onClick={onClick}>
-          <ButtonIcon data-type={type} />
-        </Button>
-      )
-    }
+    return (
+      <Button type="button" aria-label="メニューを閉じる" onClick={onClick}>
+        <ButtonIcon iconType={type} />
+      </Button>
+    )
   }
 )
 
@@ -43,7 +41,7 @@ const Button = styled.button`
   `)}
 `
 
-const ButtonIcon = styled.span`
+const ButtonIcon = styled.span<{ iconType: 'open' | 'close' }>`
   display: inline-block;
   height: 2px;
   position: relative;
@@ -60,25 +58,26 @@ const ButtonIcon = styled.span`
     top: 0;
   }
 
-  &[data-type='open'] {
-    background-color: currentColor;
+  ${(props) =>
+    props.iconType === 'open'
+      ? css`
+          background-color: currentColor;
 
-    &::before {
-      transform: translateY(-6px);
-    }
+          &::before {
+            transform: translateY(-6px);
+          }
 
-    &::after {
-      transform: translateY(6px);
-    }
-  }
+          &::after {
+            transform: translateY(6px);
+          }
+        `
+      : css`
+          &::before {
+            transform: rotate(45deg);
+          }
 
-  &[data-type='close'] {
-    &::before {
-      transform: rotate(45deg);
-    }
-
-    &::after {
-      transform: rotate(-45deg);
-    }
-  }
+          &::after {
+            transform: rotate(-45deg);
+          }
+        `}
 `

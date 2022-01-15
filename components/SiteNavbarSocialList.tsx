@@ -6,7 +6,7 @@ import { BaseSocialIcon } from '~/components/BaseSocialIcon'
 import { hoverable } from '~/styles/tools/hoverable'
 import { clamp } from '~/styles/tools/clamp'
 
-export const SiteDesktopSocialList: React.VFC = () => {
+export const SiteNavbarSocialList: React.VFC = () => {
   return (
     <Root>
       <li>

@@ -1,16 +1,17 @@
 import React from 'react'
 import { NextPage } from 'next'
 import styled from 'styled-components'
-import { client, PostType, SEOType } from '~/libs/microCMS'
+import { client } from '~/libs/microCMS'
 import { BaseLinkButton } from '~/components/BaseLinkButton'
 import { HomeKeyVisual } from '~/components/HomeKeyVisual'
 import { BaseSection } from '~/components/BaseSection'
 import { PostGrid } from '~/components/PostGrid'
-import { PostCard } from '~/components/PostCard'
+import { BlogArticleCard } from '~/components/BlogArticleCard'
 import { SiteHeadTags } from '~/components/SiteHeadTags'
 import { clamp } from '~/styles/tools/clamp'
 import { SiteMarqueeBlock } from '~/components/SiteMarqueeBlock'
-import { HomeRequestForm } from '~/components/HomeRequestForm'
+import { BaseGrid } from '~/components/BaseGrid'
+import { PostType, SEOType } from '~/types/microCMS'
 
 type HomeAPIType = {
   id: 'home'
@@ -35,8 +36,8 @@ type HomePropsType = {
 const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
   const perPage: number = 6
 
-  const PostCards: JSX.Element[] = posts.slice(0, perPage).map((post) => {
-    return <PostCard key={post.id} api={post} lv={3} />
+  const BlogArticleCards: JSX.Element[] = posts.slice(0, perPage).map((post) => {
+    return <BlogArticleCard key={post.id} api={post} lv={3} />
   })
 
   return (
@@ -44,9 +45,11 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
       <SiteHeadTags title={home.title} image={home.seo.image.url} />
       <HomeKeyVisual image={home.firstview.image} alt={home.firstview.image_alt} />
       <SectionWrapper>
-        <BaseSection title={'posts'}>
-          <PostGrid>{PostCards}</PostGrid>
-          {PostCards.length === perPage && (
+        <BaseSection title={'Posts'}>
+          <BaseGrid gap={clamp(16, 32)} columnMin={'296px'} track={'fill'}>
+            {BlogArticleCards}
+          </BaseGrid>
+          {BlogArticleCards.length === perPage && (
             <ButtonWrapper>
               <BaseLinkButton href={'/blog/'}>投稿をもっと見る</BaseLinkButton>
             </ButtonWrapper>
@@ -56,7 +59,6 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
         <BaseSection title={'Categories'}>
           <div></div>
         </BaseSection>
-        <HomeRequestForm />
       </SectionWrapper>
     </>
   )
@@ -68,7 +70,7 @@ const SectionWrapper = styled.div`
   &::after {
     /* background-color: var(--theme-background-strong); */
     background-image: var(--theme-background-pattern);
-    bottom: 0;
+    bottom: ${clamp(200, 280)};
     content: '';
     left: 0;
     position: absolute;
