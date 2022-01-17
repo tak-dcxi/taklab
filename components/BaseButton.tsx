@@ -4,19 +4,21 @@ import { buttonStyle } from '~/styles/object/buttonStyle'
 
 type BaseButtonPropsType = {
   children: string
+  icon?: React.ReactNode
   type?: 'button' | 'submit' | 'reset'
   disabled?: boolean
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-export const BaseButton: React.VFC<BaseButtonPropsType> = ({ children, type = 'button', disabled, onClick }) => {
+export const BaseButton: React.VFC<BaseButtonPropsType> = ({ children, icon, type = 'button', disabled, onClick }) => {
   return (
-    <MyButton type={type} onClick={onClick} {...(disabled && { disabled, 'aria-disabled': 'true' })}>
+    <Button type={type} onClick={onClick} {...(disabled && { disabled, 'aria-disabled': 'true' })}>
       {children}
-    </MyButton>
+      {icon}
+    </Button>
   )
 }
 
-const MyButton = styled.button`
+const Button = styled.button`
   ${buttonStyle}
 `

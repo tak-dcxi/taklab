@@ -16,23 +16,21 @@ type SiteBreadcrumbsPropsType = {
 
 export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) => {
   return (
-    <MyRoot aria-label="現在位置">
+    <Root aria-label="現在位置">
       <BaseContainer>
-        <MyList itemScope itemType="http://schema.org/BreadcrumbList">
-          <MyListItem itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
+        <List itemScope itemType="http://schema.org/BreadcrumbList">
+          <ListItem itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
             <Link href={'/'} passHref>
               <MyLink itemProp="item">
-                <BaseIcon type={'home'} size={14} />
-                <span className="VisuallyHidden" itemProp="name">
-                  Home
-                </span>
+                <BaseIcon type={'home'} size={`${14 / 16}rem`} />
+                <span itemProp="name">Home</span>
               </MyLink>
             </Link>
-            <MyIcon aria-hidden="true">&gt;</MyIcon>
+            <Chevron aria-hidden="true">&gt;</Chevron>
             <meta itemProp="position" content="1" />
-          </MyListItem>
+          </ListItem>
           {items.map(({ string, path }, index: number) => (
-            <MyListItem key={index} itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
+            <ListItem key={index} itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
               {items.length - 1 !== index ? (
                 <>
                   <Link href={path} passHref>
@@ -40,7 +38,7 @@ export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) 
                       <span itemProp="name">{string}</span>
                     </MyLink>
                   </Link>
-                  <MyIcon aria-hidden="true">&gt;</MyIcon>
+                  <Chevron aria-hidden="true">&gt;</Chevron>
                   <meta itemProp="position" content={`${index + 2}`} />
                 </>
               ) : (
@@ -51,37 +49,42 @@ export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) 
                   <meta itemProp="position" content={`${index + 2}`} />
                 </>
               )}
-            </MyListItem>
+            </ListItem>
           ))}
-        </MyList>
+        </List>
       </BaseContainer>
-    </MyRoot>
+    </Root>
   )
 }
 
-const MyRoot = styled.nav`
+const Root = styled.nav`
   font-size: var(--fontsize-1);
-  padding: 12px 0;
+  padding: 1em 0;
 `
 
-const MyList = styled.ol`
+const List = styled.ol`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
   margin: -0.1em -0.375em;
 `
 
-const MyListItem = styled.li`
+const ListItem = styled.li`
   margin: 0.1em 0.375em;
 `
 
-const MyIcon = styled.span`
+const Chevron = styled.span`
   margin-left: 0.75em;
 `
 
 const MyLink = styled.a`
   border-bottom: 1px solid var(--color-primary);
   transition: color 0.3s;
+
+  & > svg {
+    margin-right: 0.25em;
+    vertical-align: -0.125em;
+  }
 
   ${hoverable(`
     color: var(--color-primary);

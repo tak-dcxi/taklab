@@ -3,15 +3,15 @@ import type { AppProps } from 'next/app'
 import 'wicg-inert'
 import smoothscroll from 'smoothscroll-polyfill'
 import { scrollBehavior } from '~/libs/scrollBehavior'
-import { SiteLayout } from '~/components/SiteLayout'
 import { SiteScriptTags } from '~/components/SiteScriptTags'
 import { ThemeProvider } from '~/context/ThemeProvider'
+import { SiteStructureTemplate } from '~/components/SiteStructureTemplate'
 
 const App: React.VFC<AppProps> = ({ Component, pageProps, router }) => {
   useEffect(() => {
     document.documentElement.classList.remove('no-js')
 
-    const loadCDN = (src: string, integrity: string) => {
+    const loadCDN = (src: string, integrity: string): void => {
       const script: HTMLScriptElement = document.createElement('script')
       script.src = src
       script.integrity = integrity
@@ -38,6 +38,7 @@ const App: React.VFC<AppProps> = ({ Component, pageProps, router }) => {
     const handleRouteChange = (): void => {
       const main: HTMLElement = document.getElementById('main')
       main.focus()
+      window.scrollTo(0, 0)
     }
 
     router.events.on('routeChangeComplete', handleRouteChange)
@@ -46,10 +47,10 @@ const App: React.VFC<AppProps> = ({ Component, pageProps, router }) => {
 
   return (
     <ThemeProvider>
-      <SiteScriptTags />
-      <SiteLayout>
+      <SiteStructureTemplate>
+        <SiteScriptTags />
         <Component {...pageProps} />
-      </SiteLayout>
+      </SiteStructureTemplate>
     </ThemeProvider>
   )
 }

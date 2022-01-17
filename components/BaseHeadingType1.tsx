@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { clamp } from '~/styles/tools/clamp'
 
 type BaseHeadingPropsType = {
   children: string
@@ -10,17 +11,17 @@ type BaseHeadingPropsType = {
 export const BaseHeadingType1: React.VFC<BaseHeadingPropsType> = ({ children, lv, id }) => {
   return (
     <>
-      {lv === 1 && <MyH1 id={id}>{children}</MyH1>}
-      {lv === 2 && <MyH2 id={id}>{children}</MyH2>}
-      {lv === 3 && <MyH3 id={id}>{children}</MyH3>}
-      {lv === 4 && <MyH4 id={id}>{children}</MyH4>}
+      {lv === 1 && <H1 id={id}>{children}</H1>}
+      {lv === 2 && <H2 id={id}>{children}</H2>}
+      {lv === 3 && <H3 id={id}>{children}</H3>}
+      {lv === 4 && <H4 id={id}>{children}</H4>}
     </>
   )
 }
 
-const MyH1 = styled.h1`
+const H1 = styled.h1`
   font-family: var(--font-montserrat);
-  font-size: max(var(--fontsize-6), min(1.3519rem + 0.7407vw, var(--fontsize-7))); /* clamp() */
+  font-size: ${clamp(24, 32, true)};
   letter-spacing: 0.02em;
   line-height: var(--leading-tight);
   min-height: 0.01vw; /* Safariにてfont-size:clamp()がリサイズ時に動かないバグを解消する */
@@ -37,6 +38,6 @@ const MyH1 = styled.h1`
   }
 `
 
-const MyH2 = MyH1.withComponent('h2')
-const MyH3 = MyH1.withComponent('h3')
-const MyH4 = MyH1.withComponent('h4')
+const H2 = H1.withComponent('h2')
+const H3 = H1.withComponent('h3')
+const H4 = H1.withComponent('h4')

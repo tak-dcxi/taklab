@@ -2,7 +2,7 @@ import { NextRouter, useRouter } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
-import { meta } from '~/constant/meta'
+import { config } from '~/site.config'
 import { hoverable } from '~/styles/tools/hoverable'
 import { BaseSocialIcon } from './BaseSocialIcon'
 
@@ -15,14 +15,14 @@ type ItemsType = {
   label: string
   href: string
   color: string
-}[]
+}
 
 export const SiteShareButton: React.VFC<SiteShareButtonPropsType> = ({ title }) => {
   const router: NextRouter = useRouter()
   const path: string = router.asPath
-  const currentURL: string = meta.baseURL + path
+  const currentURL: string = config.baseURL + path
 
-  const items: ItemsType = [
+  const items: ItemsType[] = [
     {
       id: 'twitter',
       label: 'Twitterでシェアする',
@@ -69,16 +69,16 @@ export const SiteShareButton: React.VFC<SiteShareButtonPropsType> = ({ title }) 
   }
 
   return (
-    <MyRoot>
-      <MyHeader>
+    <Root>
+      <Header>
         <span aria-hidden="true">＼</span>Share<span aria-hidden="true">／</span>
-      </MyHeader>
+      </Header>
       <dd>
-        <MyList>
-          {items.map((item) => {
+        <List>
+          {items.map((item: ItemsType) => {
             return (
               <li key={item.id}>
-                <MyButton
+                <Button
                   type="button"
                   aria-label={item.label}
                   onClick={(event) => {
@@ -88,23 +88,23 @@ export const SiteShareButton: React.VFC<SiteShareButtonPropsType> = ({ title }) 
                   backgroundColor={item.color}
                 >
                   <BaseSocialIcon type={item.id} size={18} color={'currentColor'} presentation />
-                </MyButton>
+                </Button>
               </li>
             )
           })}
-        </MyList>
+        </List>
       </dd>
-    </MyRoot>
+    </Root>
   )
 }
 
-const MyRoot = styled.dl`
+const Root = styled.dl`
   & > * + * {
     margin-top: 16px;
   }
 `
 
-const MyHeader = styled.dt`
+const Header = styled.dt`
   font-family: var(--font-montserrat);
   text-align: center;
   text-transform: uppercase;
@@ -114,7 +114,7 @@ const MyHeader = styled.dt`
   }
 `
 
-const MyList = styled.ul`
+const List = styled.ul`
   display: grid;
   gap: 2px;
   grid-template-columns: repeat(3, 1fr);
@@ -124,13 +124,13 @@ const MyList = styled.ul`
   }
 `
 
-const MyButton = styled.button<{ backgroundColor: string }>`
+const Button = styled.button<{ backgroundColor: string }>`
   align-items: center;
   background-color: ${(props) => props.backgroundColor};
   color: var(--color-grayscale-7);
   display: inline-flex;
   justify-content: center;
-  padding: 12px 0;
+  padding: ${12 / 16}rem;
   transition: opacity 0.3s;
   width: 100%;
 

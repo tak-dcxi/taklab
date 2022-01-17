@@ -1,5 +1,6 @@
 import { css } from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
+import { clamp } from '../tools/clamp'
 
 export const document = css`
   html {
@@ -23,7 +24,7 @@ export const document = css`
   body {
     background-color: var(--theme-background-default);
     color: var(--theme-text-default);
-    font-size: var(--fontsize-2);
+    font-size: ${14 / 16}rem;
     font-weight: normal;
     height: 100%;
     line-height: var(--leading-normal);

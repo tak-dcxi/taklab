@@ -1,36 +1,43 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 import { GlobalStyle } from '~/styles/global'
 
-type MyDocumentProps = {
-  styleTags: string
-}
-export default class MyDocument extends Document<MyDocumentProps> {
-  static async getInitialProps({ renderPage }) {
+export default class MyDocument extends Document {
+  static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()
+    const originalRenderPage = ctx.renderPage
 
-    const page = renderPage(
-      (App) => (props) =>
-        sheet.collectStyles(
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) =>
+            sheet.collectStyles(
+              <>
+                <GlobalStyle />
+                <App {...props} />
+              </>
+            ),
+        })
+
+      const initialProps = await Document.getInitialProps(ctx)
+      return {
+        ...initialProps,
+        styles: (
           <>
-            <GlobalStyle />
-            <App {...props} />
+            {initialProps.styles}
+            {sheet.getStyleElement()}
           </>
-        )
-    )
-
-    const styleTags = sheet.getStyleElement()
-
-    return { ...page, styleTags }
+        ),
+      }
+    } finally {
+      sheet.seal()
+    }
   }
 
   render() {
     return (
       <Html className="no-js" lang="ja">
-        <Head prefix="og: http://ogp.me/ns#">
-          <meta charSet="utf-8" />
-          {this.props.styleTags}
-        </Head>
+        <Head prefix="og: http://ogp.me/ns#"></Head>
         <body>
           <Main />
           <NextScript />

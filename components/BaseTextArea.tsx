@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import styled from 'styled-components'
+import { formFieldStyle } from '~/styles/object/formFieldStyle'
 
 export type BaseTextAreaPropsType = {
   id?: string
@@ -34,12 +35,14 @@ export const BaseTextArea = React.forwardRef<HTMLTextAreaElement, BaseTextAreaPr
     const dummyRef = useRef<HTMLSpanElement>(null)
 
     const handleInput = (event: React.FormEvent<HTMLTextAreaElement>) => {
+      if (!dummyRef.current) return
+
       dummyRef.current.textContent = event.currentTarget.value + '\u200b'
     }
 
     return (
-      <MyWrapper>
-        <MyInput
+      <Wrapper>
+        <Input
           ref={ref}
           id={id}
           title={title}
@@ -52,51 +55,69 @@ export const BaseTextArea = React.forwardRef<HTMLTextAreaElement, BaseTextAreaPr
           {...(required && { 'aria-required': 'true' })}
           {...(disabled && { disabled, 'aria-disabled': 'true' })}
         />
-        <MyDummy ref={dummyRef} aria-hidden="true" />
-      </MyWrapper>
+        <Dummy ref={dummyRef} aria-hidden="true" />
+      </Wrapper>
     )
   }
 )
 
-const MyWrapper = styled.span`
+const Wrapper = styled.span`
+  background-color: var(--theme-textfield-background);
   display: block;
-  font-size: max(var(--fontsize-3), 16px);
+  min-height: ${240 / 16}rem;
   position: relative;
 `
 
-const MyInput = styled.textarea`
+const Input = styled.textarea`
+
+  --this-scale: 0.875;
+
   appearance: none;
-  background-color: var(--color-grayscale-7);
-  border: 1px solid var(--color-grayscale-5);
+  background-color: transparent;
+  border: 0;
   border-radius: 0;
+  box-shadow: inset 0 0 0 2px var(--theme-divider);
   display: block;
-  font: inherit;
-  height: 100%;
-  left: 0;
+  font-size: max(1rem, 16px);
+  height: calc(100% / var(--this-scale));
   overflow: hidden;
-  padding: 12px;
-  position: absolute;
-  resize: none;
-  top: 0;
-  width: 100%;
+  padding: 1em;
+  transform: scale(var(--this-scale));
+  transform-origin: top left;
+  width: calc(100% / var(--this-scale));
+
+  &:not(:only-child) {
+    left: 0;
+    position: absolute;
+    resize: none;
+    top: 0;
+  }
+
+  &::-webkit-input-placeholder {
+    color: var(--color-grayscale-3);
+  }
+
+  &::placeholder {
+    color: var(--color-grayscale-3);
+  }
 
   &[aria-invalid='true'] {
-    border-color: var(--invalid-color);
+    box-shadow: inset 0 0 0 2px var(--color-accent-1);
   }
 
   &:focus {
-    border-color: var(--active-color);
+    box-shadow: inset 0 0 0 2px var(--color-primary);
     outline: 0;
   }
 `
 
-const MyDummy = styled.span`
+const Dummy = styled.span`
   border: 1px solid;
   display: block;
-  min-height: ${240 / 16}rem;
+  font-size: max(var(--fontsize-2), 14px);
   overflow: hidden;
   overflow-wrap: break-word;
-  padding: 12px;
+  padding: 1em;
   visibility: hidden;
   white-space: pre-wrap;
   word-wrap: break-word;

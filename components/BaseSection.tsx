@@ -10,19 +10,19 @@ type BaseSectionPropsType = {
 
 export const BaseSection: React.VFC<BaseSectionPropsType> = ({ title, children }) => {
   return (
-    <MySection>
+    <Section>
       <BaseContainer>
         <BaseHeadingType1 id={`${title.toLowerCase().replace(/\s+/g, '_')}`} lv={2}>
           {title}
         </BaseHeadingType1>
         {children}
       </BaseContainer>
-    </MySection>
+    </Section>
   )
 }
 
-const MySection = styled.section`
-  padding: var(--contents-block-padding); /* clamp() */
+const Section = styled.section`
+  padding: var(--padding-block-contents) 0; /* clamp() */
 
   & > * > * + * {
     margin-top: 56px;

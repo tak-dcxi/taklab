@@ -2,21 +2,26 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { createPortal } from 'react-dom'
-import styled, { keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import { Transition } from 'react-transition-group'
-import { menu } from '~/constant/menu'
+import { menu, MenuType } from '~/constant/menu'
 import { social } from '~/constant/social'
 import { hoverable } from '~/styles/tools/hoverable'
 import { BaseIcon } from '~/components/BaseIcon'
 import { BaseSocialIcon } from '~/components/BaseSocialIcon'
 import { SiteDrawerButton } from '~/components/SiteDrawerToggler'
 import { useTheme } from '~/context/ThemeProvider'
+import { clamp } from '~/styles/tools/clamp'
+import { fadeIn, fadeOut, slideInRight, slideOutRight } from '~/styles/settings/keyframes'
+
+type CommonPropsType = {
+  expanded: boolean
+}
 
 type SiteDrawerBodyPropsType = {
-  expanded: boolean
   opener: { current: HTMLButtonElement }
   onClose: () => void
-}
+} & CommonPropsType
 
 const duration: number = 400
 
@@ -55,88 +60,92 @@ export const SiteDrawerBody = React.forwardRef(
 
     return createPortal(
       <Transition in={expanded} timeout={duration} unmountOnExit nodeRef={ref}>
-        <MyRoot
-          ref={ref}
-          role="dialog"
-          aria-modal="true"
-          aria-label="折りたたみメニュー"
-          tabIndex={-1}
-          data-drawer-transition={expanded ? 'enter' : 'exit'}
-        >
-          <MyContainer>
-            <MyContents>
-              <MyList>
-                {menu.map((item, index) => {
+        <Root ref={ref} role="dialog" aria-modal="true" aria-label="折りたたみメニュー" tabIndex={-1}>
+          <Container {...{ expanded }}>
+            <Contents>
+              <List>
+                {menu.map((item: MenuType, index: number) => {
+                  const isBlogPage = /\/blog\/.+$/.test(asPath) || item.path === asPath
+
                   return (
                     <li key={index}>
                       <Link href={item.path} passHref>
-                        <MyLink onClick={() => onClose()} {...(item.path === asPath && { 'aria-current': 'page' })}>
-                          <MyPrimaryLabel style={{ textTransform: 'uppercase' }} lang="en" translate="no">
-                            {item.title}
-                          </MyPrimaryLabel>
-                          <MySecondaryLabel>{item.subtitle}</MySecondaryLabel>
-                        </MyLink>
+                        {item.id === 'blog' ? (
+                          <MyLink onClick={() => onClose()} {...(isBlogPage && { 'aria-current': 'page' })}>
+                            <PrimaryLabel style={{ textTransform: 'uppercase' }} lang="en" translate="no">
+                              {item.title}
+                            </PrimaryLabel>
+                            <SecondaryLabel>{item.subtitle}</SecondaryLabel>
+                          </MyLink>
+                        ) : (
+                          <MyLink onClick={() => onClose()} {...(item.path === asPath && { 'aria-current': 'page' })}>
+                            <PrimaryLabel style={{ textTransform: 'uppercase' }} lang="en" translate="no">
+                              {item.title}
+                            </PrimaryLabel>
+                            <SecondaryLabel>{item.subtitle}</SecondaryLabel>
+                          </MyLink>
+                        )}
                       </Link>
                     </li>
                   )
                 })}
-              </MyList>
-              <MyGroupList>
-                <dt>Follow Me</dt>
-                <dd>
-                  <MySocialLink href={social.twitter.url} translate="no">
+              </List>
+              <GroupList>
+                <GroupListTitle>Follow Me</GroupListTitle>
+                <GroupListItem>
+                  <SocialLink href={social.twitter.url} translate="no">
                     <BaseSocialIcon type="twitter" size={20} presentation />
                     Twitter
-                  </MySocialLink>
-                </dd>
-                <dd>
-                  <MySocialLink href={social.zenn.url} translate="no">
+                  </SocialLink>
+                </GroupListItem>
+                <GroupListItem>
+                  <SocialLink href={social.zenn.url} translate="no">
                     <BaseSocialIcon type="zenn" size={20} presentation />
                     Zenn
-                  </MySocialLink>
-                </dd>
-                <dd>
-                  <MySocialLink href={social.note.url} translate="no">
+                  </SocialLink>
+                </GroupListItem>
+                <GroupListItem>
+                  <SocialLink href={social.note.url} translate="no">
                     <BaseSocialIcon type="note" size={20} presentation />
                     note
-                  </MySocialLink>
-                </dd>
-                <dd>
-                  <MySocialLink href={social.rss.url} translate="no">
+                  </SocialLink>
+                </GroupListItem>
+                <GroupListItem>
+                  <SocialLink href={social.rss.url} translate="no">
                     <BaseSocialIcon type="rss" size={20} presentation />
                     RSS
-                  </MySocialLink>
-                </dd>
-              </MyGroupList>
-              <MyThemeTogglerWrapper>
-                <MyThemeToggler
+                  </SocialLink>
+                </GroupListItem>
+              </GroupList>
+              <ThemeTogglerWrapper>
+                <ThemeToggler
                   type="button"
                   title={`現在のテーマは${colorMode === 'dark' ? 'ダークモード' : 'ライトモード'}です`}
                   onClick={setColorMode}
                 >
-                  <MyThemeIcon data-type={colorMode === 'dark' ? 'dark' : 'light'}>
-                    <span>
-                      <BaseIcon type="sun" size={20} />
-                      <BaseIcon type="moon" size={20} />
-                    </span>
-                  </MyThemeIcon>
+                  <ThemeIconWrapper>
+                    <ThemeIcon current={colorMode === 'dark' ? 'dark' : 'light'}>
+                      <BaseIcon type="sun" size={`${20 / 16}rem`} />
+                      <BaseIcon type="moon" size={`${20 / 16}rem`} />
+                    </ThemeIcon>
+                  </ThemeIconWrapper>
                   Theme
-                </MyThemeToggler>
-              </MyThemeTogglerWrapper>
-            </MyContents>
-            <MyButtonWrapper>
+                </ThemeToggler>
+              </ThemeTogglerWrapper>
+            </Contents>
+            <ButtonWrapper>
               <SiteDrawerButton type="close" onClick={handleClose} />
-            </MyButtonWrapper>
-          </MyContainer>
-          <MyOverlay onClick={handleClose} />
-        </MyRoot>
+            </ButtonWrapper>
+          </Container>
+          <Overlay onClick={handleClose} {...{ expanded }} />
+        </Root>
       </Transition>,
       document.body
     )
   }
 )
 
-const MyRoot = styled.div`
+const Root = styled.div`
   bottom: 0;
   left: 0;
   overflow: hidden;
@@ -145,30 +154,8 @@ const MyRoot = styled.div`
   top: 0;
 `
 
-const enterMenu = keyframes`
-  0% {
-    transform: translateX(100%);
-  }
-
-  100% {
-    transform: translateX(0);
-  }
-`
-
-const exitMenu = keyframes`
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(100%);
-  }
-`
-
-const MyContainer = styled.div`
-  animation-duration: ${duration}ms;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
+const Container = styled.div<CommonPropsType>`
+  animation: ${(props) => (props.expanded ? slideInRight : slideOutRight)} ${duration}ms ease-out both;
   background-color: var(--theme-drawer-background);
   bottom: 0;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -178,24 +165,16 @@ const MyContainer = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-  width: max(280px, min(14.537rem + 14.8148vw, 440px));
+  width: ${clamp(280, 440)};
   z-index: 1;
-
-  [data-drawer-transition='enter'] & {
-    animation-name: ${enterMenu};
-  }
-
-  [data-drawer-transition='exit'] & {
-    animation-name: ${exitMenu};
-  }
 `
 
-const MyContents = styled.div`
+const Contents = styled.div`
   flex: 1;
   overflow-y: auto;
 `
 
-const MyList = styled.ul`
+const List = styled.ul`
   border-bottom: 2px solid var(--theme-drawer-divider);
 
   & > li + li {
@@ -217,8 +196,8 @@ const MyLink = styled.a`
     transition: background-color 0.3s;
 
     &::after {
-      border-right: 2px solid var(--theme-text-weak);
-      border-top: 2px solid var(--theme-text-weak);
+      border-right: 2px solid var(--theme-text-muted);
+      border-top: 2px solid var(--theme-text-muted);
       bottom: 0;
       content: '';
       display: inline-block;
@@ -237,52 +216,52 @@ const MyLink = styled.a`
   }
 `
 
-const MyPrimaryLabel = styled.span`
+const PrimaryLabel = styled.span`
   display: block;
   font-family: var(--font-montserrat);
 `
 
-const MySecondaryLabel = styled.span`
-  color: var(--theme-text-weak);
+const SecondaryLabel = styled.span`
+  color: var(--theme-text-muted);
   display: block;
   font-size: max(var(--fontsize-1), 10px);
 `
 
-const MyButtonWrapper = styled.div`
+const ButtonWrapper = styled.div`
   border-bottom: var(--theme-drawer-divider) 1px solid;
   display: flex;
   justify-content: flex-end;
   order: -1;
 `
 
-const MyGroupList = styled.dl`
+const GroupList = styled.dl`
   border-bottom: 2px solid var(--theme-drawer-divider);
   font-family: var(--font-montserrat);
-
-  & > dt {
-    padding: 16px 24px;
-    text-transform: uppercase;
-  }
-
-  & > dd {
-    border-top: 1px dashed var(--theme-drawer-divider);
-  }
 `
 
-const MySocialLink = styled.a`
+const GroupListTitle = styled.dt`
+  padding: 16px 24px;
+  text-transform: uppercase;
+`
+
+const GroupListItem = styled.dd`
+  border-top: 1px dashed var(--theme-drawer-divider);
+`
+
+const SocialLink = styled.a`
   align-items: center;
   display: flex;
   padding: 16px 24px;
   position: relative;
   transition: background-color 0.3s;
 
-  & > svg {
+  & .BaseSocialIcon {
     margin-right: 1em;
   }
 
   &::after {
-    border-right: 2px solid var(--theme-text-weak);
-    border-top: 2px solid var(--theme-text-weak);
+    border-right: 2px solid var(--theme-text-muted);
+    border-top: 2px solid var(--theme-text-muted);
     bottom: 0;
     content: '';
     display: inline-block;
@@ -300,11 +279,11 @@ const MySocialLink = styled.a`
   `)}
 `
 
-const MyThemeTogglerWrapper = styled.p`
+const ThemeTogglerWrapper = styled.p`
   border-bottom: 2px solid var(--theme-drawer-divider);
 `
 
-const MyThemeToggler = styled.button`
+const ThemeToggler = styled.button`
   align-items: center;
   display: flex;
   font-family: var(--font-montserrat);
@@ -318,54 +297,31 @@ const MyThemeToggler = styled.button`
   `)}
 `
 
-const MyThemeIcon = styled.span`
+const ThemeIconWrapper = styled.span`
   display: inline-block;
   height: ${20 / 16}em;
   margin-right: 1em;
   overflow: hidden;
   width: ${20 / 16}em;
+`
 
-  & > span {
+const ThemeIcon = styled.span<{ current: 'dark' | 'light' }>`
+  display: block;
+  transition: transform 0.3s ease-out;
+
+  & .BaseIcon {
     display: block;
-    transition: transform 0.3s ease-out;
   }
 
-  &[data-type='dark'] {
-    & > span {
+  ${(props) =>
+    props.current === 'dark' &&
+    css`
       transform: translateY(${(20 / 16) * -1}em);
-    }
-  }
-
-  & svg {
-    display: block;
-    height: ${20 / 16}em;
-    width: ${20 / 16}em;
-  }
+    `}
 `
 
-const enterOverlay = keyframes`
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-`
-
-const exitOverlay = keyframes`
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-`
-
-const MyOverlay = styled.div`
-  animation-duration: ${duration}ms;
-  animation-fill-mode: forwards;
+const Overlay = styled.div<CommonPropsType>`
+  animation: ${(props) => (props.expanded ? fadeIn : fadeOut)} ${duration}ms both;
   backdrop-filter: blur(2px);
   background-color: rgba(0, 0, 0, 0.7);
   bottom: 0;
@@ -373,12 +329,4 @@ const MyOverlay = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-
-  [data-drawer-transition='enter'] & {
-    animation-name: ${enterOverlay};
-  }
-
-  [data-drawer-transition='exit'] & {
-    animation-name: ${exitOverlay};
-  }
 `

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { NextRouter, useRouter } from 'next/router'
-import { meta } from '~/constant/meta'
 import { debounce } from 'lodash'
+import { useTheme } from '~/context/ThemeProvider'
+import { config } from '~/site.config'
 
 type SiteHeadTagsPropsType = {
   title?: string
@@ -11,35 +12,46 @@ type SiteHeadTagsPropsType = {
   isErrorPage?: boolean
 }
 
+type ViewportType = 'width=device-width,initial-scale=1' | 'width=360'
+
+type ColorShemeType = 'light' | 'dark' | 'light dark'
+
 export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
-  title = meta.siteName,
-  description = meta.description,
-  image = `${meta.baseURL}/ogp.png`,
+  title = config.siteMeta.title,
+  description = config.siteMeta.description,
+  image = `${config.baseURL}/ogp.png`,
   isErrorPage,
 }) => {
   const router: NextRouter = useRouter()
   const path: string = router.asPath
-  const currentURL: string = meta.baseURL + path
-  const [viewport, setViewport] = useState<string>('width=device-width,initial-scale=1')
+  const currentURL: string = config.baseURL + path
+
+  const [viewport, setViewport] = useState<ViewportType>('width=device-width,initial-scale=1')
+  const [colorScheme, setColorScheme] = useState<ColorShemeType>('light dark')
+  const { colorMode } = useTheme()
 
   useEffect(() => {
     const handleResize = (): void => {
-      const value: string = window.outerWidth > 360 ? 'width=device-width,initial-scale=1' : 'width=360'
+      const value: ViewportType = window.outerWidth > 360 ? 'width=device-width,initial-scale=1' : 'width=360'
       if (viewport !== value) setViewport(value)
     }
 
     window.addEventListener(
       'resize',
-      debounce(() => handleResize())
+      debounce(() => handleResize(), 1000)
     )
     handleResize()
 
     return () => window.removeEventListener('resize', handleResize)
   }, [viewport])
 
+  useEffect(() => {
+    setColorScheme(colorMode === 'dark' ? 'dark' : 'light')
+  }, [colorMode])
+
   return (
     <Head>
-      <title>{title}</title>
+      <title>{path === '/' ? title : `${title} | ${config.siteMeta.title}`}</title>
       <meta name="viewport" content={viewport} />
       <meta name="description" content={description} />
       <meta name="format-detection" content="email=no,telephone=no,address=no" />
@@ -53,7 +65,7 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
           <meta property="og:title" content={title} />
           <meta property="og:url" content={currentURL} />
           <meta property="og:description" content={description} />
-          <meta property="og:site_name" content={meta.siteName} />
+          <meta property="og:site_name" content={config.siteMeta.title} />
           <meta property="og:image" content={image} />
           <meta property="og:locale" content="ja_JP" />
           <meta name="twitter:card" content="summary" />
@@ -67,6 +79,7 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
       <link rel="manifest" href="/site.webmanifest" />
       <meta name="msapplication-TileColor" content="#2f2f2f" />
       <meta name="theme-color" content="#019bb6" />
+      <meta name="color-scheme" content={colorScheme} />
 
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

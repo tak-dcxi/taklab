@@ -1,34 +1,34 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { hoverable } from '~/styles/tools/hoverable'
 
-type SiteDrawerButtonPropsType = {
+type CommonPropsType = {
   type: 'open' | 'close'
-  setExpanded?: (isExpanded: boolean) => void
-  onClick?: () => void
 }
+
+type SiteDrawerButtonPropsType = {
+  onClick?: () => void
+} & CommonPropsType
 
 export const SiteDrawerButton = React.forwardRef(
   ({ type, onClick }: SiteDrawerButtonPropsType, ref: React.Ref<HTMLButtonElement>) => {
     if (type === 'open') {
       return (
-        <MyButton ref={ref} type="button" aria-label="メニューを開く" aria-haspopup="true" onClick={onClick}>
-          <MyButtonIcon data-type={type} />
-        </MyButton>
+        <Button ref={ref} type="button" aria-label="メニューを開く" aria-haspopup="true" onClick={onClick}>
+          <ButtonIcon {...{ type }} />
+        </Button>
       )
     }
 
-    if (type === 'close') {
-      return (
-        <MyButton type="button" aria-label="メニューを閉じる" onClick={onClick}>
-          <MyButtonIcon data-type={type} />
-        </MyButton>
-      )
-    }
+    return (
+      <Button type="button" aria-label="メニューを閉じる" onClick={onClick}>
+        <ButtonIcon {...{ type }} />
+      </Button>
+    )
   }
 )
 
-const MyButton = styled.button`
+const Button = styled.button`
   align-items: center;
   background-color: var(--theme-button-background);
   color: var(--color-grayscale-7);
@@ -43,7 +43,7 @@ const MyButton = styled.button`
   `)}
 `
 
-const MyButtonIcon = styled.span`
+const ButtonIcon = styled.span<CommonPropsType>`
   display: inline-block;
   height: 2px;
   position: relative;
@@ -60,25 +60,26 @@ const MyButtonIcon = styled.span`
     top: 0;
   }
 
-  &[data-type='open'] {
-    background-color: currentColor;
+  ${(props) =>
+    props.type === 'open'
+      ? css`
+          background-color: currentColor;
 
-    &::before {
-      transform: translateY(-6px);
-    }
+          &::before {
+            transform: translateY(-6px);
+          }
 
-    &::after {
-      transform: translateY(6px);
-    }
-  }
+          &::after {
+            transform: translateY(6px);
+          }
+        `
+      : css`
+          &::before {
+            transform: rotate(45deg);
+          }
 
-  &[data-type='close'] {
-    &::before {
-      transform: rotate(45deg);
-    }
-
-    &::after {
-      transform: rotate(-45deg);
-    }
-  }
+          &::after {
+            transform: rotate(-45deg);
+          }
+        `}
 `

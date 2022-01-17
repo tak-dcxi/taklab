@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { clamp } from '~/styles/tools/clamp'
 
 type SubpageHeaderPropsType = {
   headline: string
@@ -7,24 +8,24 @@ type SubpageHeaderPropsType = {
 
 export const SubpageHeader: React.VFC<SubpageHeaderPropsType> = ({ headline }) => {
   return (
-    <MyRoot>
-      <MyHeadline>{headline}</MyHeadline>
-    </MyRoot>
+    <Root>
+      <Headline>{headline}</Headline>
+    </Root>
   )
 }
 
-const MyRoot = styled.header`
+const Root = styled.header`
   background-image: var(--theme-background-pattern);
   border-bottom: 1px solid var(--theme-divider);
   border-top: 1px solid var(--theme-divider);
   display: grid;
   font-family: var(--font-montserrat);
-  min-height: max(220px, min(8.0556rem + 22.2222vw, 440px));
+  min-height: ${clamp(220, 440)};
   place-items: center;
 `
 
-const MyHeadline = styled.h1`
-  font-size: max(1.75rem, min(1.4537rem + 1.4815vw, 2.75rem));
+const Headline = styled.h1`
+  font-size: ${clamp(28, 44, true)};
   font-weight: bold;
   padding: 32px;
   text-transform: uppercase;

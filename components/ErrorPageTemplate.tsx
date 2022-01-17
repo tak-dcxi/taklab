@@ -23,11 +23,11 @@ export const ErrorPageTemplate: React.VFC<ErrorPageTemplatePropsType> = ({ statu
   return (
     <>
       <SiteHeadTags title={title} isErrorPage />
-      <SubpageHeader headline={title} />
       <SiteBreadcrumbs items={breadcrumbs} />
+      <SubpageHeader headline={title} />
       <BaseContainer>
-        <MyContents>
-          <MySentence>
+        <Contents>
+          <Sentence>
             <p className="emoji" role="img" aria-label="ごめんなさい">
               🙇‍♂️
             </p>
@@ -38,25 +38,25 @@ export const ErrorPageTemplate: React.VFC<ErrorPageTemplatePropsType> = ({ statu
             )}
             <BaseTweetEmbed id={'1265338592584327169'} />
             <p>過去にこんなツイートがバズりました。</p>
-          </MySentence>
-          <MyButtonWrapper>
+          </Sentence>
+          <ButtonWrapper>
             <BaseLinkButton href={'/'}>トップページへ進む</BaseLinkButton>
-          </MyButtonWrapper>
-        </MyContents>
+          </ButtonWrapper>
+        </Contents>
       </BaseContainer>
     </>
   )
 }
 
-const MyContents = styled.div`
-  padding: var(--contents-block-padding);
+const Contents = styled.div`
+  padding: var(--padding-block-contents) 0;
 
   & > * + * {
     margin-top: 48px;
   }
 `
 
-const MySentence = styled.div`
+const Sentence = styled.div`
   line-height: var(--leading-loose);
   text-align: center;
 
@@ -76,7 +76,7 @@ const MySentence = styled.div`
   }
 `
 
-const MyButtonWrapper = styled.p`
+const ButtonWrapper = styled.p`
   display: flex;
   justify-content: center;
 `

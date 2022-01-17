@@ -1,23 +1,28 @@
 import React from 'react'
 import styled from 'styled-components'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuid } from 'uuid'
+
+type CommonPropsType = {
+  size?: number
+}
 
 type BaseSocialIconPropsType = {
   color?: string
-  size?: number
   type: 'twitter' | 'facebook' | 'github' | 'zenn' | 'note' | 'rss' | 'line' | 'pocket' | 'hatena' | 'feedly'
   presentation?: boolean
-}
+} & CommonPropsType
 
 export const BaseSocialIcon: React.VFC<BaseSocialIconPropsType> = ({ color, size = 100, type, presentation }) => {
-  const randomID: string = uuidv4()
+  const randomID: string = uuid()
 
   return (
-    <MySVGtag
-      width={size}
-      height={size}
+    <SVGtag
+      className="BaseSocialIcon"
+      width="24"
+      height="24"
       viewBox="0 0 100 100"
       {...(presentation ? { 'aria-hidden': 'true' } : { role: 'img', 'aria-labelledby': randomID })}
+      {...{ size }}
     >
       {type === 'twitter' && (
         <>
@@ -113,16 +118,10 @@ export const BaseSocialIcon: React.VFC<BaseSocialIconPropsType> = ({ color, size
           />
         </>
       )}
-    </MySVGtag>
+    </SVGtag>
   )
 }
 
-type MySVGTagPropsType = {
-  width: number
-  height: number
-}
-
-const MySVGtag = styled.svg<MySVGTagPropsType>`
-  height: ${(props) => props.height / 16}rem;
-  width: ${(props) => props.width / 16}rem;
+const SVGtag = styled.svg<CommonPropsType>`
+  width: ${(props) => props.size / 16}rem;
 `
