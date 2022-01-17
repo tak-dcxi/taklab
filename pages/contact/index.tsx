@@ -13,7 +13,7 @@ const ContactPage: NextPage = () => {
 
   return (
     <SubpageTemplate title={'Contact'} description={description}>
-      <BaseContainer size={'narrow'}>
+      <BaseContainer maxWidth={'var(--max-width-narrow)'}>
         <BaseStack gap={clamp(64, 80)}>
           <WysiwygArea>{description}</WysiwygArea>
           <ContactSubmitForm />

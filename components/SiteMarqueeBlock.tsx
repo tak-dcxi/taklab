@@ -1,5 +1,6 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
+import { slideOutLeft } from '~/styles/settings/keyframes'
 import { clamp } from '~/styles/tools/clamp'
 import { BaseLogo } from './BaseLogo'
 
@@ -25,22 +26,12 @@ export const SiteMarqueeBlock: React.VFC = () => {
   )
 }
 
-const LoopAnimationFirst = keyframes`
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-100%);
-  }
-`
-
 const Wrapper = styled.div`
   display: flex;
 `
 
 const Item = styled.div`
-  animation: ${LoopAnimationFirst} 14s linear infinite;
+  animation: ${slideOutLeft} 14s linear infinite;
   color: var(--theme-text-x-muted);
   flex-shrink: 0;
   padding: 0 max(1.5%, 16px);

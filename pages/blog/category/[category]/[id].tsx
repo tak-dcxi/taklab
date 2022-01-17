@@ -39,8 +39,8 @@ const CategoryArchivePagingPage: NextPage<CategoryPagePropsType> = ({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    fallback: 'blocking',
     paths: [],
+    fallback: 'blocking',
   }
 }
 
@@ -64,6 +64,7 @@ export const getStaticProps: GetStaticProps = async (context: GetStaticPropsCont
       totalCount,
       currentCategory,
     },
+    revalidate: 1,
   }
 }
 

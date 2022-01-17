@@ -12,12 +12,16 @@ import { BaseSocialIcon } from '~/components/BaseSocialIcon'
 import { SiteDrawerButton } from '~/components/SiteDrawerToggler'
 import { useTheme } from '~/context/ThemeProvider'
 import { clamp } from '~/styles/tools/clamp'
+import { fadeIn, fadeOut, slideInRight, slideOutRight } from '~/styles/settings/keyframes'
+
+type CommonPropsType = {
+  expanded: boolean
+}
 
 type SiteDrawerBodyPropsType = {
-  expanded: boolean
   opener: { current: HTMLButtonElement }
   onClose: () => void
-}
+} & CommonPropsType
 
 const duration: number = 400
 
@@ -56,15 +60,8 @@ export const SiteDrawerBody = React.forwardRef(
 
     return createPortal(
       <Transition in={expanded} timeout={duration} unmountOnExit nodeRef={ref}>
-        <Root
-          ref={ref}
-          role="dialog"
-          aria-modal="true"
-          aria-label="折りたたみメニュー"
-          tabIndex={-1}
-          data-drawer-transition={expanded ? 'enter' : 'exit'}
-        >
-          <Container>
+        <Root ref={ref} role="dialog" aria-modal="true" aria-label="折りたたみメニュー" tabIndex={-1}>
+          <Container {...{ expanded }}>
             <Contents>
               <List>
                 {menu.map((item: MenuType, index: number) => {
@@ -94,31 +91,31 @@ export const SiteDrawerBody = React.forwardRef(
                 })}
               </List>
               <GroupList>
-                <dt>Follow Me</dt>
-                <dd>
+                <GroupListTitle>Follow Me</GroupListTitle>
+                <GroupListItem>
                   <SocialLink href={social.twitter.url} translate="no">
                     <BaseSocialIcon type="twitter" size={20} presentation />
                     Twitter
                   </SocialLink>
-                </dd>
-                <dd>
+                </GroupListItem>
+                <GroupListItem>
                   <SocialLink href={social.zenn.url} translate="no">
                     <BaseSocialIcon type="zenn" size={20} presentation />
                     Zenn
                   </SocialLink>
-                </dd>
-                <dd>
+                </GroupListItem>
+                <GroupListItem>
                   <SocialLink href={social.note.url} translate="no">
                     <BaseSocialIcon type="note" size={20} presentation />
                     note
                   </SocialLink>
-                </dd>
-                <dd>
+                </GroupListItem>
+                <GroupListItem>
                   <SocialLink href={social.rss.url} translate="no">
                     <BaseSocialIcon type="rss" size={20} presentation />
                     RSS
                   </SocialLink>
-                </dd>
+                </GroupListItem>
               </GroupList>
               <ThemeTogglerWrapper>
                 <ThemeToggler
@@ -126,12 +123,12 @@ export const SiteDrawerBody = React.forwardRef(
                   title={`現在のテーマは${colorMode === 'dark' ? 'ダークモード' : 'ライトモード'}です`}
                   onClick={setColorMode}
                 >
-                  <ThemeIcon iconType={colorMode === 'dark' ? 'dark' : 'light'}>
-                    <span>
+                  <ThemeIconWrapper>
+                    <ThemeIcon current={colorMode === 'dark' ? 'dark' : 'light'}>
                       <BaseIcon type="sun" size={`${20 / 16}rem`} />
                       <BaseIcon type="moon" size={`${20 / 16}rem`} />
-                    </span>
-                  </ThemeIcon>
+                    </ThemeIcon>
+                  </ThemeIconWrapper>
                   Theme
                 </ThemeToggler>
               </ThemeTogglerWrapper>
@@ -140,7 +137,7 @@ export const SiteDrawerBody = React.forwardRef(
               <SiteDrawerButton type="close" onClick={handleClose} />
             </ButtonWrapper>
           </Container>
-          <Overlay onClick={handleClose} />
+          <Overlay onClick={handleClose} {...{ expanded }} />
         </Root>
       </Transition>,
       document.body
@@ -157,30 +154,8 @@ const Root = styled.div`
   top: 0;
 `
 
-const enterMenu = keyframes`
-  0% {
-    transform: translateX(100%);
-  }
-
-  100% {
-    transform: translateX(0);
-  }
-`
-
-const exitMenu = keyframes`
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(100%);
-  }
-`
-
-const Container = styled.div`
-  animation-duration: ${duration}ms;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
+const Container = styled.div<CommonPropsType>`
+  animation: ${(props) => (props.expanded ? slideInRight : slideOutRight)} ${duration}ms ease-out both;
   background-color: var(--theme-drawer-background);
   bottom: 0;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -192,14 +167,6 @@ const Container = styled.div`
   top: 0;
   width: ${clamp(280, 440)};
   z-index: 1;
-
-  [data-drawer-transition='enter'] & {
-    animation-name: ${enterMenu};
-  }
-
-  [data-drawer-transition='exit'] & {
-    animation-name: ${exitMenu};
-  }
 `
 
 const Contents = styled.div`
@@ -270,15 +237,15 @@ const ButtonWrapper = styled.div`
 const GroupList = styled.dl`
   border-bottom: 2px solid var(--theme-drawer-divider);
   font-family: var(--font-montserrat);
+`
 
-  & > dt {
-    padding: 16px 24px;
-    text-transform: uppercase;
-  }
+const GroupListTitle = styled.dt`
+  padding: 16px 24px;
+  text-transform: uppercase;
+`
 
-  & > dd {
-    border-top: 1px dashed var(--theme-drawer-divider);
-  }
+const GroupListItem = styled.dd`
+  border-top: 1px dashed var(--theme-drawer-divider);
 `
 
 const SocialLink = styled.a`
@@ -288,7 +255,7 @@ const SocialLink = styled.a`
   position: relative;
   transition: background-color 0.3s;
 
-  & > svg {
+  & .BaseSocialIcon {
     margin-right: 1em;
   }
 
@@ -330,56 +297,31 @@ const ThemeToggler = styled.button`
   `)}
 `
 
-const ThemeIcon = styled.span<{ iconType: 'dark' | 'light' }>`
+const ThemeIconWrapper = styled.span`
   display: inline-block;
   height: ${20 / 16}em;
   margin-right: 1em;
   overflow: hidden;
   width: ${20 / 16}em;
+`
 
-  & > span {
-    display: block;
-    transition: transform 0.3s ease-out;
-  }
+const ThemeIcon = styled.span<{ current: 'dark' | 'light' }>`
+  display: block;
+  transition: transform 0.3s ease-out;
 
-  & svg {
+  & .BaseIcon {
     display: block;
-    height: ${20 / 16}em;
-    width: ${20 / 16}em;
   }
 
   ${(props) =>
-    props.iconType === 'dark' &&
+    props.current === 'dark' &&
     css`
-      & > span {
-        transform: translateY(${(20 / 16) * -1}em);
-      }
+      transform: translateY(${(20 / 16) * -1}em);
     `}
 `
 
-const enterOverlay = keyframes`
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-`
-
-const exitOverlay = keyframes`
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-`
-
-const Overlay = styled.div`
-  animation-duration: ${duration}ms;
-  animation-fill-mode: forwards;
+const Overlay = styled.div<CommonPropsType>`
+  animation: ${(props) => (props.expanded ? fadeIn : fadeOut)} ${duration}ms both;
   backdrop-filter: blur(2px);
   background-color: rgba(0, 0, 0, 0.7);
   bottom: 0;
@@ -387,12 +329,4 @@ const Overlay = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-
-  [data-drawer-transition='enter'] & {
-    animation-name: ${enterOverlay};
-  }
-
-  [data-drawer-transition='exit'] & {
-    animation-name: ${exitOverlay};
-  }
 `

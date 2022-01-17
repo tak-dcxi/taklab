@@ -45,7 +45,7 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
       <HomeFirstView image={home.firstview.image} alt={home.firstview.image_alt} />
       <SectionWrapper>
         <BaseSection title={'Posts'}>
-          <BaseGrid gap={clamp(16, 32)} columnMin={'296px'} track={'fill'}>
+          <BaseGrid gap={clamp(16, 32)} columnMin={'280px'} track={'fill'}>
             {BlogArticleCards}
           </BaseGrid>
           {BlogArticleCards.length === perPage && (

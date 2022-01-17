@@ -1,23 +1,26 @@
 import React from 'react'
 import { NextRouter, useRouter } from 'next/router'
-import { client } from '~/libs/microCMS'
+import { getAllBlogs, getBlogById, getContents } from '~/libs/microCMS'
 import { BlogPageCommonTemplate } from '~/components/BlogPageCommonTemplate'
 import { SiteHeadTags } from '~/components/SiteHeadTags'
 import { SiteBreadcrumbs, BreadcrumbsType } from '~/components/SiteBreadcrumbs'
 import ErrorPage from '~/pages/_error'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetStaticPropsContext } from 'next'
 import { generateOgImage } from '~/libs/generateOGP'
 import { BlogArticlePageThumbnail } from '~/components/BlogArticlePageThumbnail'
-import { toStringID } from '~/utils/convertID'
 import { CategoriesType, PostType } from '~/types/microCMS'
+import { BaseContainer } from '~/components/BaseContainer'
+import { MicroCMSContentId, MicroCMSDate } from 'microcms-js-sdk'
+import { WysiwygArea } from '~/components/WysiwygArea'
+import { HTMLParser } from '~/libs/HTMLParser'
 
 type PostDetailsPagePropsType = {
   post: PostType
+  body: string
   categories: CategoriesType[]
-  currentCategory: string
 }
 
-const BlogDetailsPage: React.VFC<PostDetailsPagePropsType> = ({ post, categories }) => {
+const BlogArticlePage: React.VFC<PostDetailsPagePropsType> = ({ post, body, categories }) => {
   const router: NextRouter = useRouter()
 
   if (!router.isFallback && !post?.id) return <ErrorPage statusCode={404} />
@@ -42,43 +45,44 @@ const BlogDetailsPage: React.VFC<PostDetailsPagePropsType> = ({ post, categories
       <SiteBreadcrumbs items={breadcrumbs} />
       <BlogArticlePageThumbnail src={thumbnail} />
       <BlogPageCommonTemplate categories={categories}>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: post.body,
-          }}
-        />
+        <BaseContainer maxWidth={'var(--max-width-narrow)'}>
+          <WysiwygArea>{body}</WysiwygArea>
+        </BaseContainer>
       </BlogPageCommonTemplate>
     </>
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export async function getStaticPaths() {
+  const posts = await getAllBlogs()
+  const ids = posts.contents.map((post: PostType & MicroCMSContentId & MicroCMSDate) => {
+    return { params: { postId: post.id } }
+  })
   return {
+    paths: ids,
     fallback: 'blocking',
-    paths: [],
   }
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export async function getStaticProps(context: GetStaticPropsContext) {
   const { params, previewData } = context
 
-  if (!params?.category || !params?.id) throw new Error('Error: ID not found')
+  if (!params?.postId) throw new Error('Error: ID not found')
 
-  try {
-    const id: string = toStringID(params.id)
-    const data = await client.get({ endpoint: 'blog', contentId: id })
-    const category = await client.get({ endpoint: 'blog-category' })
+  const id: any = params?.postId || '1'
+  const post = await getBlogById(id)
+  const body = HTMLParser(post.body)
+  const { posts, categories } = await getContents()
 
-    return {
-      props: {
-        post: data,
-        categories: category.contents,
-        currentCategory: toStringID(params.category),
-      },
-    }
-  } catch (error) {
-    return { notFound: true }
+  return {
+    props: {
+      post,
+      posts,
+      body,
+      categories,
+    },
+    revalidate: 1,
   }
 }
 
-export default BlogDetailsPage
+export default BlogArticlePage

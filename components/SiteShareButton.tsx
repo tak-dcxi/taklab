@@ -15,14 +15,14 @@ type ItemsType = {
   label: string
   href: string
   color: string
-}[]
+}
 
 export const SiteShareButton: React.VFC<SiteShareButtonPropsType> = ({ title }) => {
   const router: NextRouter = useRouter()
   const path: string = router.asPath
   const currentURL: string = config.baseURL + path
 
-  const items: ItemsType = [
+  const items: ItemsType[] = [
     {
       id: 'twitter',
       label: 'Twitterでシェアする',
@@ -75,7 +75,7 @@ export const SiteShareButton: React.VFC<SiteShareButtonPropsType> = ({ title }) 
       </Header>
       <dd>
         <List>
-          {items.map((item) => {
+          {items.map((item: ItemsType) => {
             return (
               <li key={item.id}>
                 <Button

@@ -16,79 +16,40 @@ type BlogPageCommonTemplatePropsType = {
 
 export const BlogPageCommonTemplate: React.VFC<BlogPageCommonTemplatePropsType> = ({ children, categories }) => {
   return (
-    <BaseContainer>
-      <SidebarWrapper>
-        <Sidebar>
-          <Main>{children}</Main>
-          <Aside>
-            <AsideSection>
-              <BaseHeadingType2 lv={2}>Category</BaseHeadingType2>
-              <CategoryList>
-                {categories.map((category, index) => {
-                  return (
-                    <li key={index}>
-                      <Link href={`/blog/${category.id}`} passHref>
-                        <CategoryLink>
-                          {category.name}
-                          <BaseIcon type={'chevron-right'} size={`${14 / 16}rem`} />
-                        </CategoryLink>
-                      </Link>
-                    </li>
-                  )
-                })}
-              </CategoryList>
-            </AsideSection>
-            <SiteAdSence />
-          </Aside>
-        </Sidebar>
-      </SidebarWrapper>
-    </BaseContainer>
+    <Root>
+      {children}
+      <BaseContainer>
+        <Aside>
+          <BaseHeadingType2 lv={2}>Category</BaseHeadingType2>
+          <CategoryList>
+            {categories.map((category, index) => {
+              return (
+                <li key={index}>
+                  <Link href={`/blog/category/${category.id}/1`} passHref>
+                    <CategoryLink>
+                      {category.name}
+                      <BaseIcon type={'chevron-right'} size={`${14 / 16}rem`} />
+                    </CategoryLink>
+                  </Link>
+                </li>
+              )
+            })}
+          </CategoryList>
+        </Aside>
+      </BaseContainer>
+    </Root>
   )
 }
 
-const size: { [key: string]: string } = {
-  gap: 'max(7.5%, 64px)',
-  aside: '280px',
-}
-
-const SidebarWrapper = styled.div`
+const Root = styled.div`
   padding: var(--padding-block-contents) 0;
 `
 
-const Sidebar = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: calc((${size.gap} / 2) * -1);
-`
-
-const Main = styled.div`
-  flex-basis: 0;
-  flex-grow: 9999;
-  margin: calc(${size.gap} / 2);
-  min-width: calc(100% - ${size.gap});
-
-  @media ${breakpoints.sm} {
-    min-width: calc(480px - ${size.gap});
-  }
-
-  @media ${breakpoints.md} {
-    min-width: calc(640px - ${size.gap});
-  }
-`
-
 const Aside = styled.div`
-  flex-basis: ${size.aside};
-  flex-grow: 1;
-  margin: calc(${size.gap} / 2);
+  margin-top: 64px;
 
   & > * + * {
     margin-top: 48px;
-  }
-`
-
-const AsideSection = styled.section`
-  & > * + * {
-    margin-top: 16px;
   }
 `
 

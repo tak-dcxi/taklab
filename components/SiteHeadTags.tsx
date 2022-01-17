@@ -38,7 +38,7 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
 
     window.addEventListener(
       'resize',
-      debounce(() => handleResize(), 300)
+      debounce(() => handleResize(), 1000)
     )
     handleResize()
 

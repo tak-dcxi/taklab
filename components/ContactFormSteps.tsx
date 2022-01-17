@@ -32,6 +32,7 @@ const List = styled.ol`
 `
 
 const Item = styled.li`
+  font-size: ${14 / 16}rem;
   text-align: center;
 
   &[aria-current] {
@@ -47,6 +48,7 @@ const Number = styled.span`
   color: var(--color-grayscale-7);
   display: flex;
   font-family: var(--font-montserrat);
+  font-size: 1rem;
   font-weight: normal;
   height: ${32 / 16}rem;
   justify-content: center;

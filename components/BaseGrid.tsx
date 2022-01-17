@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { debounce } from 'lodash'
 
-type GridCommonType = {
+type CommonPropsType = {
   columnMin: string
   gap: string
   track?: 'fit' | 'fill'
@@ -10,7 +10,7 @@ type GridCommonType = {
 
 type BaseGridPropsType = {
   children: React.ReactNode
-} & GridCommonType
+} & CommonPropsType
 
 export const BaseGrid: React.VFC<BaseGridPropsType> = ({
   children,
@@ -43,13 +43,13 @@ export const BaseGrid: React.VFC<BaseGridPropsType> = ({
   }, [columnMin, gridRef])
 
   return (
-    <Wrapper columnMin={columnMin} gap={gap} track={track} isOverflowing={isOverflowing} ref={gridRef}>
+    <Wrapper ref={gridRef} isOverflowing={isOverflowing} {...{ columnMin, gap, track }}>
       {children}
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div<GridCommonType & { isOverflowing: boolean }>`
+const Wrapper = styled.div<CommonPropsType & { isOverflowing: boolean }>`
   align-content: start;
   display: grid;
   gap: ${(props) => props.gap};

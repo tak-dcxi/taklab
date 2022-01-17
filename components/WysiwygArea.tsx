@@ -1,18 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import DOMPurify from 'dompurify'
 import styled from 'styled-components'
+import { clamp } from '~/styles/tools/clamp'
 import { hoverable } from '~/styles/tools/hoverable'
+import 'highlight.js/styles/atom-one-dark.css'
 
-type BaseGutenbergPropsType = {
-  children: string
+type WysiwygAreaPropsType = {
+  children?: string
 }
 
-export const WysiwygArea: React.VFC<BaseGutenbergPropsType> = ({ children }) => {
-  return <Area dangerouslySetInnerHTML={{ __html: children }} />
+export const WysiwygArea: React.VFC<WysiwygAreaPropsType> = ({ children }) => {
+  const [html, setHtml] = useState<string>('')
+
+  useEffect(() => {
+    if (children) setHtml(DOMPurify().sanitize(children))
+  }, [children])
+
+  return <Area dangerouslySetInnerHTML={{ __html: html }} />
 }
 
 const Area = styled.div`
   & > * + * {
-    margin-top: ${24 / 16}rem;
+    margin-bottom: ${14 / 16}rem;
+    margin-top: ${14 / 16}rem;
   }
 
   & > :first-child {
@@ -32,23 +42,28 @@ const Area = styled.div`
   & h4:not([class]),
   & h5:not([class]),
   & h6:not([class]) {
-    margin-top: ${48 / 16}rem;
+    margin-bottom: 2em;
+    margin-bottom: 1em;
   }
 
   & h2:not([class]) {
-    font-size: var(--fontsize-6);
+    font-size: ${clamp(20, 24, true)};
+    margin-top: 3em;
   }
 
   & h3:not([class]) {
-    font-size: var(--fontsize-5);
+    font-size: ${clamp(18, 22, true)};
+    margin-top: 2em;
   }
 
   & h4:not([class]) {
-    font-size: var(--fontsize-4);
+    font-size: ${clamp(16, 20, true)};
+    margin-top: 2em;
   }
 
   & h5:not([class]) {
-    font-size: var(--fontsize-3);
+    font-size: ${clamp(14, 18, true)};
+    margin-top: 2em;
   }
 
   & *:is(ul, ol):not([class]) {
@@ -63,7 +78,7 @@ const Area = styled.div`
   }
 
   & a:not([class]) {
-    color: var(--text-color-link);
+    color: var(--color-primary);
     text-decoration: revert;
 
     ${hoverable(`
@@ -94,4 +109,15 @@ const Area = styled.div`
       position: relative !important;
     }
   }
+
+  & pre {
+    border: 1px solid var(--theme-divider);
+  }
 `
+function processNodes(children: any, transform: (node: any, index: any) => any): string {
+  throw new Error('Function not implemented.')
+}
+
+function convertNodeToElement(node: any, index: any, transform: (node: any, index: any) => any) {
+  throw new Error('Function not implemented.')
+}

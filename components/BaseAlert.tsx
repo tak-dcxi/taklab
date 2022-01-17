@@ -2,21 +2,24 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { BaseIcon } from './BaseIcon'
 
-type BaseAlertPropsType = {
-  children: string
+type CommonPropsType = {
   centering?: boolean
 }
 
+type BaseAlertPropsType = {
+  children: string
+} & CommonPropsType
+
 export const BaseAlert: React.VFC<BaseAlertPropsType> = ({ children, centering }) => {
   return (
-    <Alert role="alert" centering={centering}>
+    <Alert role="alert" {...{ centering }}>
       <BaseIcon type={'alert'} size={`${14 / 16}rem`} />
       {children}
     </Alert>
   )
 }
 
-const Alert = styled.span<{ centering: boolean }>`
+const Alert = styled.span<CommonPropsType>`
   align-items: center;
   background-color: var(--color-accent-2);
   border-radius: 4px;

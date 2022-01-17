@@ -12,6 +12,7 @@ import { clamp } from '~/styles/tools/clamp'
 import { ContactFormSteps } from './ContactFormSteps'
 import { BaseIcon } from './BaseIcon'
 import { BaseStack } from './BaseStack'
+import { BaseContainer } from './BaseContainer'
 
 type FormInputType = {
   firstName: string
@@ -56,7 +57,7 @@ export const ContactSubmitForm: React.VFC = () => {
           <BaseStack gap={'32px'}>
             <FormFieldset>
               <FormLegend>
-                お名前<strong>必須</strong>
+                お名前<FormRequiredIcon>必須</FormRequiredIcon>
               </FormLegend>
               <FormFieldsetContent>
                 <label>
@@ -98,7 +99,7 @@ export const ContactSubmitForm: React.VFC = () => {
             <FormItem>
               <FormLabel>
                 <FormLabelText>
-                  ご連絡先メールアドレス<strong>必須</strong>
+                  ご連絡先メールアドレス<FormRequiredIcon>必須</FormRequiredIcon>
                 </FormLabelText>
                 <FormTextField
                   control={control}
@@ -115,7 +116,7 @@ export const ContactSubmitForm: React.VFC = () => {
             <FormItem>
               <FormLabel>
                 <FormLabelText>
-                  件名<strong>必須</strong>
+                  件名<FormRequiredIcon>必須</FormRequiredIcon>
                 </FormLabelText>
                 <FormTextField control={control} type={'text'} name={'subject'} required error={'subject' in errors} />
               </FormLabel>
@@ -125,7 +126,7 @@ export const ContactSubmitForm: React.VFC = () => {
             <FormItem>
               <FormLabel>
                 <FormLabelText>
-                  メッセージ<strong>必須</strong>
+                  メッセージ<FormRequiredIcon>必須</FormRequiredIcon>
                 </FormLabelText>
                 <FormTextArea control={control} name={'message'} required error={'message' in errors} />
               </FormLabel>
@@ -134,11 +135,11 @@ export const ContactSubmitForm: React.VFC = () => {
           </BaseStack>
         </FormPartsContainer>
 
-        <ButtonWrapper>
+        <BaseContainer gutters="0" intrinsic>
           <BaseButton type="submit" icon={<BaseIcon type={'chevron-right'} size={'1rem'} />}>
             入力内容確認へ
           </BaseButton>
-        </ButtonWrapper>
+        </BaseContainer>
       </BaseStack>
     </form>
   )
@@ -178,22 +179,17 @@ const FormLabelText = styled.span`
   align-items: baseline;
   display: inline-flex;
   font-weight: bold;
+`
 
-  & > strong {
-    background-color: var(--color-accent-1);
-    border-radius: 2px;
-    color: var(--color-grayscale-7);
-    font-size: var(--fontsize-1);
-    font-weight: normal;
-    letter-spacing: 0.08em;
-    margin-left: 8px;
-    padding: 4px 8px;
-  }
+const FormRequiredIcon = styled.strong`
+  background-color: var(--color-accent-1);
+  border-radius: 2px;
+  color: var(--color-grayscale-7);
+  font-size: var(--fontsize-1);
+  font-weight: normal;
+  letter-spacing: 0.08em;
+  margin-left: 8px;
+  padding: 4px 8px;
 `
 
 const FormLegend = FormLabelText.withComponent('legend')
-
-const ButtonWrapper = styled.p`
-  display: flex;
-  justify-content: center;
-`

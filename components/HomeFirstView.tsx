@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
 import { BaseLogo } from '~/components/BaseLogo'
 import { debounce } from 'lodash'
 import { clamp } from '~/styles/tools/clamp'
+import { rotateClockwise } from '~/styles/settings/keyframes'
 
 type HomeFirstViewPropsType = {
   image: {
@@ -21,7 +22,7 @@ export const HomeFirstView: React.VFC<HomeFirstViewPropsType> = ({ image, alt })
   useEffect(() => {
     let vw: number = window.innerWidth
 
-    const setHeight = (): void => {
+    const handleResize = (): void => {
       if (!headerRef.current) return
 
       const vh: number = window.innerHeight
@@ -36,11 +37,13 @@ export const HomeFirstView: React.VFC<HomeFirstViewPropsType> = ({ image, alt })
 
         // 画面の横幅のサイズ変動があった時場合hは高さを再計算する
         vw = window.innerWidth
-        setHeight()
-      }, 100)
+        handleResize()
+      }, 300)
     )
 
-    setHeight()
+    handleResize()
+
+    return () => window.removeEventListener('resize', handleResize)
   }, [headerRef])
 
   const scrollSignText = 'SCROLL→SCROLL→'
@@ -76,7 +79,6 @@ export const HomeFirstView: React.VFC<HomeFirstViewPropsType> = ({ image, alt })
               return (
                 <ScrollSignCharacter
                   key={index}
-                  className="character"
                   aria-hidden="true"
                   style={{ transform: `rotate(${index * (360 / scrollSignTextArray.length)}deg)` }}
                 >
@@ -141,16 +143,6 @@ const MyImage = styled.div`
   }
 `
 
-const scrollSignAnimation = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-`
-
 const ScrollSign = styled.div`
 
   --this-radius: 52px;
@@ -158,10 +150,6 @@ const ScrollSign = styled.div`
   --this-scale: 0.7;
 
   bottom: calc(var(--this-radius) + var(--this-offset));
-  color: var(--color-grayscale-6);
-  font-family: var(--font-montserrat);
-  font-weight: bold;
-  line-height: 1;
   position: absolute;
   right: calc(var(--this-radius) + var(--this-offset));
   transform: scale(var(--this-scale));
@@ -177,16 +165,19 @@ const ScrollSign = styled.div`
 `
 
 const ScrollSignInner = styled.div`
-  animation: ${scrollSignAnimation} 8s linear infinite;
+  animation: ${rotateClockwise} 8s linear infinite;
 `
 
 const ScrollSignCharacter = styled.span`
   bottom: 0;
   color: var(--color-grayscale-7);
   display: inline-block;
+  font-family: var(--font-montserrat);
   font-size: 10px;
+  font-weight: bold;
   height: var(--this-radius);
   left: 0;
+  line-height: 1;
   position: absolute;
   transform-origin: bottom center;
 `

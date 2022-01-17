@@ -45,7 +45,7 @@ export const SiteDrawer: React.VFC = () => {
     <>
       {!media.lg && (
         <ButtonWrapper>
-          <SiteDrawerButton type="open" onClick={handleButtonClick} setExpanded={setExpanded} ref={buttonRef} />
+          <SiteDrawerButton type="open" onClick={handleButtonClick} ref={buttonRef} />
         </ButtonWrapper>
       )}
       <SiteDrawerBody expanded={expanded} onClose={onClose} opener={buttonRef} ref={bodyRef} />
@@ -54,8 +54,6 @@ export const SiteDrawer: React.VFC = () => {
 }
 
 const ButtonWrapper = styled.div`
-  display: contents;
-
   @media ${breakpoints.lg} {
     display: none;
   }

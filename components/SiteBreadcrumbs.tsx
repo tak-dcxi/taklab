@@ -39,14 +39,14 @@ export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) 
                     </MyLink>
                   </Link>
                   <Chevron aria-hidden="true">&gt;</Chevron>
-                  <meta itemProp="position" content={`${index - 1 + 1}`} />
+                  <meta itemProp="position" content={`${index + 2}`} />
                 </>
               ) : (
                 <>
                   <span itemProp="item" aria-current="location">
                     <span itemProp="name">{string}</span>
                   </span>
-                  <meta itemProp="position" content={`${index - 1 + 1}`} />
+                  <meta itemProp="position" content={`${index + 2}`} />
                 </>
               )}
             </ListItem>
@@ -78,15 +78,12 @@ const Chevron = styled.span`
 `
 
 const MyLink = styled.a`
-  align-items: baseline;
   border-bottom: 1px solid var(--color-primary);
-  display: inline-flex;
   transition: color 0.3s;
 
   & > svg {
     margin-right: 0.25em;
-    position: relative;
-    top: ${2 / 16}rem;
+    vertical-align: -0.125em;
   }
 
   ${hoverable(`

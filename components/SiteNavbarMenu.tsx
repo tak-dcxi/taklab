@@ -35,12 +35,12 @@ export const SiteNavbarMenu: React.VFC = () => {
           title={`現在のテーマは${colorMode === 'dark' ? 'ダークモード' : 'ライトモード'}です`}
           onClick={setColorMode}
         >
-          <ThemeIcon iconType={colorMode === 'dark' ? 'dark' : 'light'}>
-            <span>
+          <ThemeIconWrapper>
+            <ThemeIcon current={colorMode === 'dark' ? 'dark' : 'light'}>
               <BaseIcon type="sun" />
               <BaseIcon type="moon" />
-            </span>
-          </ThemeIcon>
+            </ThemeIcon>
+          </ThemeIconWrapper>
           Theme
         </NavbarThemeToggler>
       </li>
@@ -65,6 +65,7 @@ const NavbarLink = styled.a`
   align-items: center;
   display: inline-flex;
   font-family: var(--font-montserrat);
+  font-size: ${14 / 16}rem;
   padding: 4px;
   position: relative;
   text-transform: uppercase;
@@ -102,28 +103,26 @@ const NavbarLink = styled.a`
   `)}
 `
 
-const ThemeIcon = styled.span<{ iconType: 'dark' | 'light' }>`
+const ThemeIconWrapper = styled.span`
   display: inline-block;
   height: 1em;
   margin-right: 0.25em;
   overflow: hidden;
   width: 1em;
 
-  & > span {
-    display: block;
-    transition: transform 0.3s ease-out;
-  }
-
   & .BaseIcon {
     display: block;
   }
+`
+
+const ThemeIcon = styled.span<{ current: 'dark' | 'light' }>`
+  display: block;
+  transition: transform 0.3s ease-out;
 
   ${(props) =>
-    props.iconType === 'dark' &&
+    props.current === 'dark' &&
     css`
-      & > span {
-        transform: translateY(-1em);
-      }
+      transform: translateY(-1em);
     `}
 `
 

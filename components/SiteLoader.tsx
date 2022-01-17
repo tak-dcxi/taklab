@@ -1,22 +1,20 @@
-import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import React, { useEffect } from 'react'
+import styled from 'styled-components'
+import { rotateClockwise } from '~/styles/settings/keyframes'
 import { clamp } from '~/styles/tools/clamp'
 
 export const SiteLoader: React.VFC = () => {
+  useEffect(() => {
+    document.documentElement.setAttribute('aria-busy', 'true')
+
+    return () => document.documentElement.removeAttribute('aria-busy')
+  }, [])
+
   return <Loader role="img" aria-label="ローディング中" />
 }
 
-const loadingAnimation = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-`
 const Loader = styled.div`
-  animation: ${loadingAnimation} 0.5s linear infinite;
+  animation: ${rotateClockwise} 0.5s linear infinite;
   border-bottom: none;
   border-left: none;
   border-radius: 50%;

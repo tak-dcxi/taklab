@@ -53,7 +53,7 @@ const Copyright = styled.p`
   font-size: var(--fontsize-1);
   text-align: center;
 
-  & > small {
+  & small {
     font-size: 1em;
   }
 `

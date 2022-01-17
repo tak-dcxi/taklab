@@ -5,7 +5,7 @@ import { CategoriesType, MicroCmsResponse, PostType, Queries } from '~/types/mic
 export const PER_PAGE: number = 12
 
 const limit: number = PER_PAGE
-const defaultLimit: number = 10
+const defaultLimit: number = 12
 const defaultMaxLimit: number = 50
 
 export const client = createClient({
@@ -13,21 +13,23 @@ export const client = createClient({
   apiKey: config.apiKey,
 })
 
-export const getContents = async (
-  currentPage: number = 1,
-  articleFilter?: string
-): Promise<{
+type GetContentsType = {
   posts: PostType[]
   categories: CategoriesType[]
+  pager: number[]
   totalCount: number
-}> => {
-  const [{ posts, totalCount }, categories] = await Promise.all([
+}
+
+export const getContents = async (currentPage: number = 1, articleFilter?: string): Promise<GetContentsType> => {
+  const [{ posts, pager, totalCount }, categories] = await Promise.all([
     getBlogsByFilter(limit, currentPage, articleFilter),
     getCategories(),
   ])
+
   return {
     posts: posts.contents,
     categories: categories.contents,
+    pager,
     totalCount,
   }
 }
@@ -37,6 +39,7 @@ export const getAllBlogs = async (): Promise<MicroCmsResponse<PostType>> => {
     endpoint: 'blog',
     queries: { limit: defaultMaxLimit },
   })
+
   return response
 }
 
@@ -49,11 +52,17 @@ export const getBlogs = async (limit: number): Promise<MicroCmsResponse<PostType
   return response
 }
 
+type GetBlogsByFilter = {
+  posts: MicroCmsResponse<PostType>
+  pager: number[]
+  totalCount: number
+}
+
 export const getBlogsByFilter = async (
   limit: number,
   currentPage: number,
   articleFilter?: string
-): Promise<{ posts: MicroCmsResponse<PostType>; totalCount: number }> => {
+): Promise<GetBlogsByFilter> => {
   const queries: Queries = {
     limit: limit,
     filters: articleFilter,
@@ -64,9 +73,12 @@ export const getBlogsByFilter = async (
     queries: queries,
   })
 
+  // @ts-ignore
+  const pager = [...[Math.ceil(posts.totalCount / PER_PAGE)].keys()]
+
   const totalCount = posts.totalCount
 
-  return { posts, totalCount }
+  return { posts, pager, totalCount }
 }
 
 export const getBlogById = async (blogId: string): Promise<PostType> => {

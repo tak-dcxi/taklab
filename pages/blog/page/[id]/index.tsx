@@ -1,6 +1,6 @@
 import React from 'react'
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import { client } from '~/libs/microCMS'
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext, NextPage } from 'next'
+import { client, getBlogsByFilter, getContents } from '~/libs/microCMS'
 import { BlogArchivePageTemplate } from '~/components/BlogArchivePageTemplate'
 import { PER_PAGE } from '~/constant/archive'
 import { toNumberID } from '~/utils/convertID'
@@ -11,48 +11,45 @@ type CategoryPagePropsType = {
   totalCount: number
   currentPage: number
   categories: CategoriesType[]
+  pager: number[]
 }
 
-const BlogArchivePaginatePage: NextPage<CategoryPagePropsType> = ({ posts, totalCount, currentPage, categories }) => {
+const BlogArchivePaginatePage: NextPage<CategoryPagePropsType> = ({
+  posts,
+  totalCount,
+  currentPage,
+  categories,
+  pager,
+}) => {
+  console.log(pager)
   return (
     <BlogArchivePageTemplate posts={posts} totalCount={totalCount} categories={categories} currentPage={currentPage} />
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await client.get({ endpoint: 'blog' })
-
-  const range = (start: number, end: number): number[] =>
-    [...[end - start + 1]].map((_: number, i: number) => start + i)
-
-  const paths: string[] = range(1, Math.ceil(response.totalCount / PER_PAGE)).map((repo) => `/blog/page/${repo}`)
+export const getStaticPaths = async () => {
+  const limit: number = 12
+  const { pager } = await getBlogsByFilter(limit, 1)
+  const paths = pager.map((page) => {
+    return { params: { id: (page + 1).toString() } }
+  })
 
   return {
-    paths,
-    fallback: false,
+    paths: paths,
+    fallback: 'blocking',
   }
 }
 
-export const getStaticProps: GetStaticProps<CategoryPagePropsType> = async (context) => {
-  const { params, previewData } = context
-
-  if (!params?.id) throw new Error('Error: ID not found')
-
-  const id: number = toNumberID(params.id)
-
-  const data = await client.get({
-    endpoint: 'blog',
-    queries: { limit: PER_PAGE, offset: (id - 1) * PER_PAGE },
-  })
-
-  const categories = await client.get({ endpoint: 'blog-category' })
+export const getStaticProps = async (context: GetStaticPropsContext) => {
+  const page: any = context.params?.id || '1'
+  const { posts, pager, categories } = await getContents(page)
 
   return {
     props: {
-      posts: data.contents,
-      totalCount: data.totalCount,
-      currentPage: id,
-      categories: categories.contents,
+      currentPage: parseInt(page),
+      posts,
+      categories,
+      pager,
     },
     revalidate: 1,
   }

@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import styled, { css, keyframes } from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Transition } from 'react-transition-group'
 import { hoverable } from '~/styles/tools/hoverable'
 import { BaseIcon } from './BaseIcon'
 import { clamp } from '~/styles/tools/clamp'
 import { throttle } from 'lodash'
+import { fadeIn, fadeOut } from '~/styles/settings/keyframes'
 
 const duration = 300
 
@@ -23,6 +24,7 @@ export const SiteReturnToTopButton: React.VFC = () => {
     }
 
     window.addEventListener('scroll', throttle(handleScroll, 1000))
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -42,26 +44,6 @@ export const SiteReturnToTopButton: React.VFC = () => {
     </Transition>
   )
 }
-
-const enterButton = keyframes`
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-`
-
-const exitButton = keyframes`
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-`
 
 const Button = styled.button<{ visible: boolean }>`
 
@@ -91,10 +73,10 @@ const Button = styled.button<{ visible: boolean }>`
   ${(props) =>
     props.visible
       ? css`
-          animation: ${enterButton} ${duration}ms forwards;
+          animation: ${fadeIn} ${duration}ms forwards;
         `
       : css`
-          animation: ${exitButton} ${duration}ms forwards;
+          animation: ${fadeOut} ${duration}ms forwards;
         `}
 
   ${hoverable(`

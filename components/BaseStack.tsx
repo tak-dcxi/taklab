@@ -1,24 +1,20 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-type StackPropsType = {
+type CommonPropsType = {
   gap: string
   recursive?: boolean
 }
 
 type BaseStackPropsType = {
   children: React.ReactNode
-} & StackPropsType
+} & CommonPropsType
 
 export const BaseStack: React.VFC<BaseStackPropsType> = ({ children, recursive, gap = '0' }) => {
-  return (
-    <Stack recursive={recursive} gap={gap}>
-      {children}
-    </Stack>
-  )
+  return <Stack {...{ gap, recursive }}>{children}</Stack>
 }
 
-const Stack = styled.div<StackPropsType>`
+const Stack = styled.div<CommonPropsType>`
   ${(props) => (props.recursive ? '' : '>')} * + * {
     margin-top: ${(props) => props.gap};
   }

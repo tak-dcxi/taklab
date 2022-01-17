@@ -2,25 +2,27 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { hoverable } from '~/styles/tools/hoverable'
 
-type SiteDrawerButtonPropsType = {
+type CommonPropsType = {
   type: 'open' | 'close'
-  setExpanded?: (isExpanded: boolean) => void
-  onClick?: () => void
 }
+
+type SiteDrawerButtonPropsType = {
+  onClick?: () => void
+} & CommonPropsType
 
 export const SiteDrawerButton = React.forwardRef(
   ({ type, onClick }: SiteDrawerButtonPropsType, ref: React.Ref<HTMLButtonElement>) => {
     if (type === 'open') {
       return (
         <Button ref={ref} type="button" aria-label="メニューを開く" aria-haspopup="true" onClick={onClick}>
-          <ButtonIcon iconType={type} />
+          <ButtonIcon {...{ type }} />
         </Button>
       )
     }
 
     return (
       <Button type="button" aria-label="メニューを閉じる" onClick={onClick}>
-        <ButtonIcon iconType={type} />
+        <ButtonIcon {...{ type }} />
       </Button>
     )
   }
@@ -41,7 +43,7 @@ const Button = styled.button`
   `)}
 `
 
-const ButtonIcon = styled.span<{ iconType: 'open' | 'close' }>`
+const ButtonIcon = styled.span<CommonPropsType>`
   display: inline-block;
   height: 2px;
   position: relative;
@@ -59,7 +61,7 @@ const ButtonIcon = styled.span<{ iconType: 'open' | 'close' }>`
   }
 
   ${(props) =>
-    props.iconType === 'open'
+    props.type === 'open'
       ? css`
           background-color: currentColor;
 
