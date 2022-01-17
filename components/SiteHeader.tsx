@@ -4,13 +4,13 @@ import styled from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
 import { hoverable } from '~/styles/tools/hoverable'
 import { BaseLogo } from '~/components/BaseLogo'
-import { SiteNavbarMenu } from '~/components/SiteNavbarMenu'
-import { SiteNavbarSocialList } from './SiteNavbarSocialList'
+import { SiteHeaderMenu } from '~/components/SiteHeaderMenu'
+import { SiteHeaderSocialList } from './SiteHeaderSocialList'
 import { SiteDrawer } from '~/components/SiteDrawer'
 import { useMatchMedia } from '~/hooks/useMatchMedia'
 import { clamp } from '~/styles/tools/clamp'
 
-export const SiteNavbar: React.VFC = () => {
+export const SiteHeader: React.VFC = () => {
   const media: { [key: string]: boolean } = useMatchMedia()
 
   return (
@@ -24,10 +24,10 @@ export const SiteNavbar: React.VFC = () => {
           </Link>
         </Logo>
         <Menu id="menu" tabIndex={-1} aria-label="サイト内メニュー">
-          {media.lg && <SiteNavbarMenu />}
+          {media.lg && <SiteHeaderMenu />}
           <SiteDrawer />
         </Menu>
-        {media.lg && <SiteNavbarSocialList />}
+        {media.lg && <SiteHeaderSocialList />}
       </Container>
     </Root>
   )
