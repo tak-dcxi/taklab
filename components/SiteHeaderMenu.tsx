@@ -8,7 +8,7 @@ import { hoverable } from '~/styles/tools/hoverable'
 import { BaseIcon } from '~/components/BaseIcon'
 import { useTheme } from '~/context/ThemeProvider'
 
-export const SiteNavbarMenu: React.VFC = () => {
+export const SiteHeaderMenu: React.VFC = () => {
   const { asPath } = useRouter()
   const { colorMode, setColorMode } = useTheme()
 

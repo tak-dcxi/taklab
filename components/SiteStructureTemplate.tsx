@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { SiteNavbar } from '~/components/SIteNavbar'
+import { SiteHeader } from '~/components/SiteHeader'
 import { SiteFooter } from '~/components/SiteFooter'
 import { SiteSkipLink } from '~/components/SiteSkipLink'
 
@@ -11,7 +11,7 @@ export const SiteStructureTemplate: React.VFC<SiteStructureTemplatePropsType> = 
   return (
     <Root>
       <SiteSkipLink />
-      <SiteNavbar />
+      <SiteHeader />
       <Main id="main" aria-label="メインコンテンツ" tabIndex={-1}>
         {children}
       </Main>

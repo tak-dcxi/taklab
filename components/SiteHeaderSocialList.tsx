@@ -6,7 +6,7 @@ import { BaseSocialIcon } from '~/components/BaseSocialIcon'
 import { hoverable } from '~/styles/tools/hoverable'
 import { clamp } from '~/styles/tools/clamp'
 
-export const SiteNavbarSocialList: React.VFC = () => {
+export const SiteHeaderSocialList: React.VFC = () => {
   return (
     <Root>
       <dt className="VisuallyHidden">Follow Me</dt>
