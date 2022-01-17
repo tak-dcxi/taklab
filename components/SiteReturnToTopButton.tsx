@@ -46,7 +46,6 @@ export const SiteReturnToTopButton: React.VFC = () => {
 }
 
 const Button = styled.button<{ visible: boolean }>`
-
   --this-size: ${clamp(40, 48)};
   --this-offset: ${clamp(16, 32)};
 

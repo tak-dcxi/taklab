@@ -71,7 +71,6 @@ const Wrapper = styled.span`
 `
 
 const Input = styled.input`
-
   --this-scale: 0.875;
 
   appearance: none;

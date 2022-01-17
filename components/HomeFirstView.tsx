@@ -94,7 +94,6 @@ export const HomeFirstView: React.VFC<HomeFirstViewPropsType> = ({ image, alt })
 }
 
 const FirstView = styled.header`
-
   --this-height: calc(100vh - var(--height-header));
 
   display: grid;
@@ -144,7 +143,6 @@ const MyImage = styled.div`
 `
 
 const ScrollSign = styled.div`
-
   --this-radius: 52px;
   --this-offset: ${clamp(4, 32)};
   --this-scale: 0.7;
