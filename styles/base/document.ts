@@ -4,8 +4,7 @@ import { clamp } from '../tools/clamp'
 
 export const document = css`
   html {
-    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'BIZ UDPGothic', Meiryo,
-      sans-serif;
+    font-family: var(--font-default);
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     height: 100%;

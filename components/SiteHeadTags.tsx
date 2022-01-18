@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { NextRouter, useRouter } from 'next/router'
-import { debounce } from 'lodash'
+import debounce from 'lodash/debounce'
 import { useTheme } from '~/context/ThemeProvider'
 import { config } from '~/site.config'
 
@@ -97,6 +97,17 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
       />
       <noscript>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" />
+      </noscript>
+      <noscript>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+            .SiteLoader {
+              display: none !important;
+            }
+          `,
+          }}
+        />
       </noscript>
     </Head>
   )
