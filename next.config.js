@@ -4,8 +4,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 module.exports = withBundleAnalyzer({
   reactStrictMode: true,
+  productionBrowserSourceMaps: true,
   images: {
-    domains: ['https://tak-dcxi.microcms.io', 'images.microcms-assets.io'],
+    domains: ['tak-dcxi.microcms.io', 'images.microcms-assets.io'],
     formats: ['image/avif', 'image/webp'],
   },
   experimental: {

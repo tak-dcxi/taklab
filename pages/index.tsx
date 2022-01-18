@@ -11,6 +11,7 @@ import { clamp } from '~/styles/tools/clamp'
 import { SiteMarqueeBlock } from '~/components/SiteMarqueeBlock'
 import { BaseGrid } from '~/components/BaseGrid'
 import { PostType, SEOType } from '~/types/microCMS'
+import { HomeHeroHeader } from '~/components/HomeHeroHeader'
 
 type HomeAPIType = {
   id: 'home'
@@ -42,7 +43,7 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
   return (
     <>
       <SiteHeadTags title={home.title} image={home.seo.image.url} />
-      <HomeFirstView image={home.firstview.image} alt={home.firstview.image_alt} />
+      <HomeHeroHeader />
       <SectionWrapper>
         <BaseSection title={'Posts'}>
           <BaseGrid gap={clamp(16, 32)} columnMin={'280px'} track={'fill'}>
@@ -64,12 +65,13 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
 }
 
 const SectionWrapper = styled.div`
+  background-color: var(--theme-background-default);
+  isolation: isolate;
   position: relative;
 
   &::after {
     background-image: var(--theme-background-pattern);
     bottom: ${clamp(200, 280)};
-    content: '';
     left: 0;
     position: absolute;
     top: ${`calc(${clamp(200, 280)} * -1) `};

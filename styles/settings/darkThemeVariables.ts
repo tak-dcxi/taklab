@@ -23,6 +23,7 @@ const variables = css`
   --theme-drawer-divider: var(--color-grayscale-2);
   --theme-drawer-background: var(--color-grayscale-1);
   --theme-drawer-current: var(--color-grayscale-2);
+  --theme-heroheader-background: rgba(0, 0, 0, 0.4);
   --theme-postcard-hover: var(--color-grayscale-3);
 `
 

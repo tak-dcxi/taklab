@@ -48,13 +48,16 @@
     "smoothscroll-polyfill": "^0.4.4",
     "styled-components": "^5.3.1",
     "styled-normalize": "^8.0.7",
+    "three": "^0.136.0",
     "ua-parser-js": "^0.7.28",
     "use-dark-mode": "^2.3.1",
     "uuid": "^8.3.2",
+    "vanta": "^0.5.21",
     "wicg-inert": "^3.1.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/gtag.js": "^0.0.8",
     "@types/jsdom": "^16.2.14",
     "@types/node": "^12.12.21",
     "@types/react": "^17.0.2",
@@ -63,6 +66,7 @@
     "@types/rss": "^0.0.29",
     "@types/smoothscroll-polyfill": "^0.3.1",
     "@types/styled-components": "^5.1.14",
+    "@types/three": "^0.136.1",
     "@types/ua-parser-js": "^0.7.36",
     "@types/uuid": "^8.3.4",
     "eslint": "<8.0.0",
@@ -79,5 +83,11 @@
     "stylelint-processor-styled-components": "^1.10.0",
     "typescript": "^4.5.4",
     "yarn-run-all": "^3.1.1"
-  }
+  },
+  "browserslist": [
+    ">0.5%",
+    "iOS <= 13",
+    "not IE 11",
+    "not dead"
+  ]
 }

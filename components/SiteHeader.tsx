@@ -1,20 +1,27 @@
 import React from 'react'
 import Link from 'next/link'
-import styled from 'styled-components'
+import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
+import styled, { css } from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
 import { hoverable } from '~/styles/tools/hoverable'
 import { BaseLogo } from '~/components/BaseLogo'
-import { SiteHeaderMenu } from '~/components/SiteHeaderMenu'
-import { SiteHeaderSocialList } from './SiteHeaderSocialList'
 import { SiteDrawer } from '~/components/SiteDrawer'
 import { useMatchMedia } from '~/hooks/useMatchMedia'
 import { clamp } from '~/styles/tools/clamp'
 
+const SiteHeaderMenu = dynamic(() => import('~/components/SiteHeaderMenu').then((module) => module.SiteHeaderMenu))
+const SiteHeaderSocialList = dynamic(() =>
+  import('~/components/SiteHeaderSocialList').then((module) => module.SiteHeaderSocialList)
+)
+
 export const SiteHeader: React.VFC = () => {
+  const { asPath } = useRouter()
   const media: { [key: string]: boolean } = useMatchMedia()
+  const isHome: boolean = asPath === '/'
 
   return (
-    <Root aria-label="サイトヘッダー">
+    <Root aria-label="サイトヘッダー" isHome={isHome}>
       <Container>
         <Logo>
           <Link href={'/'} passHref>
@@ -33,13 +40,19 @@ export const SiteHeader: React.VFC = () => {
   )
 }
 
-const Root = styled.header`
-  background-color: var(--theme-header-background);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+const Root = styled.header<{ isHome: boolean }>`
   height: var(--height-header);
-  position: sticky;
+  position: ${(props) => (props.isHome ? 'fixed' : 'sticky')};
   top: 0;
+  width: 100%;
   z-index: var(--context-fixed-object);
+
+  ${(props) =>
+    !props.isHome &&
+    css`
+      background-color: var(--theme-header-background);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    `}
 `
 
 const Container = styled.div`
