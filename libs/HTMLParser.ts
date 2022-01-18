@@ -8,7 +8,7 @@ export const HTMLParser = (htmlString: string): string => {
 }
 
 const setCodeHighlight = (elements: NodeListOf<Element>) => {
-  elements.forEach((element) => {
+  elements.forEach((element: HTMLElement) => {
     element.innerHTML = hljs.highlightAuto(element.textContent ?? '').value
     element.classList.add('hljs')
   })

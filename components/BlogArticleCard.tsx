@@ -14,7 +14,7 @@ type BlogArticleCardPropsType = {
 }
 
 export const BlogArticleCard: React.VFC<BlogArticleCardPropsType> = ({ api, lv }) => {
-  const thumbnail: string = api.thumbnail ? api.thumbnail.url : api.category.image.url
+  const src: string = `${api.thumbnail ? api.thumbnail.url : api.category.image.url}?fit=crop&w=900&h=600`
 
   return (
     <article>
@@ -38,7 +38,7 @@ export const BlogArticleCard: React.VFC<BlogArticleCardPropsType> = ({ api, lv }
           </Description>
           <ImageWrapper>
             <Image
-              src={thumbnail}
+              src={src}
               layout={'responsive'}
               width={'3'}
               height={'2'}
