@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { debounce } from 'lodash'
+import debounce from 'lodash/debounce'
 
 type CommonPropsType = {
   columnMin: string

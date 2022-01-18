@@ -6,7 +6,7 @@ import { hoverable } from '~/styles/tools/hoverable'
 import { getDate } from '~/utils/getDate'
 import { BaseIcon } from './BaseIcon'
 import { PostType } from '~/types/microCMS'
-import { debounce } from '~/utils/debounce'
+import debounce from 'lodash/debounce'
 
 type BlogArticleCardPropsType = {
   api: PostType

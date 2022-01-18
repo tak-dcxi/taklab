@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styled from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
 import { BaseLogo } from '~/components/BaseLogo'
-import { debounce } from 'lodash'
+import debounce from 'lodash/debounce'
 import { clamp } from '~/styles/tools/clamp'
 import { rotateClockwise } from '~/styles/settings/keyframes'
 
