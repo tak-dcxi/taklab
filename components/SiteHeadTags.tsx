@@ -55,6 +55,7 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
       <meta name="viewport" content={viewport} />
       <meta name="description" content={description} />
       <meta name="format-detection" content="email=no,telephone=no,address=no" />
+      <meta name="robots" content="noindex,nofollow" />
 
       {isErrorPage ? (
         <meta name="robots" content="noindex,nofollow" />
@@ -86,17 +87,17 @@ export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
       <link
         rel="preload"
         as="style"
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&display=swap"
       />
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&display=swap"
         media="print"
         // @ts-ignore
         onLoad="this.media='all'"
       />
       <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&display=swap" />
       </noscript>
       <noscript>
         <style

@@ -6,19 +6,15 @@ import { scrollBehavior } from '~/libs/scrollBehavior'
 import { SiteScriptTags } from '~/components/SiteScriptTags'
 import { ThemeProvider } from '~/context/ThemeProvider'
 import { SiteStructureTemplate } from '~/components/SiteStructureTemplate'
+import { setViewHeight } from '~/libs/setViewHeight'
+import { loadCDN } from '~/utils/loadCDN'
+import { usePageView } from '~/hooks/usePageView'
 
 const App: React.VFC<AppProps> = ({ Component, pageProps, router }) => {
+  usePageView()
+
   useEffect(() => {
     document.documentElement.classList.remove('no-js')
-
-    const loadCDN = (src: string, integrity: string): void => {
-      const script: HTMLScriptElement = document.createElement('script')
-      script.src = src
-      script.integrity = integrity
-      script.crossOrigin = 'anonymous'
-      script.defer = true
-      document.head.appendChild(script)
-    }
 
     try {
       document.querySelector(':focus-visible')
@@ -32,6 +28,8 @@ const App: React.VFC<AppProps> = ({ Component, pageProps, router }) => {
     if (!('scrollBehavior' in document.documentElement.style)) smoothscroll.polyfill()
 
     scrollBehavior()
+
+    setViewHeight()
   }, [])
 
   useEffect(() => {

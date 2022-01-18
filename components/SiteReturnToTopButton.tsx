@@ -4,7 +4,7 @@ import { Transition } from 'react-transition-group'
 import { hoverable } from '~/styles/tools/hoverable'
 import { BaseIcon } from './BaseIcon'
 import { clamp } from '~/styles/tools/clamp'
-import { throttle } from 'lodash'
+import throttle from 'lodash/throttle'
 import { fadeIn, fadeOut } from '~/styles/settings/keyframes'
 
 const duration = 300
