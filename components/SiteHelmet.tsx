@@ -55,7 +55,6 @@ export const SiteHelmet: React.VFC<SiteHelmetPropsType> = ({
       <meta name="viewport" content={viewport} />
       <meta name="description" content={description} />
       <meta name="format-detection" content="email=no,telephone=no,address=no" />
-      <meta name="robots" content="noindex,nofollow" />
 
       {isErrorPage ? (
         <meta name="robots" content="noindex,nofollow" />
