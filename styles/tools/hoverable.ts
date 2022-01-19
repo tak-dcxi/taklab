@@ -1,6 +1,9 @@
 import { StyledComponent } from 'styled-components'
 
-export const hoverable = (styles: string, root?: StyledComponent<'a', any, {}, never>) => {
+export const hoverable = (
+  styles: string,
+  root?: StyledComponent<'a', any, {}, never> | StyledComponent<'button', any, {}, never>
+): string => {
   if (root) {
     return `
       ${root}:focus-visible & {

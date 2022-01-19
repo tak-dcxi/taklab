@@ -13,13 +13,12 @@ export const SiteFooterMenu: React.VFC = () => {
 
   return (
     <Root>
-      <Menu>
-        <dt className="VisuallyHidden">サイト内メニュー</dt>
+      <Menu aria-label="サイト内メニュー">
         {menu.map((item: MenuType, index: number) => {
           const isBlogPage = /\/blog\/.+$/.test(asPath) || item.path === asPath
 
           return (
-            <dd key={index}>
+            <li key={index}>
               <Link href={item.path} passHref>
                 {item.id === 'blog' ? (
                   <FooterLink {...(isBlogPage && { 'aria-current': 'page' })}>{item.title}</FooterLink>
@@ -27,38 +26,37 @@ export const SiteFooterMenu: React.VFC = () => {
                   <FooterLink {...(item.path === asPath && { 'aria-current': 'page' })}>{item.title}</FooterLink>
                 )}
               </Link>
-            </dd>
+            </li>
           )
         })}
       </Menu>
-      <SocialList>
-        <dt className="VisuallyHidden">Follow Me</dt>
-        <dd>
+      <SocialList aria-label="Follow Me">
+        <li>
           <SocialLink href={social.twitter.url} target="_blank" rel="noopener noreferrer">
             <BaseSocialIcon size={20} type="twitter" />
           </SocialLink>
-        </dd>
-        <dd>
+        </li>
+        <li>
           <SocialLink href={social.zenn.url} target="_blank" rel="noopener noreferrer">
             <BaseSocialIcon size={20} type="zenn" />
           </SocialLink>
-        </dd>
-        <dd>
+        </li>
+        <li>
           <SocialLink href={social.note.url} target="_blank" rel="noopener noreferrer">
             <BaseSocialIcon size={20} type="note" />
           </SocialLink>
-        </dd>
-        <dd>
+        </li>
+        <li>
           <SocialLink href={social.rss.url} target="_blank" rel="noopener noreferrer">
             <BaseSocialIcon size={20} type="rss" />
           </SocialLink>
-        </dd>
+        </li>
       </SocialList>
     </Root>
   )
 }
 
-const Root = styled.dl`
+const Root = styled.div`
   overflow: hidden;
 
   & > * + * {
@@ -66,13 +64,13 @@ const Root = styled.dl`
   }
 `
 
-const Menu = styled.div`
+const Menu = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin: -8px;
 
-  & dd {
+  & li {
     margin: 8px;
   }
 
@@ -82,13 +80,13 @@ const Menu = styled.div`
   }
 `
 
-const SocialList = styled.div`
+const SocialList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin: -8px;
 
-  & dd {
+  & li {
     margin: 8px;
   }
 `

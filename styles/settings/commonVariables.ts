@@ -15,7 +15,7 @@ export const commonVariables = css`
     * アクセントカラー
     * プライマリカラーとは区別して強調したい要素に使用する色です。
   */
-    --color-accent-1: #ad4043;
+    --color-accent-1: #cd5c5c;
     --color-accent-2: #f8d7da;
 
     /**

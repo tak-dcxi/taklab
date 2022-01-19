@@ -6,7 +6,6 @@ import { hoverable } from '~/styles/tools/hoverable'
 import { getDate } from '~/utils/getDate'
 import { BaseIcon } from './BaseIcon'
 import { PostType } from '~/types/microCMS'
-import debounce from 'lodash/debounce'
 
 type BlogArticleCardPropsType = {
   api: PostType
@@ -19,23 +18,10 @@ export const BlogArticleCard: React.VFC<BlogArticleCardPropsType> = ({ api, lv }
   return (
     <article>
       <Link href={`/blog/[postId]`} as={`/blog/${api.id}`} passHref>
-        <Container>
-          <Description>
-            {lv === 2 && <H2>{api.title}</H2>}
-            {lv === 3 && <H3>{api.title}</H3>}
-            {lv === 4 && <H4>{api.title}</H4>}
-            <Meta>
-              <dt className="VisuallyHidden">カテゴリ</dt>
-              <Category>
-                <BaseIcon type={'hash'} size={`${14 / 16}rem`} />
-                {api.category.name}
-              </Category>
-              <dt className="VisuallyHidden">投稿日</dt>
-              <Date>
-                <time dateTime={api.createdAt}>{getDate(api.createdAt, 'en')}</time>
-              </Date>
-            </Meta>
-          </Description>
+        <MyLink>
+          {lv === 2 && <H2>{api.title}</H2>}
+          {lv === 3 && <H3>{api.title}</H3>}
+          {lv === 4 && <H4>{api.title}</H4>}
           <ImageWrapper>
             <Image
               src={src}
@@ -49,92 +35,82 @@ export const BlogArticleCard: React.VFC<BlogArticleCardPropsType> = ({ api, lv }
               quality={75}
             />
           </ImageWrapper>
-        </Container>
+          <MetaWrapper>
+            <Meta>
+              <dt className="VisuallyHidden">投稿日</dt>
+              <dd>
+                <time dateTime={api.createdAt}>{getDate(api.createdAt, 'en')}</time>
+              </dd>
+              <dt className="VisuallyHidden">カテゴリ</dt>
+              <dd>#{api.category.name}</dd>
+            </Meta>
+          </MetaWrapper>
+        </MyLink>
       </Link>
     </article>
   )
 }
 
-const Container = styled.a`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-`
+const duration: string = '0.3s'
 
-const ImageWrapper = styled.div`
-  background-color: var(--color-grayscale-3);
-  order: -1;
-  overflow: hidden;
-
-  & > * {
-    transition: transform 0.3s;
-  }
-
-  ${hoverable(
-    `
-    & > * {
-      transform: scale(1.1);
-    }
-  `,
-    Container
-  )}
-`
-
-const Description = styled.div`
-  background-color: var(--theme-background-muted);
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: min(7.5%, 20px);
-  position: relative;
-  transition: background-color 0.3s;
-  z-index: 1;
-
-  &::after {
-    background-color: var(--color-primary);
-    bottom: 0;
-    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
-    content: '';
-    height: 12px;
-    position: absolute;
-    right: 0;
-    width: 12px;
-  }
-
-  ${hoverable(
-    `
-    background-color: var(--theme-postcard-hover);
-  `,
-    Container
-  )}
+const MyLink = styled.a`
+  display: grid;
 `
 
 const H2 = styled.h2`
-  flex: 1;
   letter-spacing: 0.02em;
   line-height: var(--leading-relaxed);
+  margin-top: ${4 / 16}rem;
+  transition: color ${duration};
+
+  ${hoverable(
+    `
+    color: var(--color-primary);
+    `,
+    MyLink
+  )}
 `
 
 const H3 = H2.withComponent('h3')
 const H4 = H2.withComponent('h4')
 
-const Meta = styled.dl`
-  margin-top: 16px;
+const ImageWrapper = styled.div`
+  background-color: var(--color-grayscale-2);
+  order: -2;
+  overflow: hidden;
+  position: relative;
+  transition: opacity ${duration};
+
+  & img {
+    transition: transform ${duration};
+  }
+
+  ${hoverable(
+    `
+    opacity .9;
+
+    & img {
+      transform: scale(1.1);
+    }
+  `,
+    MyLink
+  )}
 `
 
-const Date = styled.dd`
-  align-items: center;
+const MetaWrapper = styled.div`
   color: var(--theme-text-muted);
   font-family: var(--font-designed);
-  margin-top: ${4 / 16}em;
+  margin-top: ${12 / 16}rem;
+  order: -1;
+  overflow: hidden;
 `
 
-const Category = styled.dd`
-  align-items: center;
-  color: var(--color-primary);
-  letter-spacing: 0.02em;
+const Meta = styled.dl`
+  display: flex;
+  flex-wrap: wrap;
+  margin: ${(6 / 16) * -1}rem;
 
-  & .BaseIcon {
-    margin-right: 0.25em;
+  & > * {
+    margin: ${6 / 16}rem;
   }
 `
