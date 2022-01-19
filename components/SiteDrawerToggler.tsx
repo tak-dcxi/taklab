@@ -32,7 +32,7 @@ const Button = styled.button`
   align-items: center;
   background-color: var(--theme-button-background);
   color: var(--color-grayscale-7);
-  display: flex;
+  display: inline-flex;
   height: var(--height-header);
   justify-content: center;
   transition: background-color 0.3s;
