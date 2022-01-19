@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { SiteHeadTags } from '~/components/SiteHeadTags'
+import { SiteHelmet } from '~/components/SiteHelmet'
 import { BreadcrumbsType, SiteBreadcrumbs } from '~/components/SiteBreadcrumbs'
 import { SubpageHeader } from '~/components/SubpageHeader'
 
@@ -21,7 +21,7 @@ export const SubpageTemplate: React.VFC<SubpageLayoutPropsType> = ({ title, desc
   return (
     <>
       <SiteBreadcrumbs items={breadcrumbs} />
-      <SiteHeadTags title={title} description={description} image={image} />
+      <SiteHelmet title={title} description={description} image={image} />
       <SubpageHeader headline={title} />
       <Contents>{children}</Contents>
     </>

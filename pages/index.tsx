@@ -5,7 +5,7 @@ import { client } from '~/libs/microCMS'
 import { BaseLinkButton } from '~/components/BaseLinkButton'
 import { BaseSection } from '~/components/BaseSection'
 import { BlogArticleCard } from '~/components/BlogArticleCard'
-import { SiteHeadTags } from '~/components/SiteHeadTags'
+import { SiteHelmet } from '~/components/SiteHelmet'
 import { clamp } from '~/styles/tools/clamp'
 import { SiteMarqueeBlock } from '~/components/SiteMarqueeBlock'
 import { BaseGrid } from '~/components/BaseGrid'
@@ -41,7 +41,7 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
 
   return (
     <>
-      <SiteHeadTags title={home.title} image={home.seo.image.url} />
+      <SiteHelmet title={home.title} image={home.seo.image.url} />
       <HomeHeroHeader />
       <SectionWrapper>
         <BaseSection title={'Latest Posts'}>

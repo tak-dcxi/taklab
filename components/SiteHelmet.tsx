@@ -5,7 +5,7 @@ import debounce from 'lodash/debounce'
 import { useTheme } from '~/context/ThemeProvider'
 import { config } from '~/site.config'
 
-type SiteHeadTagsPropsType = {
+type SiteHelmetPropsType = {
   title?: string
   description?: string
   image?: string
@@ -16,7 +16,7 @@ type ViewportType = 'width=device-width,initial-scale=1' | 'width=360'
 
 type ColorShemeType = 'light' | 'dark' | 'light dark'
 
-export const SiteHeadTags: React.VFC<SiteHeadTagsPropsType> = ({
+export const SiteHelmet: React.VFC<SiteHelmetPropsType> = ({
   title = config.siteMeta.title,
   description = config.siteMeta.description,
   image = `${config.baseURL}/ogp.png`,

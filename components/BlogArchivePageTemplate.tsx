@@ -10,7 +10,7 @@ import { BlogArchivePagination } from './BlogArchivePagination'
 import { BlogArticleCard } from './BlogArticleCard'
 import { BlogPageCommonTemplate } from './BlogPageCommonTemplate'
 import { BreadcrumbsType, SiteBreadcrumbs } from './SiteBreadcrumbs'
-import { SiteHeadTags } from './SiteHeadTags'
+import { SiteHelmet } from './SiteHelmet'
 import { SubpageHeader } from './SubpageHeader'
 
 type BlogArchivePageTemplatePropsType = {
@@ -48,7 +48,7 @@ export const BlogArchivePageTemplate: React.VFC<BlogArchivePageTemplatePropsType
 
   return (
     <>
-      <SiteHeadTags title={categoryLabel} />
+      <SiteHelmet title={categoryLabel} />
       <SiteBreadcrumbs items={breadcrumbs} />
       <SubpageHeader headline={categoryLabel} />
       <BlogPageCommonTemplate categories={categories}>
