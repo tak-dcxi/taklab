@@ -72,7 +72,7 @@ const Root = styled.header`
 
 const Description = styled.div`
   font-family: var(--font-designed);
-  font-size: ${clamp(12, 14)};
+  font-size: ${clamp(12, 14, true)};
   letter-spacing: 0.02em;
   line-height: var(--leading-loose);
   margin-top: 2em;
@@ -80,7 +80,6 @@ const Description = styled.div`
 `
 
 const ScrollSign = styled.div`
-
   --this-radius: 52px;
   --this-offset: ${clamp(4, 32)};
   --this-scale: 0.7;

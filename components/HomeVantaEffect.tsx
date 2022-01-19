@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import * as THREE from 'three'
+import * as THREE from 'three/build/three.min.js'
 import FOG from 'vanta/dist/vanta.fog.min.js'
 
 export const HomeVantaEffect: React.VFC = () => {

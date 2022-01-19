@@ -5,7 +5,6 @@ import { BaseContainer } from '~/components/BaseContainer'
 import { BreadcrumbsType, SiteBreadcrumbs } from '~/components/SiteBreadcrumbs'
 import { SubpageHeader } from '~/components/SubpageHeader'
 import { SiteHeadTags } from '~/components/SiteHeadTags'
-import { BaseTweetEmbed } from './BaseTweetEmbed'
 
 type ErrorPageTemplatePropsType = {
   statusCode: number
@@ -36,8 +35,6 @@ export const ErrorPageTemplate: React.VFC<ErrorPageTemplatePropsType> = ({ statu
             ) : (
               <p>アクセスしようとしたページは表示できませんでした。</p>
             )}
-            <BaseTweetEmbed id={'1265338592584327169'} />
-            <p>過去にこんなツイートがバズりました。</p>
           </Sentence>
           <ButtonWrapper>
             <BaseLinkButton href={'/'}>トップページへ進む</BaseLinkButton>

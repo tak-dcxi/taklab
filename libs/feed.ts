@@ -43,12 +43,17 @@ async function generatedRssFeed(): Promise<void> {
       // post のプロパティ情報は使用しているオブジェクトの形式に合わせる
       const postURL: string = `${baseURL}/blog/${content.category.id}/${content.id}`
 
+      const description: string = content.body
+      const parser: DOMParser = new DOMParser()
+      const parsedDescription: Document = parser.parseFromString(description, 'text/html')
+      const text: string = parsedDescription.body.textContent || ''
+
       feed.addItem({
         title: content.title,
-        description: content.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''),
+        description: text,
         id: postURL,
         link: postURL,
-        content: content.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''),
+        content: text,
         date: new Date(content.publishedAt),
       })
     }
