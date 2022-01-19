@@ -64,7 +64,7 @@ const Root = styled.ul`
 const NavbarLink = styled.a`
   align-items: center;
   display: inline-flex;
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
   font-size: ${14 / 16}rem;
   padding: 4px;
   position: relative;
@@ -79,18 +79,22 @@ const NavbarLink = styled.a`
     position: absolute;
     right: 0;
     top: 100%;
+    transform: scaleX(0);
+    transition: transform 0.3s;
     z-index: -1;
+  }
+
+  &::before {
+    background-color: currentColor;
   }
 
   &::after {
     background-color: var(--color-primary);
-    transform: scaleX(0);
-    transition: transform 0.3s;
   }
 
   &[aria-current] {
     &::before {
-      background-color: currentColor;
+      transform: scaleX(1);
     }
   }
 

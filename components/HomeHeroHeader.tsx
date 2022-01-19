@@ -1,7 +1,9 @@
 import dynamic from 'next/dynamic'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
+import { useHeaderIntersectionObserve } from '~/context/HeaderIntersectionOberve'
+import { useIntersectionObserver } from '~/hooks/useIntersectionObserver'
 import { rotateClockwise } from '~/styles/settings/keyframes'
 import { clamp } from '~/styles/tools/clamp'
 import { BaseContainer } from './BaseContainer'
@@ -12,6 +14,10 @@ const HomeVantaEffect = dynamic(() => import('~/components/HomeVantaEffect').the
 })
 
 export const HomeHeroHeader: React.VFC = () => {
+  const headerRef = useRef<HTMLElement>(null)
+  const { setIntersecting } = useHeaderIntersectionObserve()
+  const intersecting = useIntersectionObserver(headerRef)
+
   const scrollSignText = 'SCROLL→SCROLL→'
   const scrollSignTextArray = []
 
@@ -20,8 +26,12 @@ export const HomeHeroHeader: React.VFC = () => {
     .split('')
     .forEach((character: string) => scrollSignTextArray.push(character))
 
+  useEffect(() => {
+    setIntersecting(intersecting)
+  }, [setIntersecting, headerRef, intersecting])
+
   return (
-    <Root>
+    <Root ref={headerRef}>
       <BaseContainer gutters={clamp(24, 40)}>
         <h1>
           <BaseLogo size={clamp(280, 560, true, 320, 1920)} />
@@ -57,14 +67,16 @@ const Root = styled.header`
   height: max(480px, calc(var(--vh, 1vh) * 100));
   isolation: isolate;
   overflow: hidden;
+  position: relative;
 `
 
 const Description = styled.div`
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
   font-size: ${clamp(12, 14)};
   letter-spacing: 0.02em;
   line-height: var(--leading-loose);
-  margin-top: ${24 / 16}rem;
+  margin-top: 2em;
+  min-height: 0.01vw;
 `
 
 const ScrollSign = styled.div`
@@ -94,7 +106,7 @@ const ScrollSignInner = styled.div`
 const ScrollSignCharacter = styled.span`
   bottom: 0;
   display: inline-block;
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
   font-size: 10px;
   font-weight: bold;
   height: var(--this-radius);

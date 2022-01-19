@@ -105,7 +105,7 @@ const Root = styled.dl`
 `
 
 const Header = styled.dt`
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
   text-align: center;
   text-transform: uppercase;
 

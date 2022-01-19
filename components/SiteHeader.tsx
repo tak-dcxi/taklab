@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { NextRouter, useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 import styled, { css } from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
@@ -9,6 +9,7 @@ import { BaseLogo } from '~/components/BaseLogo'
 import { SiteDrawer } from '~/components/SiteDrawer'
 import { useMatchMedia } from '~/hooks/useMatchMedia'
 import { clamp } from '~/styles/tools/clamp'
+import { useHeaderIntersectionObserve } from '~/context/HeaderIntersectionOberve'
 
 const SiteHeaderMenu = dynamic(() => import('~/components/SiteHeaderMenu').then((module) => module.SiteHeaderMenu))
 const SiteHeaderSocialList = dynamic(() =>
@@ -16,12 +17,13 @@ const SiteHeaderSocialList = dynamic(() =>
 )
 
 export const SiteHeader: React.VFC = () => {
-  const { asPath } = useRouter()
+  const router: NextRouter = useRouter()
+  const path: string = router.asPath
   const media: { [key: string]: boolean } = useMatchMedia()
-  const isHome: boolean = asPath === '/'
+  const { intersecting } = useHeaderIntersectionObserve()
 
   return (
-    <Root aria-label="サイトヘッダー" isHome={isHome}>
+    <Root aria-label="サイトヘッダー" isHome={path === '/'} intersecting={intersecting}>
       <Container>
         <Logo>
           <Link href={'/'} passHref>
@@ -40,13 +42,29 @@ export const SiteHeader: React.VFC = () => {
   )
 }
 
-const Root = styled.header<{ isHome: boolean }>`
+type HeaderRootPropsType = {
+  isHome: boolean
+  intersecting?: boolean
+}
+
+const Root = styled.header<HeaderRootPropsType>`
   height: var(--height-header);
   position: ${(props) => (props.isHome ? 'fixed' : 'sticky')};
   top: 0;
+  transition: background-color 0.3s, box-shadow 0.3s;
   width: 100%;
   z-index: var(--context-fixed-object);
 
+  /* トップページでの処理 */
+  ${(props) =>
+    props.isHome &&
+    !props.intersecting &&
+    css`
+      background-color: var(--theme-header-background);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    `}
+
+  /* 下層ページでの処理 */
   ${(props) =>
     !props.isHome &&
     css`

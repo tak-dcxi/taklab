@@ -19,7 +19,7 @@ const Root = styled.header`
   border-bottom: 1px solid var(--theme-divider);
   border-top: 1px solid var(--theme-divider);
   display: grid;
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
   min-height: ${clamp(220, 440)};
   place-items: center;
 `
