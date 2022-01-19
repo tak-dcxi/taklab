@@ -2,7 +2,7 @@ import React from 'react'
 import { BlogPageCommonTemplate } from '~/components/BlogPageCommonTemplate'
 import { BlogArticlePageThumbnail } from '~/components/BlogArticlePageThumbnail'
 import { BreadcrumbsType, SiteBreadcrumbs } from '~/components/SiteBreadcrumbs'
-import { SiteHeadTags } from '~/components/SiteHeadTags'
+import { SiteHelmet } from '~/components/SiteHelmet'
 import { SiteLoader } from '~/components/SiteLoader'
 import { useDraft } from '~/hooks/useDraft'
 import { generateOgImage } from '~/libs/generateOGP'
@@ -35,7 +35,7 @@ const DraftPage: React.VFC<PostDetailsPagePropsType> = ({ post, categories }) =>
 
   return (
     <>
-      <SiteHeadTags title={data.post.title} image={ogImage} />
+      <SiteHelmet title={data.post.title} image={ogImage} />
       <SiteBreadcrumbs items={breadcrumbs} />
       <BlogArticlePageThumbnail src={thumbnail} />
       <BlogPageCommonTemplate categories={categories}>

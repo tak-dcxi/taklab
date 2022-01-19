@@ -2,7 +2,7 @@ import React from 'react'
 import { NextRouter, useRouter } from 'next/router'
 import { getAllBlogs, getBlogById, getContents } from '~/libs/microCMS'
 import { BlogPageCommonTemplate } from '~/components/BlogPageCommonTemplate'
-import { SiteHeadTags } from '~/components/SiteHeadTags'
+import { SiteHelmet } from '~/components/SiteHelmet'
 import { SiteBreadcrumbs, BreadcrumbsType } from '~/components/SiteBreadcrumbs'
 import ErrorPage from '~/pages/_error'
 import { GetStaticPropsContext } from 'next'
@@ -41,7 +41,7 @@ const BlogArticlePage: React.VFC<PostDetailsPagePropsType> = ({ post, body, cate
 
   return (
     <>
-      <SiteHeadTags title={post.title} image={ogImage} />
+      <SiteHelmet title={post.title} image={ogImage} />
       <SiteBreadcrumbs items={breadcrumbs} />
       <BlogArticlePageThumbnail src={thumbnail} />
       <BlogPageCommonTemplate categories={categories}>

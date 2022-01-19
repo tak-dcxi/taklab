@@ -24,8 +24,8 @@ export const commonVariables = css`
   */
     --color-grayscale-0: #1c1c1c;
     --color-grayscale-1: #2c2c2c;
-    --color-grayscale-2: #484848;
-    --color-grayscale-3: #999;
+    --color-grayscale-2: #3a3a3a;
+    --color-grayscale-3: #6a6a6a;
     --color-grayscale-4: #e0e0e0;
     --color-grayscale-5: #e7e7e7;
     --color-grayscale-6: #f2f2f2;

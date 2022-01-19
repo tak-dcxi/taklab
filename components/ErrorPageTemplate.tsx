@@ -4,7 +4,7 @@ import { BaseLinkButton } from '~/components/BaseLinkButton'
 import { BaseContainer } from '~/components/BaseContainer'
 import { BreadcrumbsType, SiteBreadcrumbs } from '~/components/SiteBreadcrumbs'
 import { SubpageHeader } from '~/components/SubpageHeader'
-import { SiteHeadTags } from '~/components/SiteHeadTags'
+import { SiteHelmet } from '~/components/SiteHelmet'
 
 type ErrorPageTemplatePropsType = {
   statusCode: number
@@ -21,7 +21,7 @@ export const ErrorPageTemplate: React.VFC<ErrorPageTemplatePropsType> = ({ statu
 
   return (
     <>
-      <SiteHeadTags title={title} isErrorPage />
+      <SiteHelmet title={title} isErrorPage />
       <SiteBreadcrumbs items={breadcrumbs} />
       <SubpageHeader headline={title} />
       <BaseContainer>
