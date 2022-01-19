@@ -6,7 +6,7 @@ const variables = css`
   --theme-text-muted: var(--color-grayscale-4);
   --theme-text-x-muted: var(--color-grayscale-2);
   --theme-text-difference: var(--color-grayscale-1);
-  --theme-background-default: var(--color-grayscale-1);
+  --theme-background-default: var(--color-grayscale-0);
   --theme-background-muted: var(--color-grayscale-2);
   --theme-background-strong: var(--color-grayscale-0);
   --theme-background-pattern: repeating-linear-gradient(
@@ -18,7 +18,7 @@ const variables = css`
   );
   --theme-divider: #111;
   --theme-button-background: var(--color-grayscale-2);
-  --theme-textfield-background: var(--color-grayscale-0);
+  --theme-textfield-background: var(--color-grayscale-1);
   --theme-header-background: var(--color-grayscale-0);
   --theme-drawer-divider: var(--color-grayscale-2);
   --theme-drawer-background: var(--color-grayscale-1);

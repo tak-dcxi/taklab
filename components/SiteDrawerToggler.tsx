@@ -39,7 +39,7 @@ const Button = styled.button`
   width: var(--height-header);
 
   ${hoverable(`
-    background-color: var(--color-grayscale-2);
+    background-color: var(--color-primary);
   `)}
 `
 
