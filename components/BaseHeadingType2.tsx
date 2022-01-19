@@ -20,7 +20,7 @@ export const BaseHeadingType2: React.VFC<BaseHeadingPropsType> = ({ children, lv
 }
 
 const H2 = styled.h1`
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
   font-size: ${clamp(20, 24, true)}; /* clamp() */
   letter-spacing: 0.02em;
   line-height: var(--leading-tight);

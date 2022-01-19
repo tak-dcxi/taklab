@@ -49,7 +49,7 @@ export const ContactSubmitForm: React.VFC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} tabIndex={-1} aria-labelledby={randomID}>
       <h2 id={randomID} className="VisuallyHidden">
-        お問い合わせフォーム
+        お問い合わせ内容をご記入ください
       </h2>
       <BaseStack gap={clamp(64, 80)}>
         <ContactFormSteps current={1} />

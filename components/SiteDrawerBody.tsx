@@ -218,7 +218,7 @@ const MyLink = styled.a`
 
 const PrimaryLabel = styled.span`
   display: block;
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
 `
 
 const SecondaryLabel = styled.span`
@@ -236,7 +236,7 @@ const ButtonWrapper = styled.div`
 
 const GroupList = styled.dl`
   border-bottom: 2px solid var(--theme-drawer-divider);
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
 `
 
 const GroupListTitle = styled.dt`
@@ -286,7 +286,7 @@ const ThemeTogglerWrapper = styled.p`
 const ThemeToggler = styled.button`
   align-items: center;
   display: flex;
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
   padding: 16px 24px;
   text-transform: uppercase;
   transition: background-color 0.3s;

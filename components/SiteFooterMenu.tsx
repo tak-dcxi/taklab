@@ -95,7 +95,7 @@ const SocialList = styled.div`
 
 const FooterLink = styled.a`
   display: inline-block;
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
   font-size: ${14 / 16}rem;
   padding: 4px;
   position: relative;

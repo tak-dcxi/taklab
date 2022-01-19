@@ -50,7 +50,7 @@ const LogoWrapper = styled.p`
 `
 
 const Copyright = styled.p`
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
   font-size: var(--fontsize-1);
   text-align: center;
 

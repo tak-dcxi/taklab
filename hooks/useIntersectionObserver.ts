@@ -10,6 +10,8 @@ export const useIntersectionObserver = (ref: { current: HTMLElement }): boolean 
   const [intersecting, setIntersecting] = useState<boolean>(false)
 
   useEffect(() => {
+    if (!ref.current) return
+
     const observer: IntersectionObserver = new IntersectionObserver(([entry]) => setIntersecting(entry.isIntersecting))
     observer.observe(ref.current)
 

@@ -125,7 +125,7 @@ const Meta = styled.dl`
 const Date = styled.dd`
   align-items: center;
   color: var(--theme-text-muted);
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
   margin-top: ${4 / 16}em;
 `
 

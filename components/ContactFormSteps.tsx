@@ -47,7 +47,7 @@ const Number = styled.span`
   border-radius: 50%;
   color: var(--color-grayscale-7);
   display: flex;
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
   font-size: 1rem;
   font-weight: normal;
   height: ${32 / 16}rem;

@@ -140,7 +140,7 @@ const DateWrapper = styled.div`
 const Date = styled.dl`
   display: flex;
   flex-wrap: wrap;
-  font-family: var(--font-montserrat);
+  font-family: var(--font-designed);
   margin: -8px;
 
   & > dd {
