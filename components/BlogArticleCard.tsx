@@ -1,27 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import styled, { css } from 'styled-components'
 import { hoverable } from '~/styles/tools/hoverable'
 import { getDate } from '~/utils/getDate'
-import { BaseIcon } from './BaseIcon'
 import { PostType } from '~/types/microCMS'
+
+type CommonPropsType = {
+  appendCategory?: boolean
+}
 
 type BlogArticleCardPropsType = {
   api: PostType
   lv: 2 | 3 | 4
-}
+} & CommonPropsType
 
-export const BlogArticleCard: React.VFC<BlogArticleCardPropsType> = ({ api, lv }) => {
+export const BlogArticleCard: React.VFC<BlogArticleCardPropsType> = ({ api, lv, appendCategory = true }) => {
   const src: string = `${api.thumbnail ? api.thumbnail.url : api.category.image.url}?fit=crop&w=900&h=600`
 
   return (
-    <article>
+    <Root {...{ appendCategory }}>
       <Link href={`/blog/[postId]`} as={`/blog/${api.id}`} passHref>
-        <MyLink>
+        <LinkToArticle>
           {lv === 2 && <H2>{api.title}</H2>}
           {lv === 3 && <H3>{api.title}</H3>}
           {lv === 4 && <H4>{api.title}</H4>}
+
           <ImageWrapper>
             <Image
               src={src}
@@ -35,30 +39,47 @@ export const BlogArticleCard: React.VFC<BlogArticleCardPropsType> = ({ api, lv }
               quality={75}
             />
           </ImageWrapper>
-          <MetaWrapper>
-            <Meta>
-              <dt className="VisuallyHidden">投稿日</dt>
-              <dd>
-                <time dateTime={api.createdAt}>{getDate(api.createdAt, 'en')}</time>
-              </dd>
-              <dt className="VisuallyHidden">カテゴリ</dt>
-              <dd>#{api.category.name}</dd>
-            </Meta>
-          </MetaWrapper>
-        </MyLink>
+          <PublishedAt>
+            <dt className="VisuallyHidden">投稿日</dt>
+            <dd>
+              <time dateTime={api.createdAt}>{getDate(api.createdAt, 'en')}</time>
+            </dd>
+          </PublishedAt>
+        </LinkToArticle>
       </Link>
-    </article>
+
+      {appendCategory && (
+        <Category>
+          <dt className="VisuallyHidden">カテゴリ</dt>
+          <dd>
+            <Link href={`/blog/category/[id]/1`} as={`/blog/category/${api.category.id}/1`} passHref>
+              <LinkToCategory>[{api.category.name}]</LinkToCategory>
+            </Link>
+          </dd>
+        </Category>
+      )}
+    </Root>
   )
 }
 
 const duration: string = '0.3s'
 
-const MyLink = styled.a`
+const Root = styled.article<CommonPropsType>`
+  ${(props) =>
+    props.appendCategory &&
+    css`
+      display: grid;
+      gap: ${12 / 16}rem;
+      grid-template-rows: auto 1fr;
+    `}
+`
+
+const LinkToArticle = styled.a`
   display: grid;
 `
 
 const H2 = styled.h2`
-  letter-spacing: 0.02em;
+  letter-spacing: var(--letter-spacing-text);
   line-height: var(--leading-relaxed);
   margin-top: ${4 / 16}rem;
   transition: color ${duration};
@@ -66,8 +87,8 @@ const H2 = styled.h2`
   ${hoverable(
     `
     color: var(--color-primary);
-    `,
-    MyLink
+  `,
+    LinkToArticle
   )}
 `
 
@@ -93,24 +114,44 @@ const ImageWrapper = styled.div`
       transform: scale(1.1);
     }
   `,
-    MyLink
+    LinkToArticle
   )}
 `
 
-const MetaWrapper = styled.div`
+const Category = styled.dl`
+  align-self: end;
+  color: var(--theme-text-muted);
+  font-family: var(--font-designed);
+`
+
+const LinkToCategory = styled.a`
+  position: relative;
+  transition: color ${duration};
+
+  &::after {
+    background-color: var(--color-primary);
+    bottom: 0;
+    content: '';
+    height: 1px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    transform-origin: left;
+    transition: transform ${duration};
+  }
+
+  ${hoverable(`
+    color: var(--color-primary);
+
+    &::after {
+      transform: scaleX(0);
+    }
+  `)}
+`
+
+const PublishedAt = styled.dl`
   color: var(--theme-text-muted);
   font-family: var(--font-designed);
   margin-top: ${12 / 16}rem;
   order: -1;
-  overflow: hidden;
-`
-
-const Meta = styled.dl`
-  display: flex;
-  flex-wrap: wrap;
-  margin: ${(6 / 16) * -1}rem;
-
-  & > * {
-    margin: ${6 / 16}rem;
-  }
 `

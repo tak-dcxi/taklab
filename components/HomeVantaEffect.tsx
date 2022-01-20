@@ -2,9 +2,11 @@ import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import * as THREE from 'three/build/three.min.js'
 import FOG from 'vanta/dist/vanta.fog.min.js'
+import { useHeaderIntersectionObserve } from '~/context/HeaderIntersectionOberve'
 
 export const HomeVantaEffect: React.VFC = () => {
   const vantaRef = useRef<HTMLDivElement>(null)
+  const { intersecting } = useHeaderIntersectionObserve()
 
   useEffect(() => {
     const vantaEffect = FOG({
@@ -24,16 +26,22 @@ export const HomeVantaEffect: React.VFC = () => {
       zoom: 0.5,
     })
 
-    return () => vantaEffect.destroy()
+    return () => {
+      if (vantaEffect) vantaEffect.destroy()
+    }
   }, [])
 
-  return <Vanta ref={vantaRef} />
+  return <Vanta ref={vantaRef} intersecting={intersecting} />
 }
 
-const Vanta = styled.div`
+type VantaPropsType = {
+  intersecting: boolean
+}
+
+const Vanta = styled.div<VantaPropsType>`
   height: 100vh;
   left: 0;
-  position: fixed;
+  position: ${(props) => (props.intersecting ? 'fixed' : 'absolute')};
   top: 0;
   width: 100vw;
   z-index: -1;

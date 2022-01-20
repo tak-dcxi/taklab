@@ -69,14 +69,13 @@ const Wrapper = styled.span`
 `
 
 const Input = styled.textarea`
-
   --this-scale: 0.875;
 
   appearance: none;
   background-color: transparent;
   border: 0;
   border-radius: 0;
-  box-shadow: inset 0 0 0 2px var(--theme-divider);
+  box-shadow: inset 0 0 0 1px var(--theme-divider);
   display: block;
   font-size: max(1rem, 16px);
   height: calc(100% / var(--this-scale));

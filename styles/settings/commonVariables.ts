@@ -23,12 +23,12 @@ export const commonVariables = css`
     * 通常の要素に使用する色です。
   */
     --color-grayscale-0: #1c1c1c;
-    --color-grayscale-1: #2c2c2c;
+    --color-grayscale-1: #2e2e2e;
     --color-grayscale-2: #3a3a3a;
-    --color-grayscale-3: #6a6a6a;
+    --color-grayscale-3: #6e6e6e;
     --color-grayscale-4: #e0e0e0;
     --color-grayscale-5: #e7e7e7;
-    --color-grayscale-6: #f2f2f2;
+    --color-grayscale-6: #f1f1f1;
     --color-grayscale-7: #fefefe;
 
     /**
@@ -52,7 +52,7 @@ export const commonVariables = css`
     --fontsize-7: ${32 / globalFontSize}rem; /* = 32px */
 
     /**
-    * ラインハイト
+    * line-height
   */
     --leading-none: 1;
     --leading-x-tight: 1.125;
@@ -60,6 +60,12 @@ export const commonVariables = css`
     --leading-normal: 1.5;
     --leading-relaxed: 1.75;
     --leading-loose: 2;
+
+    /**
+    * letter-spacing
+  */
+    --letter-spacing-text: 0.05em;
+    --letter-spacing-headline: 0.02em;
 
     /**
     * z-index

@@ -4,7 +4,7 @@ import { slideOutLeft } from '~/styles/settings/keyframes'
 import { clamp } from '~/styles/tools/clamp'
 import { BaseLogo } from './BaseLogo'
 
-export const SiteMarqueeBlock: React.VFC = () => {
+export const SiteFooterMarquee: React.VFC = () => {
   return (
     <Wrapper>
       <Item>
@@ -28,6 +28,7 @@ export const SiteMarqueeBlock: React.VFC = () => {
 
 const Wrapper = styled.div`
   display: flex;
+  overflow: hidden;
 `
 
 const Item = styled.div`

@@ -77,7 +77,7 @@ const Input = styled.input`
   background-color: transparent;
   border: 0;
   border-radius: 0;
-  box-shadow: inset 0 0 0 2px var(--theme-divider);
+  box-shadow: inset 0 0 0 1px var(--theme-divider);
   font-size: max(1rem, 16px);
   height: calc(100% / var(--this-scale));
   line-height: ${48 / 16}rem;

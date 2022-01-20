@@ -7,10 +7,12 @@ import { BaseSection } from '~/components/BaseSection'
 import { BlogArticleCard } from '~/components/BlogArticleCard'
 import { SiteHelmet } from '~/components/SiteHelmet'
 import { clamp } from '~/styles/tools/clamp'
-import { SiteMarqueeBlock } from '~/components/SiteMarqueeBlock'
 import { BaseGrid } from '~/components/BaseGrid'
 import { PostType, SEOType } from '~/types/microCMS'
 import { HomeHeroHeader } from '~/components/HomeHeroHeader'
+import { breakpoints } from '~/constant/breakpoints'
+import { AboutProfile } from '~/components/AboutProfile'
+import { HomeAboutSection } from '~/components/HomeAboutSection'
 
 type HomeAPIType = {
   id: 'home'
@@ -44,8 +46,9 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
       <SiteHelmet title={home.title} image={home.seo.image.url} />
       <HomeHeroHeader />
       <SectionWrapper>
+        <HomeAboutSection />
         <BaseSection title={'Latest Posts'}>
-          <BaseGrid gap={clamp(24, 32)} columnMin={'280px'} track={'fill'}>
+          <BaseGrid gap={clamp(24, 32)} columnMin={clamp(212, 280)} track={'fill'}>
             {BlogArticleCards}
           </BaseGrid>
           {BlogArticleCards.length === perPage && (
@@ -54,7 +57,6 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
             </ButtonWrapper>
           )}
         </BaseSection>
-        <SiteMarqueeBlock />
         <BaseSection title={'Categories'}>
           <div></div>
         </BaseSection>
@@ -66,17 +68,6 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
 const SectionWrapper = styled.div`
   background-color: var(--theme-background-default);
   isolation: isolate;
-  position: relative;
-
-  &::after {
-    background-image: var(--theme-background-pattern);
-    bottom: ${clamp(200, 280)};
-    left: 0;
-    position: absolute;
-    top: ${`calc(${clamp(200, 280)} * -1) `};
-    width: max(50%, 296px);
-    z-index: -1;
-  }
 `
 
 const ButtonWrapper = styled.p`

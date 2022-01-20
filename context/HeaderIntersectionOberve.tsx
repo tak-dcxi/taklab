@@ -1,3 +1,4 @@
+import { NextRouter, useRouter } from 'next/router'
 import { createContext, useCallback, useContext, useState } from 'react'
 
 type HeaderIntersectionObserveContextType = {
@@ -20,7 +21,9 @@ type HeaderIntersectionObserveProviderPropsType = {
 export const HeaderIntersectionObserveProvider: React.VFC<HeaderIntersectionObserveProviderPropsType> = ({
   children,
 }) => {
-  const [value, setValue] = useState<boolean>(false)
+  const router: NextRouter = useRouter()
+  const path: string = router.asPath
+  const [value, setValue] = useState<boolean>(path === '/')
 
   const setIntersecting = useCallback((current: boolean): void => {
     setValue(current)
