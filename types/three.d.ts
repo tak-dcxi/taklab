@@ -1,1 +1,1 @@
-declare module 'three/build/three.min.js'
+declare module '~/libs/threeCustom.min.js'
