@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { NextRouter, useRouter } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
@@ -9,13 +9,14 @@ import { hoverable } from '~/styles/tools/hoverable'
 import { BaseSocialIcon } from './BaseSocialIcon'
 
 export const SiteFooterMenu: React.VFC = () => {
-  const { asPath } = useRouter()
+  const router: NextRouter = useRouter()
+  const path: string = router.asPath
 
   return (
     <Root>
       <Menu aria-label="サイト内メニュー">
         {menu.map((item: MenuType, index: number) => {
-          const isBlogPage = /\/blog\/.+$/.test(asPath) || item.path === asPath
+          const isBlogPage = /\/blog\/.+$/.test(path) || item.path === path
 
           return (
             <li key={index}>
@@ -23,7 +24,7 @@ export const SiteFooterMenu: React.VFC = () => {
                 {item.id === 'blog' ? (
                   <FooterLink {...(isBlogPage && { 'aria-current': 'page' })}>{item.title}</FooterLink>
                 ) : (
-                  <FooterLink {...(item.path === asPath && { 'aria-current': 'page' })}>{item.title}</FooterLink>
+                  <FooterLink {...(item.path === path && { 'aria-current': 'page' })}>{item.title}</FooterLink>
                 )}
               </Link>
             </li>

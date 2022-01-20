@@ -36,8 +36,8 @@ export const HomeHeroHeader: React.VFC = () => {
         <h1>
           <BaseLogo size={clamp(280, 560, true, 320, 1920)} />
         </h1>
-        <Description>
-          <p>I am a Japanese Web Creator living in Tokyo.</p>
+        <Description lang="en">
+          <p>Hello, I am a Japanese Web Creator living in Tokyo.</p>
           <p>My hobbies is to experiment with new technologies and I love HTML and CSS.</p>
         </Description>
       </BaseContainer>

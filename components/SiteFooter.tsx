@@ -30,9 +30,7 @@ export const SiteFooter: React.VFC = () => {
 
 const Root = styled.footer`
   background-color: var(--color-grayscale-1);
-  border-top: 1px solid var(--theme-divider);
   color: var(--color-grayscale-7);
-  isolation: isolate;
   padding: ${clamp(48, 64)} 0;
 `
 

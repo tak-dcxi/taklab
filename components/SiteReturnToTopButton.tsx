@@ -10,9 +10,7 @@ import { fadeIn, fadeOut } from '~/styles/settings/keyframes'
 const duration = 300
 
 export const SiteReturnToTopButton: React.VFC = () => {
-  // Transitionコンポーネントにおける "findDOMNode is deprecated in StrictMode" Warningを無効化します
-  // https://www.kindacode.com/article/react-warning-finddomnode-is-deprecated-in-strictmode/
-  const buttonRef = useRef(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const [visible, setVisible] = useState<boolean>(false)
 
   useEffect(() => {
@@ -23,7 +21,7 @@ export const SiteReturnToTopButton: React.VFC = () => {
       setVisible(target <= scroll)
     }
 
-    window.addEventListener('scroll', throttle(handleScroll, 1000))
+    window.addEventListener('scroll', throttle(handleScroll, 1000), { passive: true })
 
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])

@@ -60,7 +60,7 @@ const Root = styled.header<HeaderRootPropsType>`
     props.isHome &&
     !props.intersecting &&
     css`
-      background-color: var(--theme-header-background);
+      background-color: var(--theme-background-default);
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     `}
 
@@ -68,7 +68,7 @@ const Root = styled.header<HeaderRootPropsType>`
   ${(props) =>
     !props.isHome &&
     css`
-      background-color: var(--theme-header-background);
+      background-color: var(--theme-background-default);
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     `}
 `
