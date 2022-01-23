@@ -9,21 +9,27 @@ type CommonPropsType = {
   andText?: boolean
 }
 
-type BaseContainerPropsType = {
+type BaseCenterPropsType = {
+  as?: React.ElementType
   children: React.ReactNode
 } & CommonPropsType
 
-export const BaseContainer: React.VFC<BaseContainerPropsType> = ({
+export const BaseCenter: React.VFC<BaseCenterPropsType> = ({
+  as = 'div',
   children,
   maxWidth = 'var(--max-width-default)',
   gutters = clamp(16, 32),
   intrinsic,
   andText,
 }) => {
-  return <Container {...{ maxWidth, gutters, intrinsic, andText }}>{children}</Container>
+  return (
+    <Center as={as} className="BaseCenter" {...{ maxWidth, gutters, intrinsic, andText }}>
+      {children}
+    </Center>
+  )
 }
 
-const Container = styled.div<CommonPropsType>`
+const Center = styled.div<CommonPropsType>`
   box-sizing: content-box;
   margin-left: auto;
   margin-right: auto;

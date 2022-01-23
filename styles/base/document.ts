@@ -23,10 +23,11 @@ export const document = css`
   body {
     background-color: var(--theme-background-default);
     color: var(--theme-text-default);
-    font-size: ${14 / 16}rem;
+    font-size: ${clamp(12.8, 15, true)};
     font-weight: normal;
     height: 100%;
     line-height: var(--leading-normal);
+    min-height: 0.01vw;
     padding: 0;
   }
 

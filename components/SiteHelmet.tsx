@@ -95,20 +95,6 @@ export const SiteHelmet: React.VFC<SiteHelmetPropsType> = ({
         // @ts-ignore
         onLoad="this.media='all'"
       />
-      <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&display=swap" />
-      </noscript>
-      <noscript>
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-            .SiteLoader {
-              display: none !important;
-            }
-          `,
-          }}
-        />
-      </noscript>
     </Head>
   )
 }

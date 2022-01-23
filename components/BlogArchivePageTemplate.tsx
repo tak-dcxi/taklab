@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { PER_PAGE } from '~/constant/archive'
 import { clamp } from '~/styles/tools/clamp'
 import { CategoriesType, PostType } from '~/types/microCMS'
-import { BaseContainer } from './BaseContainer'
+import { BaseCenter } from './BaseCenter'
 import { BaseGrid } from './BaseGrid'
 import { BaseStack } from './BaseStack'
 import { BlogArchivePagination } from './BlogArchivePagination'
@@ -52,7 +52,7 @@ export const BlogArchivePageTemplate: React.VFC<BlogArchivePageTemplatePropsType
       <SiteBreadcrumbs items={breadcrumbs} />
       <SubpageHeader headline={categoryLabel} />
       <BlogPageCommonTemplate categories={categories}>
-        <BaseContainer>
+        <BaseCenter>
           <BaseStack gap={clamp(48, 64)}>
             <section>
               <h2 id="postsList" className="VisuallyHidden">
@@ -81,7 +81,7 @@ export const BlogArchivePageTemplate: React.VFC<BlogArchivePageTemplatePropsType
               />
             )}
           </BaseStack>
-        </BaseContainer>
+        </BaseCenter>
       </BlogPageCommonTemplate>
     </>
   )

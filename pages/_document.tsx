@@ -36,7 +36,7 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="ja">
+      <Html lang="ja" data-js="false">
         <Head prefix="og: http://ogp.me/ns#"></Head>
         <body>
           <Main />

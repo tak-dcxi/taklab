@@ -12,7 +12,7 @@ import { clamp } from '~/styles/tools/clamp'
 import { ContactFormSteps } from './ContactFormSteps'
 import { BaseIcon } from './BaseIcon'
 import { BaseStack } from './BaseStack'
-import { BaseContainer } from './BaseContainer'
+import { BaseCenter } from './BaseCenter'
 
 type FormInputType = {
   firstName: string
@@ -135,11 +135,11 @@ export const ContactSubmitForm: React.VFC = () => {
           </BaseStack>
         </FormPartsContainer>
 
-        <BaseContainer gutters="0" intrinsic>
+        <BaseCenter gutters="0" intrinsic>
           <BaseButton type="submit" icon={<BaseIcon type={'chevron-right'} size={'1rem'} />}>
             入力内容確認へ
           </BaseButton>
-        </BaseContainer>
+        </BaseCenter>
       </BaseStack>
     </form>
   )
@@ -178,7 +178,6 @@ const FormLabel = styled.label`
 const FormLabelText = styled.span`
   align-items: baseline;
   display: inline-flex;
-  font-weight: bold;
 `
 
 const FormRequiredIcon = styled.strong`

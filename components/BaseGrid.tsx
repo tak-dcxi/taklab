@@ -9,10 +9,12 @@ type CommonPropsType = {
 }
 
 type BaseGridPropsType = {
+  as?: React.ElementType
   children: React.ReactNode
 } & CommonPropsType
 
 export const BaseGrid: React.VFC<BaseGridPropsType> = ({
+  as = 'div',
   children,
   columnMin = '256px',
   gap = '16px',
@@ -43,7 +45,7 @@ export const BaseGrid: React.VFC<BaseGridPropsType> = ({
   }, [columnMin, gridRef])
 
   return (
-    <Wrapper ref={gridRef} isOverflowing={isOverflowing} {...{ columnMin, gap, track }}>
+    <Wrapper as={as} ref={gridRef} className="BaseGrid" isOverflowing={isOverflowing} {...{ columnMin, gap, track }}>
       {children}
     </Wrapper>
   )

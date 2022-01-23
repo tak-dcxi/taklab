@@ -1,13 +1,11 @@
 import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
-import { breakpoints } from '~/constant/breakpoints'
 import { hoverable } from '~/styles/tools/hoverable'
 import { CategoriesType } from '~/types/microCMS'
-import { BaseContainer } from './BaseContainer'
+import { BaseCenter } from './BaseCenter'
 import { BaseHeadingType2 } from './BaseHeadingType2'
 import { BaseIcon } from './BaseIcon'
-import { SiteAdSence } from './SiteAdSence'
 
 type BlogPageCommonTemplatePropsType = {
   children: React.ReactNode
@@ -18,7 +16,7 @@ export const BlogPageCommonTemplate: React.VFC<BlogPageCommonTemplatePropsType> 
   return (
     <Root>
       {children}
-      <BaseContainer>
+      <BaseCenter>
         <Aside>
           <BaseHeadingType2 lv={2}>Category</BaseHeadingType2>
           <CategoryList>
@@ -36,7 +34,7 @@ export const BlogPageCommonTemplate: React.VFC<BlogPageCommonTemplatePropsType> 
             })}
           </CategoryList>
         </Aside>
-      </BaseContainer>
+      </BaseCenter>
     </Root>
   )
 }

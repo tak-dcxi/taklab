@@ -16,6 +16,7 @@ export const BaseLogo: React.VFC<BaseLogoPropsType> = ({ size, color = 'currentC
 
   return (
     <SVGTag
+      className="BaseLogo"
       width="220"
       height="20"
       viewBox="0 0 220 20"

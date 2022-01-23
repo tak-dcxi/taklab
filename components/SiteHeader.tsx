@@ -51,25 +51,29 @@ const Root = styled.header<HeaderRootPropsType>`
   height: var(--height-header);
   position: ${(props) => (props.isHome ? 'fixed' : 'sticky')};
   top: 0;
-  transition: background-color 0.3s, box-shadow 0.3s;
   width: 100%;
   z-index: var(--context-fixed-object);
+
+  &::after {
+    background-color: var(--theme-background-default);
+    bottom: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    content: '';
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: opacity 0.3s;
+    z-index: -1;
+  }
 
   /* トップページでの処理 */
   ${(props) =>
     props.isHome &&
-    !props.intersecting &&
     css`
-      background-color: var(--theme-background-default);
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    `}
-
-  /* 下層ページでの処理 */
-  ${(props) =>
-    !props.isHome &&
-    css`
-      background-color: var(--theme-background-default);
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      &::after {
+        opacity: ${props.intersecting ? 0 : 1};
+      }
     `}
 `
 
@@ -95,6 +99,7 @@ const Logo = styled.p`
 
 const LogoLink = styled.a`
   display: inline-block;
+  isolation: isolate;
   position: relative;
 
   &::after {

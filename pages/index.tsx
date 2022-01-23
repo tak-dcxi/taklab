@@ -2,17 +2,14 @@ import React from 'react'
 import { NextPage } from 'next'
 import styled from 'styled-components'
 import { client } from '~/libs/microCMS'
-import { BaseLinkButton } from '~/components/BaseLinkButton'
-import { BaseSection } from '~/components/BaseSection'
 import { BlogArticleCard } from '~/components/BlogArticleCard'
 import { SiteHelmet } from '~/components/SiteHelmet'
-import { clamp } from '~/styles/tools/clamp'
-import { BaseGrid } from '~/components/BaseGrid'
-import { PostType, SEOType } from '~/types/microCMS'
+import { CategoriesType, PostType, SEOType } from '~/types/microCMS'
 import { HomeHeroHeader } from '~/components/HomeHeroHeader'
-import { breakpoints } from '~/constant/breakpoints'
-import { AboutProfile } from '~/components/AboutProfile'
 import { HomeAboutSection } from '~/components/HomeAboutSection'
+import { HomeLatestPostsSection } from '~/components/HomeLatestPostsSection'
+import { HomeCategorySection } from '~/components/HomeCategorySection'
+import { HomeContactSection } from '~/components/HomeContactSection'
 
 type HomeAPIType = {
   id: 'home'
@@ -32,9 +29,10 @@ type HomeAPIType = {
 type HomePropsType = {
   home: HomeAPIType
   posts: PostType[]
+  categories: CategoriesType[]
 }
 
-const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
+const HomePage: NextPage<HomePropsType> = ({ home, posts, categories }) => {
   const perPage: number = 6
 
   const BlogArticleCards: JSX.Element[] = posts.slice(0, perPage).map((post) => {
@@ -47,19 +45,11 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts }) => {
       <HomeHeroHeader />
       <SectionWrapper>
         <HomeAboutSection />
-        <BaseSection title={'Latest Posts'}>
-          <BaseGrid gap={clamp(24, 32)} columnMin={clamp(212, 280)} track={'fill'}>
-            {BlogArticleCards}
-          </BaseGrid>
-          {BlogArticleCards.length === perPage && (
-            <ButtonWrapper>
-              <BaseLinkButton href={'/blog/'}>投稿をもっと見る</BaseLinkButton>
-            </ButtonWrapper>
-          )}
-        </BaseSection>
-        <BaseSection title={'Categories'}>
-          <div></div>
-        </BaseSection>
+        <HomeLatestPostsSection appendButton={BlogArticleCards.length === perPage}>
+          {BlogArticleCards}
+        </HomeLatestPostsSection>
+        <HomeCategorySection {...{ categories }} />
+        <HomeContactSection />
       </SectionWrapper>
     </>
   )
@@ -70,19 +60,21 @@ const SectionWrapper = styled.div`
   isolation: isolate;
 `
 
-const ButtonWrapper = styled.p`
-  display: flex;
-  justify-content: center;
-`
-
 export const getStaticProps = async () => {
   const home = await client.get({ endpoint: 'pages', contentId: 'home' })
-  const posts = await client.get({ endpoint: 'blog' })
+
+  const posts = await client.get({
+    endpoint: 'blog',
+    queries: { limit: 6, offset: 0 },
+  })
+
+  const categories = await client.get({ endpoint: 'blog-category' })
 
   return {
     props: {
       home: home,
       posts: posts.contents,
+      categories: categories.contents,
     },
     revalidate: 1,
   }

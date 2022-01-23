@@ -7,14 +7,21 @@ type CommonPropsType = {
 }
 
 type BaseStackPropsType = {
+  as?: React.ElementType
   children: React.ReactNode
 } & CommonPropsType
 
-export const BaseStack: React.VFC<BaseStackPropsType> = ({ children, recursive, gap = '0' }) => {
-  return <Stack {...{ gap, recursive }}>{children}</Stack>
+export const BaseStack: React.VFC<BaseStackPropsType> = ({ as = 'div', children, recursive, gap = '0' }) => {
+  return (
+    <Stack as={as} className="BaseStack" {...{ gap, recursive }}>
+      {children}
+    </Stack>
+  )
 }
 
 const Stack = styled.div<CommonPropsType>`
+  display: block;
+
   ${(props) => (props.recursive ? '' : '>')} * + * {
     margin-top: ${(props) => props.gap};
   }

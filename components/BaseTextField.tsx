@@ -40,7 +40,7 @@ export const BaseTextField = React.forwardRef<HTMLInputElement, BaseTextFieldPro
     ref
   ) => {
     return (
-      <Wrapper>
+      <Wrapper className="BaseTextField">
         <Input
           ref={ref}
           id={id}

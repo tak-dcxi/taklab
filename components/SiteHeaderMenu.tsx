@@ -81,7 +81,6 @@ const NavbarLink = styled.a`
     top: 100%;
     transform: scaleX(0);
     transition: transform 0.3s;
-    z-index: -1;
   }
 
   &::before {

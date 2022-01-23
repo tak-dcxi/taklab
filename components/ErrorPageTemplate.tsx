@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { BaseLinkButton } from '~/components/BaseLinkButton'
-import { BaseContainer } from '~/components/BaseContainer'
+import { BaseCenter } from '~/components/BaseCenter'
 import { BreadcrumbsType, SiteBreadcrumbs } from '~/components/SiteBreadcrumbs'
 import { SubpageHeader } from '~/components/SubpageHeader'
 import { SiteHelmet } from '~/components/SiteHelmet'
@@ -24,7 +24,7 @@ export const ErrorPageTemplate: React.VFC<ErrorPageTemplatePropsType> = ({ statu
       <SiteHelmet title={title} isErrorPage />
       <SiteBreadcrumbs items={breadcrumbs} />
       <SubpageHeader headline={title} />
-      <BaseContainer>
+      <BaseCenter>
         <Contents>
           <Sentence>
             <p className="emoji" role="img" aria-label="ごめんなさい">
@@ -40,7 +40,7 @@ export const ErrorPageTemplate: React.VFC<ErrorPageTemplatePropsType> = ({ statu
             <BaseLinkButton href={'/'}>トップページへ進む</BaseLinkButton>
           </ButtonWrapper>
         </Contents>
-      </BaseContainer>
+      </BaseCenter>
     </>
   )
 }
