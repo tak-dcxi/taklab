@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { BaseContainer } from '~/components/BaseContainer'
+import { BaseCenter } from '~/components/BaseCenter'
 import { BaseLogo } from '~/components/BaseLogo'
 import { clamp } from '~/styles/tools/clamp'
 import { SiteReturnToTopButton } from './SiteReturnToTopButton'
@@ -10,7 +10,7 @@ import { BaseStack } from './BaseStack'
 export const SiteFooter: React.VFC = () => {
   return (
     <Root aria-label="サイトフッター">
-      <BaseContainer>
+      <BaseCenter>
         <BaseStack gap={'48px'}>
           <LogoWrapper>
             <BaseLogo size={clamp(184, 220, true)} />
@@ -22,7 +22,7 @@ export const SiteFooter: React.VFC = () => {
             </small>
           </Copyright>
         </BaseStack>
-      </BaseContainer>
+      </BaseCenter>
       <SiteReturnToTopButton />
     </Root>
   )

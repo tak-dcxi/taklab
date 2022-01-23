@@ -67,7 +67,7 @@ export const SiteScriptTags: React.VFC = () => {
       )}
       {isNotSupportIntersectionObserver && (
         <Script
-          src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver"
+          src="https://cdn.jsdelivr.net/npm/intersection-observer-polyfill@0.1.0/index.min.js"
           integrity="sha384-3ou67cSLPlqbWs2vyPz/t28wMveOdZf1ysTnpmRmv9Af3UsRl7HJLvgD3g5orDOq"
           crossOrigin="anonymous"
           defer

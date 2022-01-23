@@ -1,12 +1,14 @@
 import dynamic from 'next/dynamic'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
 import { useHeaderIntersectionObserve } from '~/context/HeaderIntersectionOberve'
 import { useIntersectionObserver } from '~/hooks/useIntersectionObserver'
 import { rotateClockwise } from '~/styles/settings/keyframes'
 import { clamp } from '~/styles/tools/clamp'
-import { BaseContainer } from './BaseContainer'
+import { AnimeFadeIn } from './AnimeFadeIn'
+import { AnimeMaskSlide } from './AnimeMaskSlide'
+import { BaseCenter } from './BaseCenter'
 import { BaseLogo } from './BaseLogo'
 
 const HomeVantaEffect = dynamic(() => import('~/components/HomeVantaEffect').then((module) => module.HomeVantaEffect), {
@@ -15,6 +17,7 @@ const HomeVantaEffect = dynamic(() => import('~/components/HomeVantaEffect').the
 
 export const HomeHeroHeader: React.VFC = () => {
   const headerRef = useRef<HTMLElement>(null)
+  const [loaded, setLoaded] = useState<boolean>(false)
   const { setIntersecting } = useHeaderIntersectionObserve()
   const intersecting = useIntersectionObserver(headerRef)
 
@@ -30,17 +33,29 @@ export const HomeHeroHeader: React.VFC = () => {
     setIntersecting(intersecting)
   }, [setIntersecting, headerRef, intersecting])
 
+  useEffect(() => {
+    if (document.readyState === 'complete') {
+      setLoaded(true)
+    } else {
+      window.addEventListener('load', () => setLoaded(true), false)
+    }
+  }, [])
+
   return (
     <Root ref={headerRef}>
-      <BaseContainer gutters={clamp(24, 40)}>
+      <BaseCenter gutters={clamp(24, 40)}>
         <h1>
-          <BaseLogo size={clamp(280, 560, true, 320, 1920)} />
+          <AnimeMaskSlide as={'span'} active={loaded}>
+            <BaseLogo size={clamp(280, 560, true, 320, 1920)} />
+          </AnimeMaskSlide>
         </h1>
         <Description lang="en">
-          <p>Hello, I am a Japanese Web Creator living in Tokyo.</p>
-          <p>My hobbies is to experiment with new technologies and I love HTML and CSS.</p>
+          <AnimeFadeIn active={loaded} delay={800}>
+            <p>Hello, I am a Japanese Web Creator living in Tokyo.</p>
+            <p>My hobbies is to experiment with new technologies and I love HTML and CSS.</p>
+          </AnimeFadeIn>
         </Description>
-      </BaseContainer>
+      </BaseCenter>
       <ScrollSign>
         <ScrollSignInner>
           {scrollSignTextArray.map((character: string, index: number) => {

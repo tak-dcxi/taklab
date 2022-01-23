@@ -5,7 +5,7 @@ import { existsGaId, GA_ID, pageview } from '~/libs/gtag'
 export const usePageView = (): void => {
   const router: NextRouter = useRouter()
 
-  console.log(GA_ID)
+  if (!(process.env.NODE_ENV === 'production')) console.log(GA_ID)
 
   useEffect(() => {
     if (!existsGaId) return
@@ -15,8 +15,7 @@ export const usePageView = (): void => {
     }
 
     router.events.on('routeChangeComplete', handleRouteChange)
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
+
+    return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
 }

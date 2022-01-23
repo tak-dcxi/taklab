@@ -53,6 +53,7 @@ const MyLink = styled.a`
   display: inline-block;
   padding: 4px;
   position: relative;
+  isolation: isolate;
 
   &::after {
     background-color: var(--color-grayscale-3);

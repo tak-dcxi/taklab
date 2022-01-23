@@ -9,7 +9,7 @@ import { GetStaticPropsContext } from 'next'
 import { generateOgImage } from '~/libs/generateOGP'
 import { BlogArticlePageThumbnail } from '~/components/BlogArticlePageThumbnail'
 import { CategoriesType, PostType } from '~/types/microCMS'
-import { BaseContainer } from '~/components/BaseContainer'
+import { BaseCenter } from '~/components/BaseCenter'
 import { MicroCMSContentId, MicroCMSDate } from 'microcms-js-sdk'
 import { WysiwygArea } from '~/components/WysiwygArea'
 import { HTMLParser } from '~/libs/HTMLParser'
@@ -45,9 +45,9 @@ const BlogArticlePage: React.VFC<PostDetailsPagePropsType> = ({ post, body, cate
       <SiteBreadcrumbs items={breadcrumbs} />
       <BlogArticlePageThumbnail src={thumbnail} />
       <BlogPageCommonTemplate categories={categories}>
-        <BaseContainer maxWidth={'var(--max-width-narrow)'}>
+        <BaseCenter maxWidth={'var(--max-width-narrow)'}>
           <WysiwygArea>{body}</WysiwygArea>
-        </BaseContainer>
+        </BaseCenter>
       </BlogPageCommonTemplate>
     </>
   )

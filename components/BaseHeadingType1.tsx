@@ -11,10 +11,26 @@ type BaseHeadingPropsType = {
 export const BaseHeadingType1: React.VFC<BaseHeadingPropsType> = ({ children, lv, id }) => {
   return (
     <>
-      {lv === 1 && <H1 id={id}>{children}</H1>}
-      {lv === 2 && <H2 id={id}>{children}</H2>}
-      {lv === 3 && <H3 id={id}>{children}</H3>}
-      {lv === 4 && <H4 id={id}>{children}</H4>}
+      {lv === 1 && (
+        <H1 id={id} className="BaseHeadingType1">
+          {children}
+        </H1>
+      )}
+      {lv === 2 && (
+        <H2 id={id} className="BaseHeadingType1">
+          {children}
+        </H2>
+      )}
+      {lv === 3 && (
+        <H3 id={id} className="BaseHeadingType1">
+          {children}
+        </H3>
+      )}
+      {lv === 4 && (
+        <H4 id={id} className="BaseHeadingType1">
+          {children}
+        </H4>
+      )}
     </>
   )
 }

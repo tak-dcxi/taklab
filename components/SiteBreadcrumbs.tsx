@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { hoverable } from '~/styles/tools/hoverable'
-import { BaseContainer } from '~/components/BaseContainer'
+import { BaseCenter } from '~/components/BaseCenter'
 import { BaseIcon } from './BaseIcon'
 
 export type BreadcrumbsType = {
@@ -17,16 +17,16 @@ type SiteBreadcrumbsPropsType = {
 export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) => {
   return (
     <Root aria-label="現在位置">
-      <BaseContainer>
+      <BaseCenter>
         <List itemScope itemType="http://schema.org/BreadcrumbList">
           <ListItem itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
             <Link href={'/'} passHref>
               <MyLink itemProp="item">
                 <BaseIcon type={'home'} size={`${14 / 16}rem`} />
-                <span itemProp="name">Home</span>
+                <span itemProp="name">HOME</span>
               </MyLink>
             </Link>
-            <Chevron aria-hidden="true">&gt;</Chevron>
+            <Slash aria-hidden="true">/</Slash>
             <meta itemProp="position" content="1" />
           </ListItem>
           {items.map(({ string, path }, index: number) => (
@@ -38,7 +38,7 @@ export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) 
                       <span itemProp="name">{string}</span>
                     </MyLink>
                   </Link>
-                  <Chevron aria-hidden="true">&gt;</Chevron>
+                  <Slash aria-hidden="true">&gt;</Slash>
                   <meta itemProp="position" content={`${index + 2}`} />
                 </>
               ) : (
@@ -52,12 +52,13 @@ export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) 
             </ListItem>
           ))}
         </List>
-      </BaseContainer>
+      </BaseCenter>
     </Root>
   )
 }
 
 const Root = styled.nav`
+  font-family: var(--font-designed);
   font-size: var(--fontsize-1);
   padding: 1em 0;
 `
@@ -73,7 +74,7 @@ const ListItem = styled.li`
   margin: 0.1em 0.375em;
 `
 
-const Chevron = styled.span`
+const Slash = styled.span`
   margin-left: 0.75em;
 `
 

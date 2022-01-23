@@ -7,7 +7,7 @@ type HeaderIntersectionObserveContextType = {
 }
 
 const defaultContext: HeaderIntersectionObserveContextType = {
-  intersecting: false,
+  intersecting: true,
   setIntersecting: () => {},
 }
 

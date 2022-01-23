@@ -41,7 +41,7 @@ export const BaseTextArea = React.forwardRef<HTMLTextAreaElement, BaseTextAreaPr
     }
 
     return (
-      <Wrapper>
+      <Wrapper className="BaseTextArea">
         <Input
           ref={ref}
           id={id}

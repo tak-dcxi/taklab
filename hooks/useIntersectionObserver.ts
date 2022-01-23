@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
+import shallowEqual from 'shallowequal'
 
 /**
  * 任意の要素（DOM）同士の交差を監視します。
@@ -6,17 +7,65 @@ import React, { useState, useEffect } from 'react'
  * @return {boolean}
  */
 
-export const useIntersectionObserver = (ref: { current: HTMLElement }): boolean => {
-  const [intersecting, setIntersecting] = useState<boolean>(false)
+export type IntersectionChangeHandler = (entry: IntersectionObserverEntry) => void
+
+export type IntersectionOptions = {
+  root?: React.RefObject<Element>
+  rootMargin?: string
+  threshold?: number | number[]
+  once?: boolean
+  defaultIntersecting?: boolean
+}
+
+export const useIntersectionObserver = (
+  target: React.RefObject<Element> | Element | null,
+  options: IntersectionOptions = {},
+  callback?: IntersectionChangeHandler
+): boolean => {
+  const { defaultIntersecting, once, ...opts } = options
+  const optsRef = useRef(opts)
+  const [intersecting, setIntersecting] = useState(defaultIntersecting === true)
+  const intersectedRef = useRef(false)
 
   useEffect(() => {
-    if (!ref.current) return
+    if (!shallowEqual(optsRef.current, opts)) optsRef.current = opts
+  }, [opts])
 
-    const observer: IntersectionObserver = new IntersectionObserver(([entry]) => setIntersecting(entry.isIntersecting))
-    observer.observe(ref.current)
+  useEffect(() => {
+    if (!target) return
 
-    return () => observer.disconnect()
-  }, [ref])
+    const element: Element = target instanceof Element ? target : target.current
+
+    if (!element) return
+
+    if (once && intersectedRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries: IntersectionObserverEntry[]): void => {
+        const entry: IntersectionObserverEntry = entries[entries.length - 1]
+
+        setIntersecting(entry.isIntersecting)
+
+        if (callback != null) callback(entry)
+
+        if (entry.isIntersecting) intersectedRef.current = true
+
+        if (once && entry.isIntersecting && element != null) observer.disconnect()
+      },
+      {
+        ...optsRef.current,
+        root: optsRef.current.root != null ? optsRef.current.root.current : null,
+      }
+    )
+
+    observer.observe(element)
+
+    return () => {
+      if (once && intersectedRef.current) return
+
+      if (element != null) observer.disconnect()
+    }
+  }, [callback, once, target])
 
   return intersecting
 }

@@ -12,7 +12,7 @@ type BaseAlertPropsType = {
 
 export const BaseAlert: React.VFC<BaseAlertPropsType> = ({ children, centering }) => {
   return (
-    <Alert role="alert" {...{ centering }}>
+    <Alert className="BaseAlert" role="alert" {...{ centering }}>
       <BaseIcon type={'alert'} size={`${14 / 16}rem`} />
       {children}
     </Alert>
