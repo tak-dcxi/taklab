@@ -8,7 +8,6 @@ import { CategoriesType, PostType, SEOType } from '~/types/microCMS'
 import { HomeHeroHeader } from '~/components/HomeHeroHeader'
 import { HomeAboutSection } from '~/components/HomeAboutSection'
 import { HomeLatestPostsSection } from '~/components/HomeLatestPostsSection'
-import { HomeCategorySection } from '~/components/HomeCategorySection'
 import { HomeContactSection } from '~/components/HomeContactSection'
 
 type HomeAPIType = {
@@ -44,11 +43,10 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts, categories }) => {
       <SiteHelmet title={home.title} image={home.seo.image.url} />
       <HomeHeroHeader />
       <SectionWrapper>
-        <HomeAboutSection />
         <HomeLatestPostsSection appendButton={BlogArticleCards.length === perPage}>
           {BlogArticleCards}
         </HomeLatestPostsSection>
-        <HomeCategorySection {...{ categories }} />
+        <HomeAboutSection />
         <HomeContactSection />
       </SectionWrapper>
     </>

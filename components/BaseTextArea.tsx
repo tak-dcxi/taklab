@@ -43,17 +43,11 @@ export const BaseTextArea = React.forwardRef<HTMLTextAreaElement, BaseTextAreaPr
     return (
       <Wrapper className="BaseTextArea">
         <Input
-          ref={ref}
-          id={id}
-          title={title}
-          placeholder={placeholder}
-          aria-invalid={error}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          onInput={handleInput}
+          {...{ ref, id, title, placeholder, value, onChange, onBlur }}
           {...(required && { 'aria-required': 'true' })}
           {...(disabled && { disabled, 'aria-disabled': 'true' })}
+          aria-invalid={error}
+          onInput={handleInput}
         />
         <Dummy ref={dummyRef} aria-hidden="true" />
       </Wrapper>
@@ -69,7 +63,7 @@ const Wrapper = styled.span`
 `
 
 const Input = styled.textarea`
-  --this-scale: 0.875;
+  --scale: 0.875;
 
   appearance: none;
   background-color: transparent;
@@ -78,12 +72,12 @@ const Input = styled.textarea`
   box-shadow: inset 0 0 0 1px var(--theme-divider);
   display: block;
   font-size: max(1rem, 16px);
-  height: calc(100% / var(--this-scale));
+  height: calc(100% / var(--scale));
   overflow: hidden;
   padding: 1em;
-  transform: scale(var(--this-scale));
+  transform: scale(var(--scale));
   transform-origin: top left;
-  width: calc(100% / var(--this-scale));
+  width: calc(100% / var(--scale));
 
   &:not(:only-child) {
     left: 0;

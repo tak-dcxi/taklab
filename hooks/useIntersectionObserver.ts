@@ -24,7 +24,7 @@ export const useIntersectionObserver = (
 ): boolean => {
   const { defaultIntersecting, once, ...opts } = options
   const optsRef = useRef(opts)
-  const [intersecting, setIntersecting] = useState(defaultIntersecting === true)
+  const [intersecting, setIntersecting] = useState<boolean>(defaultIntersecting === true)
   const intersectedRef = useRef(false)
 
   useEffect(() => {

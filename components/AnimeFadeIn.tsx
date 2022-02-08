@@ -13,11 +13,7 @@ type AnimeFadeInPropsType = {
 } & CommonPropsType
 
 export const AnimeFadeIn: React.VFC<AnimeFadeInPropsType> = ({ as = 'div', children, active, delay = 0 }) => {
-  return (
-    <Wrapper as={as} {...{ active, delay }}>
-      {children}
-    </Wrapper>
-  )
+  return <Wrapper {...{ as, active, delay }}>{children}</Wrapper>
 }
 
 const Wrapper = styled.div<CommonPropsType>`

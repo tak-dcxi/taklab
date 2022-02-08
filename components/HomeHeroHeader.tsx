@@ -55,6 +55,10 @@ export const HomeHeroHeader: React.VFC = () => {
             <p>My hobbies is to experiment with new technologies and I love HTML and CSS.</p>
           </AnimeFadeIn>
         </Description>
+        <noscript>
+          <p>このページでは JavaScriptを使用しています。</p>
+          <p>お使いのWEBブラウザで JavaScriptを有効にしてからご覧ください。</p>
+        </noscript>
       </BaseCenter>
       <ScrollSign>
         <ScrollSignInner>
@@ -95,21 +99,21 @@ const Description = styled.div`
 `
 
 const ScrollSign = styled.div`
-  --this-radius: 52px;
-  --this-offset: ${clamp(4, 32)};
-  --this-scale: 0.7;
+  --radius: 52px;
+  --offset: ${clamp(4, 32)};
+  --scale: 0.7;
 
-  bottom: calc(var(--this-radius) + var(--this-offset));
+  bottom: calc(var(--radius) + var(--offset));
   position: absolute;
-  right: calc(var(--this-radius) + var(--this-offset));
-  transform: scale(var(--this-scale));
+  right: calc(var(--radius) + var(--offset));
+  transform: scale(var(--scale));
 
   @media ${breakpoints.sm} {
-    --this-scale: 0.85;
+    --scale: 0.85;
   }
 
   @media ${breakpoints.lg} {
-    --this-scale: 1;
+    --scale: 1;
   }
 `
 
@@ -123,7 +127,7 @@ const ScrollSignCharacter = styled.span`
   font-family: var(--font-designed);
   font-size: 10px;
   font-weight: bold;
-  height: var(--this-radius);
+  height: var(--radius);
   left: 0;
   line-height: 1;
   position: absolute;

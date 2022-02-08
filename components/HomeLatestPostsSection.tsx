@@ -12,7 +12,7 @@ type HomeLatestPostsSection = {
 
 export const HomeLatestPostsSection: React.VFC<HomeLatestPostsSection> = ({ children, appendButton }) => {
   return (
-    <HomeSection title={'Latest Posts'} background={'strong'}>
+    <HomeSection title={'Latest Posts'}>
       <BaseGrid gap={clamp(24, 32)} columnMin={clamp(212, 280)} track={'fill'}>
         {children}
       </BaseGrid>

@@ -8,7 +8,7 @@ const variables = css`
   --theme-text-difference: var(--color-grayscale-1);
   --theme-background-default: var(--color-grayscale-0);
   --theme-background-muted: var(--color-grayscale-2);
-  --theme-background-strong: var(--color-grayscale-0);
+  --theme-background-strong: #0e0e0e;
   --theme-background-pattern: repeating-linear-gradient(
     -45deg,
     rgba(244, 244, 244, 0),

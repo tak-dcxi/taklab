@@ -44,37 +44,31 @@ export const SiteReturnToTopButton: React.VFC = () => {
 }
 
 const Button = styled.button<{ visible: boolean }>`
-  --this-size: ${clamp(40, 48)};
-  --this-offset: ${clamp(16, 32)};
+  --size: ${clamp(40, 48)};
+  --offset: ${clamp(16, 32)};
 
   align-items: center;
+  animation-duration: ${duration}ms;
+  animation-fill-mode: forwards;
+  animation-name: ${(props) => (props.visible ? fadeIn : fadeOut)};
   background-color: var(--theme-button-background);
   border-radius: 4px;
-  bottom: var(--this-offset);
+  bottom: var(--offset);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: var(--color-grayscale-7);
   display: inline-flex;
-  height: var(--this-size);
+  height: var(--size);
   justify-content: center;
   padding: 0;
   position: fixed;
-  right: var(--this-offset);
+  right: var(--offset);
   transition: background-color 0.3s;
-  width: var(--this-size);
+  width: var(--size);
   z-index: var(--context-fixed-object);
 
   @supports (bottom: env(safe-area-inset-bottom)) {
-    bottom: calc(var(--this-offset) + env(safe-area-inset-bottom));
+    bottom: calc(var(--offset) + env(safe-area-inset-bottom));
   }
-
-  ${(props) =>
-    props.visible
-      ? css`
-          animation: ${fadeIn} ${duration}ms forwards;
-        `
-      : css`
-          animation: ${fadeOut} ${duration}ms forwards;
-        `}
 
   ${hoverable(`
     background-color: var(--color-primary);

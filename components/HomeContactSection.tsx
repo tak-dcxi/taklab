@@ -8,8 +8,8 @@ import { HomeSection } from './HomeSection'
 
 export const HomeContactSection: React.VFC = () => {
   return (
-    <HomeSection title={'Contact'} background="strong">
-      <BaseCenter maxWidth={'var(--max-width-narrow)'}>
+    <HomeSection title={'Contact'}>
+      <BaseCenter gutters={'0'} maxWidth={'var(--max-width-narrow)'}>
         <BaseStack gap={clamp(48, 56)}>
           <BaseParagraph>
             お仕事のご依頼やご相談、イベントでの登壇依頼、当サイトおよび私に対するご要望・ご感想・メッセージはお問い合わせフォームよりお気軽にお問い合わせください。

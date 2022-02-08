@@ -13,17 +13,17 @@ export const BaseHeadingType2: React.VFC<BaseHeadingPropsType> = ({ children, lv
   return (
     <>
       {lv === 2 && (
-        <H2 id={id} className="BaseHeadingType2">
+        <H2 className="BaseHeadingType2" {...{ id }}>
           {children}
         </H2>
       )}
       {lv === 3 && (
-        <H3 id={id} className="BaseHeadingType2">
+        <H3 className="BaseHeadingType2" {...{ id }}>
           {children}
         </H3>
       )}
       {lv === 4 && (
-        <H4 id={id} className="BaseHeadingType2">
+        <H4 className="BaseHeadingType2" {...{ id }}>
           {children}
         </H4>
       )}

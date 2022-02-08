@@ -20,17 +20,15 @@ export const AnimeMaskSlide: React.VFC<AnimeMaskSlidePropsType> = ({
   maskColor = 'currentColor',
 }) => {
   return (
-    <Outer as={as} {...{ active, delay }}>
-      <Inner as={as} {...{ active, delay, maskColor }}>
-        {children}
-      </Inner>
+    <Outer {...{ as, active, delay }}>
+      <Inner {...{ as, active, delay, maskColor }}>{children}</Inner>
     </Outer>
   )
 }
 
 const Outer = styled.div<CommonPropsType>`
   display: block;
-  opacity: ${(props) => (props.active ? 1 : 0)};
+  opacity: ${(props) => (props.active ? '1' : '0')};
   overflow: hidden;
   transition: opacity 0s ${(props) => props.delay}ms;
   width: fit-content;

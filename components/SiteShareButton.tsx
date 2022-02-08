@@ -5,6 +5,7 @@ import { breakpoints } from '~/constant/breakpoints'
 import { config } from '~/site.config'
 import { hoverable } from '~/styles/tools/hoverable'
 import { BaseSocialIcon } from './BaseSocialIcon'
+import { BaseStack } from './BaseStack'
 
 type SiteShareButtonPropsType = {
   title: string
@@ -69,7 +70,7 @@ export const SiteShareButton: React.VFC<SiteShareButtonPropsType> = ({ title }) 
   }
 
   return (
-    <Root>
+    <BaseStack as={'dl'} gap={'16px'}>
       <Header>
         <span aria-hidden="true">＼</span>Share<span aria-hidden="true">／</span>
       </Header>
@@ -94,15 +95,9 @@ export const SiteShareButton: React.VFC<SiteShareButtonPropsType> = ({ title }) 
           })}
         </List>
       </dd>
-    </Root>
+    </BaseStack>
   )
 }
-
-const Root = styled.dl`
-  & > * + * {
-    margin-top: 16px;
-  }
-`
 
 const Header = styled.dt`
   font-family: var(--font-designed);

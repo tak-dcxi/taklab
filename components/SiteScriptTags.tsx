@@ -15,11 +15,7 @@ export const SiteScriptTags: React.VFC = () => {
 
   const isNotSupportScrollBehavior: boolean = !('scrollBehavior' in document.documentElement.style)
 
-  const isNotSupportIntersectionObserver: boolean = !(
-    'IntersectionObserver' in window &&
-    'IntersectionObserverEntry' in window &&
-    'intersectionRatio' in window.IntersectionObserverEntry.prototype
-  )
+  const isNotSupportIntersectionObserver: boolean = !('IntersectionObserver' in window)
 
   return (
     <>

@@ -57,7 +57,6 @@ const Root = styled.div`
 `
 
 const ImageWrapper = styled.div`
-  box-shadow: 0 0 20px -6px rgba(0, 0, 0, 0.6);
   height: 100%;
   margin: auto;
   max-width: var(--max-width-default);

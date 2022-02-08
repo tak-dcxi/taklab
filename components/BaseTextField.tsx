@@ -42,21 +42,12 @@ export const BaseTextField = React.forwardRef<HTMLInputElement, BaseTextFieldPro
     return (
       <Wrapper className="BaseTextField">
         <Input
-          ref={ref}
-          id={id}
-          name={name}
-          type={type}
-          title={title}
-          placeholder={placeholder}
-          autoCorrect="off"
-          autoCapitalize="off"
-          autoComplete={autoComplete}
-          aria-invalid={error}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
+          {...{ ref, id, name, type, title, placeholder, autoComplete, value, onChange, onBlur }}
           {...(required && { 'aria-required': 'true' })}
           {...(disabled && { disabled, 'aria-disabled': 'true' })}
+          autoCorrect="off"
+          autoCapitalize="off"
+          aria-invalid={error}
         />
       </Wrapper>
     )
@@ -71,7 +62,7 @@ const Wrapper = styled.span`
 `
 
 const Input = styled.input`
-  --this-scale: 0.875;
+  --scale: 0.875;
 
   appearance: none;
   background-color: transparent;
@@ -79,12 +70,12 @@ const Input = styled.input`
   border-radius: 0;
   box-shadow: inset 0 0 0 1px var(--theme-divider);
   font-size: max(1rem, 16px);
-  height: calc(100% / var(--this-scale));
+  height: calc(100% / var(--scale));
   line-height: ${48 / 16}rem;
   padding: 0 1em;
-  transform: scale(var(--this-scale));
+  transform: scale(var(--scale));
   transform-origin: top left;
-  width: calc(100% / var(--this-scale));
+  width: calc(100% / var(--scale));
 
   &::-webkit-input-placeholder {
     color: var(--color-grayscale-3);

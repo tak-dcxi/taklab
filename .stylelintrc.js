@@ -31,6 +31,7 @@ module.exports = {
     'no-duplicate-selectors': null,
     'block-no-empty': null,
     'at-rule-blacklist': null,
+    'custom-property-empty-line-before': null,
   },
   ignoreFiles: ['dist/**/*.css', 'node_modules/**/*.css'],
 }
