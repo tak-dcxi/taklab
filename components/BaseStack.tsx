@@ -13,7 +13,7 @@ type BaseStackPropsType = {
 
 export const BaseStack: React.VFC<BaseStackPropsType> = ({ as = 'div', children, recursive, gap = '0' }) => {
   return (
-    <Stack as={as} className="BaseStack" {...{ gap, recursive }}>
+    <Stack className="BaseStack" {...{ as, gap, recursive }}>
       {children}
     </Stack>
   )

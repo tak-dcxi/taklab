@@ -21,7 +21,7 @@ export const BaseGrid: React.VFC<BaseGridPropsType> = ({
   track = 'fit',
 }) => {
   const gridRef = useRef<HTMLDivElement>(null)
-  const [isOverflowing, setIsOverflowing] = useState<boolean>(false)
+  const [isWide, setIsWide] = useState<boolean>(true)
 
   useEffect(() => {
     const handleResize = (): void => {
@@ -35,7 +35,7 @@ export const BaseGrid: React.VFC<BaseGridPropsType> = ({
       const minToPixels: number = test.offsetWidth
       element.removeChild(test)
 
-      setIsOverflowing(element.scrollWidth > minToPixels)
+      setIsWide(element.scrollWidth > minToPixels)
     }
 
     window.addEventListener('resize', debounce(handleResize, 300), false)
@@ -45,18 +45,18 @@ export const BaseGrid: React.VFC<BaseGridPropsType> = ({
   }, [columnMin, gridRef])
 
   return (
-    <Wrapper as={as} ref={gridRef} className="BaseGrid" isOverflowing={isOverflowing} {...{ columnMin, gap, track }}>
+    <Wrapper ref={gridRef} className="BaseGrid" isWide={isWide} {...{ as, columnMin, gap, track }}>
       {children}
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div<CommonPropsType & { isOverflowing: boolean }>`
+const Wrapper = styled.div<CommonPropsType & { isWide: boolean }>`
   align-content: start;
   display: grid;
   gap: ${(props) => props.gap};
   grid-template-columns: ${(props) =>
-    props.isOverflowing
+    props.isWide
       ? `repeat(${props.track === 'fit' ? 'auto-fit' : 'auto-fill'}, minmax(${props.columnMin}, 1fr)) `
       : '100%'};
 `

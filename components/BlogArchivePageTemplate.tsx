@@ -51,7 +51,7 @@ export const BlogArchivePageTemplate: React.VFC<BlogArchivePageTemplatePropsType
       <SiteHelmet title={categoryLabel} />
       <SiteBreadcrumbs items={breadcrumbs} />
       <SubpageHeader headline={categoryLabel} />
-      <BlogPageCommonTemplate categories={categories}>
+      <BlogPageCommonTemplate {...{ categories }}>
         <BaseCenter>
           <BaseStack gap={clamp(48, 64)}>
             <section>
@@ -73,13 +73,7 @@ export const BlogArchivePageTemplate: React.VFC<BlogArchivePageTemplatePropsType
                 </NoPosts>
               )}
             </section>
-            {totalCount > PER_PAGE && (
-              <BlogArchivePagination
-                totalCount={totalCount}
-                currentPage={currentPage}
-                currentCategory={currentCategory}
-              />
-            )}
+            {totalCount > PER_PAGE && <BlogArchivePagination {...{ totalCount, currentPage, currentCategory }} />}
           </BaseStack>
         </BaseCenter>
       </BlogPageCommonTemplate>

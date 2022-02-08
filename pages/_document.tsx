@@ -37,7 +37,7 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="ja" data-js="false">
-        <Head prefix="og: http://ogp.me/ns#"></Head>
+        <Head prefix="og: http://ogp.me/ns#" />
         <body>
           <Main />
           <NextScript />

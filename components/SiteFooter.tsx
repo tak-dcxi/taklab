@@ -6,6 +6,7 @@ import { clamp } from '~/styles/tools/clamp'
 import { SiteReturnToTopButton } from './SiteReturnToTopButton'
 import { SiteFooterMenu } from './SiteFooterMenu'
 import { BaseStack } from './BaseStack'
+import { darkMode } from '~/styles/tools/darkMode'
 
 export const SiteFooter: React.VFC = () => {
   return (

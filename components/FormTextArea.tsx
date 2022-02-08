@@ -10,16 +10,5 @@ export const FormTextArea = <T extends FieldValues>(props: FormTextAreaPropsType
     formState: { errors },
   } = useController<T>({ name, control })
 
-  return (
-    <BaseTextArea
-      ref={ref}
-      id={id}
-      title={title}
-      placeholder={placeholder}
-      required={required}
-      disabled={disabled}
-      error={error}
-      {...rest}
-    />
-  )
+  return <BaseTextArea {...{ ref, id, title, placeholder, required, disabled, error }} {...rest} />
 }

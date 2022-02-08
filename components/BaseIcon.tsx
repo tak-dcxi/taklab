@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid'
 
 type CommonPropsType = {
   size?: string
+  css?: string
 }
 
 type BaseIconPropsType = {
@@ -29,7 +30,7 @@ type BaseIconPropsType = {
     | 'hash'
 } & CommonPropsType
 
-export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor', label, size = '1em', type }) => {
+export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor', label, size = '1em', type, css }) => {
   const randomID: string = uuid()
 
   return (
@@ -44,7 +45,7 @@ export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor',
       strokeLinecap="round"
       strokeLinejoin="round"
       {...(label ? { role: 'img', 'aria-labelledby': randomID } : { 'aria-hidden': 'true' })}
-      {...{ size }}
+      {...{ size, css }}
     >
       {label && <title id={randomID}>{label}</title>}
       {type === 'arrow-up' && <path d="M12 19V6M5 12l7-7 7 7" />}
@@ -131,4 +132,5 @@ export const BaseIcon: React.VFC<BaseIconPropsType> = ({ color = 'currentColor',
 
 const SVGTag = styled.svg<CommonPropsType>`
   width: ${(props) => props.size};
+  ${(props) => props.css}
 `

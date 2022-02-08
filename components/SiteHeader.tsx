@@ -12,9 +12,7 @@ import { clamp } from '~/styles/tools/clamp'
 import { useHeaderIntersectionObserve } from '~/context/HeaderIntersectionOberve'
 
 const SiteHeaderMenu = dynamic(() => import('~/components/SiteHeaderMenu').then((module) => module.SiteHeaderMenu))
-const SiteHeaderSocialList = dynamic(() =>
-  import('~/components/SiteHeaderSocialList').then((module) => module.SiteHeaderSocialList)
-)
+const SiteSNSLinks = dynamic(() => import('~/components/SiteSNSLinks').then((module) => module.SiteSNSLinks))
 
 export const SiteHeader: React.VFC = () => {
   const router: NextRouter = useRouter()
@@ -36,7 +34,11 @@ export const SiteHeader: React.VFC = () => {
           {media.lg && <SiteHeaderMenu />}
           <SiteDrawer />
         </Menu>
-        {media.lg && <SiteHeaderSocialList />}
+        {media.lg && (
+          <SNSList>
+            <SiteSNSLinks />
+          </SNSList>
+        )}
       </Container>
     </Root>
   )
@@ -126,4 +128,14 @@ const LogoLink = styled.a`
 const Menu = styled.nav`
   grid-area: header-nav;
   justify-self: end;
+`
+
+const SNSList = styled.div`
+  grid-area: header-social;
+  justify-self: end;
+  padding: 0 ${clamp(16, 32, false, 320, 1920)};
+
+  @media ${breakpoints.lgUntil} {
+    display: none;
+  }
 `

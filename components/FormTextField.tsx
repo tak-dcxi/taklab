@@ -10,18 +10,5 @@ export const FormTextField = <T extends FieldValues>(props: FormTextFieldPropsTy
     formState: { errors },
   } = useController<T>({ name, control })
 
-  return (
-    <BaseTextField
-      ref={ref}
-      id={id}
-      type={type}
-      title={title}
-      placeholder={placeholder}
-      autoComplete={autoComplete}
-      required={required}
-      disabled={disabled}
-      error={error}
-      {...rest}
-    />
-  )
+  return <BaseTextField {...{ ref, id, type, title, placeholder, autoComplete, required, disabled, error }} {...rest} />
 }

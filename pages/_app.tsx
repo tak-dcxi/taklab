@@ -16,6 +16,7 @@ const App: React.VFC<AppProps> = ({ Component, pageProps, router }) => {
   usePageView()
 
   useEffect(() => {
+    document.documentElement.setAttribute('data-js', 'true')
     scrollBehavior()
     setViewHeight()
   }, [])
