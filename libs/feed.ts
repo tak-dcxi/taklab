@@ -7,14 +7,14 @@ async function generatedRssFeed(): Promise<void> {
   const baseURL: string = config.baseURL || ''
   const date: Date = new Date()
 
-  // デフォルトになる feed の情報
+  // RSSフィードの基本情報を設定
   const feed = new Feed({
     title: config.siteMeta.title || '',
     description: config.siteMeta.description,
     id: baseURL,
     link: baseURL,
     language: 'ja',
-    image: `${baseURL}/favicon.png`, // image には OGP 画像でなくファビコンを指定
+    image: `${baseURL}/favicon.png`, // ここではOGP画像ではなく、ファビコンを指定
     copyright: `© ${date.getFullYear()} TAK / Web Creator`,
     updated: date,
     feedLinks: {
@@ -24,42 +24,27 @@ async function generatedRssFeed(): Promise<void> {
     },
   })
 
-  // ローカルファイルや API 経由などでファイルのデータを取得する関数を書く
+  // microCMSからブログのデータを取得
   const posts = await client.get({ endpoint: 'blog' })
 
-  // feed で定義した情報から各記事での変更点を宣言
-  posts.contents.forEach(
-    (content: {
-      id: string
-      title: string
-      description: string
-      content: string
-      publishedAt: string
-      body: string
-      category: {
-        id: string
-      }
-    }) => {
-      // post のプロパティ情報は使用しているオブジェクトの形式に合わせる
-      const postURL: string = `${baseURL}/blog/${content.category.id}/${content.id}`
+  // 取得したブログデータをRSSフィードに追加
+  posts.contents.forEach((content) => {
+    const postURL: string = `${baseURL}/blog/${content.category.id}/${content.id}`
+    const parser: DOMParser = new DOMParser()
+    const parsedDescription: Document = parser.parseFromString(content.body, 'text/html')
+    const text: string = parsedDescription.body.textContent || ''
 
-      const description: string = content.body
-      const parser: DOMParser = new DOMParser()
-      const parsedDescription: Document = parser.parseFromString(description, 'text/html')
-      const text: string = parsedDescription.body.textContent || ''
+    feed.addItem({
+      title: content.title,
+      description: text,
+      id: postURL,
+      link: postURL,
+      content: text,
+      date: new Date(content.publishedAt),
+    })
+  })
 
-      feed.addItem({
-        title: content.title,
-        description: text,
-        id: postURL,
-        link: postURL,
-        content: text,
-        date: new Date(content.publishedAt),
-      })
-    }
-  )
-
-  // フィード情報を public/rss 配下にディレクトリを作って保存
+  // public/rssにRSSフィードを保存
   fs.mkdirSync('./public/rss', { recursive: true })
   fs.writeFileSync('./public/rss/feed.xml', feed.rss2())
   fs.writeFileSync('./public/rss/atom.xml', feed.atom1())

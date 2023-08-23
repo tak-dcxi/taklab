@@ -2,27 +2,19 @@ import { createClient } from 'microcms-js-sdk'
 import { config } from '~/site.config'
 import { CategoriesType, MicroCmsResponse, PostType, Queries } from '~/types/microCMS'
 
-export const PER_PAGE: number = 12
+// ページごとの投稿数
+export const PER_PAGE = 12
+const DEFAULT_MAX_LIMIT = 50
 
-const limit: number = PER_PAGE
-const defaultLimit: number = 12
-const defaultMaxLimit: number = 50
-
+// microCMSのクライアントを生成
 export const client = createClient({
   serviceDomain: config.serviceId,
   apiKey: config.apiKey,
 })
 
-type GetContentsType = {
-  posts: PostType[]
-  categories: CategoriesType[]
-  pager: number[]
-  totalCount: number
-}
-
-export const getContents = async (currentPage: number = 1, articleFilter?: string): Promise<GetContentsType> => {
+export const getContents = async (currentPage: number = 1, articleFilter?: string) => {
   const [{ posts, pager, totalCount }, categories] = await Promise.all([
-    getBlogsByFilter(limit, currentPage, articleFilter),
+    getBlogsByFilter(PER_PAGE, currentPage, articleFilter),
     getCategories(),
   ])
 
@@ -34,63 +26,45 @@ export const getContents = async (currentPage: number = 1, articleFilter?: strin
   }
 }
 
-export const getAllBlogs = async (): Promise<MicroCmsResponse<PostType>> => {
-  const response = await client.get<MicroCmsResponse<PostType>>({
+// 指定されたlimitでの全てのブログを取得
+export const getBlogs = async (limit: number = DEFAULT_MAX_LIMIT): Promise<MicroCmsResponse<PostType>> => {
+  return client.get<MicroCmsResponse<PostType>>({
     endpoint: 'blog',
-    queries: { limit: defaultMaxLimit },
+    queries: { limit },
   })
-
-  return response
-}
-
-export const getBlogs = async (limit: number): Promise<MicroCmsResponse<PostType>> => {
-  const response = await client.get<MicroCmsResponse<PostType>>({
-    endpoint: 'blog',
-    queries: { limit: limit },
-  })
-
-  return response
-}
-
-type GetBlogsByFilter = {
-  posts: MicroCmsResponse<PostType>
-  pager: number[]
-  totalCount: number
 }
 
 export const getBlogsByFilter = async (
   limit: number,
   currentPage: number,
   articleFilter?: string
-): Promise<GetBlogsByFilter> => {
+): Promise<{ posts: MicroCmsResponse<PostType>; pager: number[]; totalCount: number }> => {
   const queries: Queries = {
-    limit: limit,
+    limit,
     filters: articleFilter,
     offset: (currentPage - 1) * limit,
   }
+
   const posts = await client.get<MicroCmsResponse<PostType>>({
     endpoint: 'blog',
-    queries: queries,
+    queries,
   })
 
-  // @ts-ignore
-  const pager = [...[Math.ceil(posts.totalCount / PER_PAGE)].keys()]
+  const pager = [...Array(Math.ceil(posts.totalCount / PER_PAGE)).keys()]
 
-  const totalCount = posts.totalCount
-
-  return { posts, pager, totalCount }
+  return { posts, pager, totalCount: posts.totalCount }
 }
 
+// IDで特定のブログを取得
 export const getBlogById = async (blogId: string): Promise<PostType> => {
-  const response = await client.get<PostType>({
+  return client.get<PostType>({
     endpoint: 'blog',
     contentId: blogId,
     queries: { depth: 2 },
   })
-  return response
 }
 
+// カテゴリを取得
 export const getCategories = async (): Promise<MicroCmsResponse<CategoriesType>> => {
-  const response = await client.get<MicroCmsResponse<CategoriesType>>({ endpoint: 'blog-category' })
-  return response
+  return client.get<MicroCmsResponse<CategoriesType>>({ endpoint: 'blog-category' })
 }

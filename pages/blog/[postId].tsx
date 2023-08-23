@@ -1,6 +1,5 @@
-import React from 'react'
 import { NextRouter, useRouter } from 'next/router'
-import { getAllBlogs, getBlogById, getContents } from '~/libs/microCMS'
+import { getBlogs, getBlogById, getContents } from '~/libs/microCMS'
 import { BlogPageCommonTemplate } from '~/components/BlogPageCommonTemplate'
 import { SiteHelmet } from '~/components/SiteHelmet'
 import { SiteBreadcrumbs, BreadcrumbsType } from '~/components/SiteBreadcrumbs'
@@ -54,7 +53,7 @@ const BlogArticlePage: React.VFC<PostDetailsPagePropsType> = ({ post, body, cate
 }
 
 export async function getStaticPaths() {
-  const posts = await getAllBlogs()
+  const posts = await getBlogs()
   const ids = posts.contents.map((post: PostType & MicroCMSContentId & MicroCMSDate) => {
     return { params: { postId: post.id } }
   })
