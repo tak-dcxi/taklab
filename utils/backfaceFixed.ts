@@ -1,20 +1,30 @@
 export const backfaceFixed = (fixed: boolean): void => {
-  const html: HTMLElement = document.documentElement
-  const body: HTMLElement = document.body
+  // body要素を取得
+  const body = document.body as HTMLElement
+
+  // スクロールバーの幅を計算
   const scrollbarWidth: number = window.innerWidth - body.clientWidth
 
-  body.style.borderRight = fixed ? `${scrollbarWidth}px solid transparent` : ''
+  // サポートしていない場合、固定時にスクロールバーの幅だけ右のボーダーを設定
+  // 型エラーを回避するために一時的にanyにキャスト
+  ;(body.style as any).borderRight = fixed ? `${scrollbarWidth}px solid transparent` : ''
 
-  const scrollingElement = (): Element | HTMLElement => {
+  // スクローリングする要素を取得する関数
+  const getScrollingElement = (): Element | HTMLElement => {
     const browser: string = window.navigator.userAgent.toLowerCase()
-    if ('scrollingElement' in document) return document.scrollingElement
-    if (browser.indexOf('webkit') > 0) return body
-    return html
+    // スクローリング要素がdocumentに存在するかチェック
+    if ('scrollingElement' in document) return (document as any).scrollingElement as Element
+    // WebKitブラウザの場合、bodyがスクロール要素として扱われる
+    if (browser.includes('webkit')) return body
+    // それ以外のブラウザでは、html要素がスクロール要素として扱われる
+    return (document as any).documentElement as Element
   }
 
-  const scrollY: number = fixed ? scrollingElement().scrollTop : parseInt(body.style.top || '0')
+  // 現在のスクロール位置を取得
+  const scrollY: number = fixed ? getScrollingElement().scrollTop : parseInt(body.style.top || '0')
 
-  const styles: { [key: string]: string } = {
+  // body要素を固定するためのスタイル定義
+  const fixedStyles: { [key: string]: string } = {
     height: '100vh',
     left: '0',
     overflow: 'hidden',
@@ -23,8 +33,15 @@ export const backfaceFixed = (fixed: boolean): void => {
     width: '100vw',
   }
 
-  Object.keys(styles).forEach((key) => (body.style[key] = fixed ? styles[key] : ''))
-  html.style.height = fixed ? '100vh' : ''
-
-  if (!fixed) window.scrollTo(0, scrollY * -1)
+  // 固定する場合、上で定義したスタイルを適用
+  if (fixed) {
+    Object.keys(fixedStyles).forEach((key) => (body.style[key] = fixedStyles[key]))
+    ;(document.documentElement as HTMLElement).style.height = '100vh'
+  } else {
+    // 固定を解除する場合、スタイルをクリア
+    Object.keys(fixedStyles).forEach((key) => (body.style[key] = ''))
+    ;(document.documentElement as HTMLElement).style.height = ''
+    // 元のスクロール位置に戻す
+    window.scrollTo(0, scrollY * -1)
+  }
 }
