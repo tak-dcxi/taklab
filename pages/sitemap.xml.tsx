@@ -5,8 +5,9 @@ import { PostType } from '~/types/microCMS'
 
 const Sitemap = () => null
 
-// @see https://zenn.dev/catnose99/articles/c441954a987c24
-
+/**
+ * sitemap.xml を動的に生成する関数です。
+ */
 const generateSitemapXml = async () => {
   let xml: string = `<?xml version="1.0" encoding="UTF-8"?>`
   xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`
@@ -14,26 +15,19 @@ const generateSitemapXml = async () => {
   const pages = await client.get({ endpoint: 'pages' })
   const blog = await client.get({ endpoint: 'blog' })
 
+  // ページ情報をxmlに追加
   pages.contents.forEach((page: { updatedAt: string; id: string }) => {
-    if (page.id === 'home') {
-      xml += `
+    const loc = page.id === 'home' ? config.baseURL : `${config.baseURL}/${page.id}`
+    xml += `
       <url>
-        <loc>${config.baseURL}</loc>
+        <loc>${loc}</loc>
         <lastmod>${page.updatedAt}</lastmod>
         <changefreq>weekly</changefreq>
       </url>
     `
-    } else {
-      xml += `
-      <url>
-        <loc>${config.baseURL}/${page.id}</loc>
-        <lastmod>${page.updatedAt}</lastmod>
-        <changefreq>weekly</changefreq>
-      </url>
-    `
-    }
   })
 
+  // ブログの情報をxmlに追加
   blog.contents.forEach((post: PostType) => {
     xml += `
       <url>
@@ -48,6 +42,9 @@ const generateSitemapXml = async () => {
   return xml
 }
 
+/**
+ * サーバーサイドでsitemap.xmlを生成してレスポンスとして返す
+ */
 export const getServerSideProps = async ({ res }: GetServerSidePropsContext) => {
   const xml: string = await generateSitemapXml()
 
