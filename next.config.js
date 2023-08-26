@@ -9,7 +9,7 @@ module.exports = withBundleAnalyzer({
     domains: ['tak-dcxi.microcms.io', 'images.microcms-assets.io'],
     formats: ['image/avif', 'image/webp'],
   },
-  experimental: {
-    optimizeFonts: true,
+  compiler: {
+    styledComponents: true,
   },
 })
