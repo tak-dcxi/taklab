@@ -92,5 +92,8 @@
     "iOS <= 13",
     "not IE 11",
     "not dead"
-  ]
+  ],
+  "engines": {
+    "node": "18.x"
+  }
 }
