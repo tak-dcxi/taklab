@@ -36,6 +36,8 @@ const App: React.VFC<AppProps> = ({ Component, pageProps, router }) => {
     const handleRouteChange = (): void => {
       const main: HTMLElement = document.getElementById('main')
       if (main) main.focus()
+      // mainにfocusする都合上、見た目のスクロール位置がズレるので最上部までスクロールする
+      window.scrollTo(0, 0)
     }
 
     // ルートが変更されたら処理を実行
