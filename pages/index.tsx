@@ -9,6 +9,8 @@ import { HomeHeroHeader } from '~/components/HomeHeroHeader'
 import { HomeAboutSection } from '~/components/HomeAboutSection'
 import { HomeLatestPostsSection } from '~/components/HomeLatestPostsSection'
 import { HomeContactSection } from '~/components/HomeContactSection'
+import { BlogSearchForm } from '~/components/BlogSearchForm'
+import { BlogCategoryCard } from '~/components/BlogCategoryCard'
 
 type HomeAPIType = {
   id: 'home'
@@ -48,6 +50,8 @@ const HomePage: NextPage<HomePropsType> = ({ home, posts, categories }) => {
         </HomeLatestPostsSection>
         <HomeAboutSection />
         <HomeContactSection />
+        <BlogSearchForm />
+        <BlogCategoryCard />
       </SectionWrapper>
     </>
   )

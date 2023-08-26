@@ -20,8 +20,8 @@ export const BlogArticleCard: React.VFC<BlogArticleCardPropsType> = ({ api, lv, 
 
   return (
     <Root {...{ appendCategory }}>
-      <Link href={`/blog/[postId]`} as={`/blog/${api.id}`} passHref>
-        <LinkToArticle>
+      <LinkToArticle href={`/blog/${api.id}`} passHref>
+        <div>
           {lv === 2 && <H2>{api.title}</H2>}
           {lv === 3 && <H3>{api.title}</H3>}
           {lv === 4 && <H4>{api.title}</H4>}
@@ -45,16 +45,16 @@ export const BlogArticleCard: React.VFC<BlogArticleCardPropsType> = ({ api, lv, 
               <time dateTime={api.createdAt}>{getDate(api.createdAt, 'en')}</time>
             </dd>
           </PublishedAt>
-        </LinkToArticle>
-      </Link>
+        </div>
+      </LinkToArticle>
 
       {appendCategory && (
         <Category>
           <dt className="VisuallyHidden">カテゴリ</dt>
           <dd>
-            <Link href={`/blog/category/[id]/1`} as={`/blog/category/${api.category.id}/1`} passHref>
-              <LinkToCategory>[{api.category.name}]</LinkToCategory>
-            </Link>
+            <LinkToCategory href={`/blog/category/${api.category.id}/1`} passHref>
+              [{api.category.name}]
+            </LinkToCategory>
           </dd>
         </Category>
       )}
@@ -74,8 +74,10 @@ const Root = styled.article<CommonPropsType>`
     `}
 `
 
-const LinkToArticle = styled.a`
-  display: grid;
+const LinkToArticle = styled(Link)`
+  & > div {
+    display: grid;
+  }
 `
 
 const H2 = styled.h2`
@@ -124,7 +126,7 @@ const Category = styled.dl`
   font-family: var(--font-designed);
 `
 
-const LinkToCategory = styled.a`
+const LinkToCategory = styled(Link)`
   position: relative;
   transition: color ${duration};
 

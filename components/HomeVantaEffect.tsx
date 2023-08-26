@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import * as THREE from '~/libs/threeCustom.min.js'
+import * as THREE from 'three'
 import FOG from 'vanta/dist/vanta.fog.min.js'
 import { useHeaderIntersectionObserve } from '~/context/HeaderIntersectionOberve'
 

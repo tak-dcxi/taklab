@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { formFieldStyle } from '~/styles/object/formFieldStyle'
-import { toKebabCase } from '~/utils/convertString'
 
 export type BaseTextFieldPropsType = {
   type?: 'text' | 'email' | 'tel' | 'password'
@@ -47,7 +45,7 @@ export const BaseTextField = React.forwardRef<HTMLInputElement, BaseTextFieldPro
           {...(disabled && { disabled, 'aria-disabled': 'true' })}
           autoCorrect="off"
           autoCapitalize="off"
-          aria-invalid={error}
+          aria-invalid={!!error}
         />
       </Wrapper>
     )

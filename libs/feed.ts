@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { BinaryData, JSDOM } from 'jsdom'
 import { Feed } from 'feed'
 import { client } from '~/libs/microCMS'
 import { config } from '~/site.config'
@@ -7,14 +8,14 @@ async function generatedRssFeed(): Promise<void> {
   const baseURL: string = config.baseURL || ''
   const date: Date = new Date()
 
-  // デフォルトになる feed の情報
+  // RSSフィードの基本情報を設定
   const feed = new Feed({
     title: config.siteMeta.title || '',
     description: config.siteMeta.description,
     id: baseURL,
     link: baseURL,
     language: 'ja',
-    image: `${baseURL}/favicon.png`, // image には OGP 画像でなくファビコンを指定
+    image: `${baseURL}/favicon.png`, // ここではOGP画像ではなく、ファビコンを指定
     copyright: `© ${date.getFullYear()} TAK / Web Creator`,
     updated: date,
     feedLinks: {
@@ -24,29 +25,23 @@ async function generatedRssFeed(): Promise<void> {
     },
   })
 
-  // ローカルファイルや API 経由などでファイルのデータを取得する関数を書く
+  // microCMSからブログのデータを取得
   const posts = await client.get({ endpoint: 'blog' })
 
-  // feed で定義した情報から各記事での変更点を宣言
+  // 取得したブログデータをRSSフィードに追加
   posts.contents.forEach(
     (content: {
-      id: string
-      title: string
-      description: string
-      content: string
-      publishedAt: string
-      body: string
-      category: {
-        id: string
-      }
+      category: { id: any }
+      id: any
+      body: string | Buffer | BinaryData
+      title: any
+      publishedAt: string | number | Date
     }) => {
-      // post のプロパティ情報は使用しているオブジェクトの形式に合わせる
       const postURL: string = `${baseURL}/blog/${content.category.id}/${content.id}`
 
-      const description: string = content.body
-      const parser: DOMParser = new DOMParser()
-      const parsedDescription: Document = parser.parseFromString(description, 'text/html')
-      const text: string = parsedDescription.body.textContent || ''
+      // jsdomを利用してHTMLを解析
+      const dom = new JSDOM(content.body)
+      const text: string = dom.window.document.body.textContent || ''
 
       feed.addItem({
         title: content.title,
@@ -59,7 +54,7 @@ async function generatedRssFeed(): Promise<void> {
     }
   )
 
-  // フィード情報を public/rss 配下にディレクトリを作って保存
+  // public/rssにRSSフィードを保存
   fs.mkdirSync('./public/rss', { recursive: true })
   fs.writeFileSync('./public/rss/feed.xml', feed.rss2())
   fs.writeFileSync('./public/rss/atom.xml', feed.atom1())

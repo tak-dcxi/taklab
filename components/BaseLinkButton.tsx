@@ -22,15 +22,21 @@ export const BaseLinkButton: React.VFC<BaseLinkButtonPropsType> = ({ children, h
   }
 
   return (
-    <Link passHref {...{ href }}>
-      <Button {...{ onClick }} {...(blank && { target: '_blank', rel: 'noopener noreferrer' })}>
-        {children}
-        <BaseIcon type={'chevron-right'} size={`${18 / 16}rem`} />
-      </Button>
-    </Link>
+    <LinkComponentButton
+      passHref
+      {...{ href, onClick }}
+      {...(blank && { target: '_blank', rel: 'noopener noreferrer' })}
+    >
+      {children}
+      <BaseIcon type={'chevron-right'} size={`${18 / 16}rem`} />
+    </LinkComponentButton>
   )
 }
 
 const Button = styled.a`
+  ${buttonStyle}
+`
+
+const LinkComponentButton = styled(Link)`
   ${buttonStyle}
 `

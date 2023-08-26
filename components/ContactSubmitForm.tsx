@@ -14,6 +14,15 @@ import { BaseIcon } from './BaseIcon'
 import { BaseStack } from './BaseStack'
 import { BaseCenter } from './BaseCenter'
 
+// 入力のバリデーションルールのスキーマ
+const schema = yup.object({
+  firstName: yup.string().required('姓の入力は必須です'),
+  givenName: yup.string().required('名の入力は必須です'),
+  email: yup.string().required('メールアドレスの入力は必須です').email('正しいメールアドレスを入力してください'),
+  subject: yup.string().required('件名の入力は必須です'),
+  message: yup.string().required('メッセージの入力は必須です'),
+})
+
 type FormInputType = {
   firstName: string
   givenName: string
@@ -23,19 +32,10 @@ type FormInputType = {
   message: string
 }
 
-const schema = yup.object({
-  firstName: yup.string().required('姓の入力は必須です'),
-  givenName: yup.string().required('名の入力は必須です'),
-  email: yup.string().required('メールアドレスの入力は必須です').email('正しいメールアドレスを入力してください'),
-  subject: yup.string().required('件名の入力は必須です'),
-  message: yup.string().required('メッセージの入力は必須です'),
-})
-
 export const ContactSubmitForm: React.VFC = () => {
   const {
     control,
     handleSubmit,
-    setError,
     formState: { errors },
   } = useForm<FormInputType>({
     mode: 'onBlur',
@@ -43,95 +43,67 @@ export const ContactSubmitForm: React.VFC = () => {
   })
 
   const onSubmit = (data: any) => console.log(data)
+  const randomID = 'test'
 
-  const randomID = uuid()
+  // エラーメッセージを表示するヘルパーコンポーネント
+  const ErrorMessage = ({ name }: { name: keyof FormInputType }) =>
+    errors[name] ? <BaseAlert>{errors[name]?.message}</BaseAlert> : null
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} tabIndex={-1} aria-labelledby={randomID}>
       <h2 id={randomID} className="VisuallyHidden">
         お問い合わせ内容をご記入ください
       </h2>
-      <BaseStack gap={clamp(64, 80)}>
+      <BaseStack gap="80px">
         <ContactFormSteps current={1} />
         <FormPartsContainer>
-          <BaseStack gap={'32px'}>
+          <BaseStack gap="32px">
             <FormFieldset>
               <FormLegend>
                 お名前<FormRequiredIcon>必須</FormRequiredIcon>
               </FormLegend>
               <FormFieldsetContent>
-                <label>
-                  <span className="VisuallyHidden">姓</span>
-                  <FormTextField
-                    control={control}
-                    type={'text'}
-                    name={'firstName'}
-                    autoComplete={'first-name'}
-                    placeholder={'姓'}
-                    required
-                    error={'firstName' in errors}
-                  />
-                </label>
-                <label>
-                  <span className="VisuallyHidden">名</span>
-                  <FormTextField
-                    control={control}
-                    type={'text'}
-                    name={'givenName'}
-                    autoComplete={'given-name'}
-                    placeholder={'名'}
-                    required
-                    error={'givenName' in errors}
-                  />
-                </label>
+                <FieldWithLabel
+                  control={control}
+                  name="firstName"
+                  type="text"
+                  autoComplete="first-name"
+                  placeholder="姓"
+                />
+                <FieldWithLabel
+                  control={control}
+                  name="givenName"
+                  type="text"
+                  autoComplete="given-name"
+                  placeholder="名"
+                />
               </FormFieldsetContent>
-              {errors.firstName && <BaseAlert>{errors.firstName?.message}</BaseAlert>}
-              {errors.givenName && <BaseAlert>{errors.givenName?.message}</BaseAlert>}
+              <ErrorMessage name="firstName" />
+              <ErrorMessage name="givenName" />
             </FormFieldset>
 
-            <FormItem>
-              <FormLabel>
-                <FormLabelText>会社名</FormLabelText>
-                <FormTextField control={control} type={'text'} name={'organization'} autoComplete={'organization'} />
-              </FormLabel>
-            </FormItem>
+            <FieldWithLabel
+              control={control}
+              name="organization"
+              type="text"
+              autoComplete="organization"
+              label="会社名"
+            />
+            <FieldWithLabel
+              control={control}
+              name="email"
+              type="email"
+              autoComplete="email"
+              label="ご連絡先メールアドレス"
+              required
+            />
+            <ErrorMessage name="email" />
 
-            <FormItem>
-              <FormLabel>
-                <FormLabelText>
-                  ご連絡先メールアドレス<FormRequiredIcon>必須</FormRequiredIcon>
-                </FormLabelText>
-                <FormTextField
-                  control={control}
-                  type={'email'}
-                  name={'email'}
-                  autoComplete={'email'}
-                  required
-                  error={'email' in errors}
-                />
-              </FormLabel>
-              {errors.email && <BaseAlert>{errors.email?.message}</BaseAlert>}
-            </FormItem>
+            <FieldWithLabel control={control} name="subject" type="text" label="件名" required />
+            <ErrorMessage name="subject" />
 
-            <FormItem>
-              <FormLabel>
-                <FormLabelText>
-                  件名<FormRequiredIcon>必須</FormRequiredIcon>
-                </FormLabelText>
-                <FormTextField control={control} type={'text'} name={'subject'} required error={'subject' in errors} />
-              </FormLabel>
-              {errors.subject && <BaseAlert>{errors.subject?.message}</BaseAlert>}
-            </FormItem>
-
-            <FormItem>
-              <FormLabel>
-                <FormLabelText>
-                  メッセージ<FormRequiredIcon>必須</FormRequiredIcon>
-                </FormLabelText>
-                <FormTextArea control={control} name={'message'} required error={'message' in errors} />
-              </FormLabel>
-              {errors.message && <BaseAlert>{errors.message?.message}</BaseAlert>}
-            </FormItem>
+            <FieldWithLabel control={control} name="message" as="textarea" label="メッセージ" required />
+            <ErrorMessage name="message" />
           </BaseStack>
         </FormPartsContainer>
 
@@ -144,6 +116,24 @@ export const ContactSubmitForm: React.VFC = () => {
     </form>
   )
 }
+
+const FieldWithLabel = ({ control, name, label, ...rest }: any) => (
+  <FormItem>
+    <FormLabel>
+      {label && (
+        <FormLabelText>
+          {label}
+          {rest.required && <FormRequiredIcon>必須</FormRequiredIcon>}
+        </FormLabelText>
+      )}
+      {rest.as === 'textarea' ? (
+        <FormTextArea control={control} name={name} {...rest} />
+      ) : (
+        <FormTextField control={control} name={name} {...rest} />
+      )}
+    </FormLabel>
+  </FormItem>
+)
 
 const FormItem = styled.p`
   & > * + * {

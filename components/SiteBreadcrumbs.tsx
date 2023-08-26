@@ -20,12 +20,10 @@ export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) 
       <BaseCenter>
         <List itemScope itemType="http://schema.org/BreadcrumbList">
           <ListItem itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
-            <Link href={'/'} passHref>
-              <MyLink itemProp="item">
-                <BaseIcon type={'home'} size={`${14 / 16}rem`} />
-                <span itemProp="name">HOME</span>
-              </MyLink>
-            </Link>
+            <MyLink href={'/'} passHref itemProp="item">
+              <BaseIcon type={'home'} size={`${14 / 16}rem`} />
+              <span itemProp="name">HOME</span>
+            </MyLink>
             <Slash aria-hidden="true">/</Slash>
             <meta itemProp="position" content="1" />
           </ListItem>
@@ -33,11 +31,9 @@ export const SiteBreadcrumbs: React.VFC<SiteBreadcrumbsPropsType> = ({ items }) 
             <ListItem key={index} itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem">
               {items.length - 1 !== index ? (
                 <>
-                  <Link href={path} passHref>
-                    <MyLink itemProp="item">
-                      <span itemProp="name">{string}</span>
-                    </MyLink>
-                  </Link>
+                  <MyLink href={path} passHref itemProp="item">
+                    <span itemProp="name">{string}</span>
+                  </MyLink>
                   <Slash aria-hidden="true">&gt;</Slash>
                   <meta itemProp="position" content={`${index + 2}`} />
                 </>
@@ -78,7 +74,7 @@ const Slash = styled.span`
   margin-left: 0.75em;
 `
 
-const MyLink = styled.a`
+const MyLink = styled(Link)`
   border-bottom: 1px solid var(--color-primary);
   transition: color 0.3s;
 

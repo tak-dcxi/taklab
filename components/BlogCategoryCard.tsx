@@ -1,52 +1,69 @@
 import React, { useRef } from 'react'
+import useSWR from 'swr'
 import Link from 'next/link'
 import Image from 'next/image'
 import styled from 'styled-components'
 import { clamp } from '~/styles/tools/clamp'
 import { hoverable } from '~/styles/tools/hoverable'
+import { BaseGrid } from './BaseGrid'
+import { getCategories } from '~/libs/microCMS'
+import { CategoriesType } from '~/types/microCMS'
 
-type BlogCategoryCard = {
-  id: string
-  name: string
-  image: string
+const fetchCategories = async (): Promise<CategoriesType[]> => {
+  const response = await getCategories()
+  return response.contents
 }
 
-export const BlogCategoryCard: React.VFC<BlogCategoryCard> = ({ id, name, image }) => {
-  const src: string = `${image}?fit=crop&w=375&h=95`
+export const BlogCategoryCard: React.VFC = () => {
+  const { data: categories, error } = useSWR('blog-category', fetchCategories)
+
+  if (error) return <p>カテゴリを取得できませんでした</p>
+  if (!categories) return <p>Loading...</p>
 
   return (
-    <Link href={`/blog/category/[category]/1`} as={`/blog/category/${id}/1`} passHref>
-      <MyLink>
-        {name}
-        <ImageWrapper>
-          <Image src={src} alt={''} layout="fill" decoding="async" loading="lazy" objectFit="cover" quality={75} />
-        </ImageWrapper>
-      </MyLink>
-    </Link>
+    <BaseGrid as={'ul'} gap={'8px'} columnMin={clamp(148, 240)} track={'fill'}>
+      {categories.map((category: CategoriesType, index: number) => {
+        return (
+          <li key={index}>
+            <MyLink href={`/blog/category/${category.id}/1`} passHref>
+              {category.name}
+              <ImageWrapper>
+                <Image
+                  src={`${category.image.url}?fit=crop&w=375&h=95`}
+                  alt={''}
+                  layout="fill"
+                  decoding="async"
+                  loading="lazy"
+                  objectFit="cover"
+                  quality={80}
+                />
+              </ImageWrapper>
+            </MyLink>
+          </li>
+        )
+      })}
+    </BaseGrid>
   )
 }
 
-const MyLink = styled.a`
-  align-items: center;
+const MyLink = styled(Link)`
+  border-radius: 4px;
   color: var(--color-grayscale-7);
-  display: flex;
+  display: grid;
   font-family: var(--font-designed);
   font-size: ${clamp(14, 20, true)};
   isolation: isolate;
-  justify-content: center;
   letter-spacing: var(--letter-spacing-headline);
-  min-height: 0.01vw;
+  min-height: 120px;
   overflow: hidden;
-  padding: ${clamp(24, 48)} 16px;
+  padding: 16px;
+  place-items: center;
   position: relative;
 `
 
 const ImageWrapper = styled.span`
-  bottom: 0;
-  left: 0;
   position: absolute;
-  right: 0;
-  top: 0;
+  inset: 0;
   z-index: -1;
 
   &::after {

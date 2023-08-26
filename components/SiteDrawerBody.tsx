@@ -69,23 +69,31 @@ export const SiteDrawerBody = React.forwardRef(
 
                   return (
                     <li key={index}>
-                      <Link href={item.path} passHref>
-                        {item.id === 'blog' ? (
-                          <MyLink onClick={() => onClose()} {...(isBlogPage && { 'aria-current': 'page' })}>
-                            <PrimaryLabel style={{ textTransform: 'uppercase' }} lang="en" translate="no">
-                              {item.title}
-                            </PrimaryLabel>
-                            <SecondaryLabel>{item.subtitle}</SecondaryLabel>
-                          </MyLink>
-                        ) : (
-                          <MyLink onClick={() => onClose()} {...(item.path === asPath && { 'aria-current': 'page' })}>
-                            <PrimaryLabel style={{ textTransform: 'uppercase' }} lang="en" translate="no">
-                              {item.title}
-                            </PrimaryLabel>
-                            <SecondaryLabel>{item.subtitle}</SecondaryLabel>
-                          </MyLink>
-                        )}
-                      </Link>
+                      {item.id === 'blog' ? (
+                        <MyLink
+                          href={item.path}
+                          passHref
+                          onClick={() => onClose()}
+                          {...(isBlogPage && { 'aria-current': 'page' })}
+                        >
+                          <PrimaryLabel style={{ textTransform: 'uppercase' }} lang="en" translate="no">
+                            {item.title}
+                          </PrimaryLabel>
+                          <SecondaryLabel>{item.subtitle}</SecondaryLabel>
+                        </MyLink>
+                      ) : (
+                        <MyLink
+                          href={item.path}
+                          passHref
+                          onClick={() => onClose()}
+                          {...(item.path === asPath && { 'aria-current': 'page' })}
+                        >
+                          <PrimaryLabel style={{ textTransform: 'uppercase' }} lang="en" translate="no">
+                            {item.title}
+                          </PrimaryLabel>
+                          <SecondaryLabel>{item.subtitle}</SecondaryLabel>
+                        </MyLink>
+                      )}
                     </li>
                   )
                 })}
@@ -182,7 +190,7 @@ const List = styled.ul`
   }
 `
 
-const MyLink = styled.a`
+const MyLink = styled(Link)`
   display: block;
   letter-spacing: 0.01em;
   padding: 12px 30px 12px 24px;

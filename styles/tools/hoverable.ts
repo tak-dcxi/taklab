@@ -15,7 +15,7 @@ export const hoverable = (
       }
 
       @media (hover: hover) and (pointer: fine) {
-        ${root}:hover & {
+        ${root}:hover &:where(:any-link, :enabled, summary) {
           ${styles}
         }
       }
@@ -32,7 +32,7 @@ export const hoverable = (
     }
 
     @media (hover: hover) and (pointer: fine) {
-      &:hover {
+      &:where(:any-link, :enabled, summary):hover {
         ${styles}
       }
     }

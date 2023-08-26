@@ -1,22 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import DOMPurify from 'dompurify'
 import styled from 'styled-components'
 import { clamp } from '~/styles/tools/clamp'
 import { hoverable } from '~/styles/tools/hoverable'
 import 'highlight.js/styles/atom-one-dark.css'
 
+declare global {
+  interface Window {
+    twttr: any
+  }
+}
+
 type WysiwygAreaPropsType = {
   children?: string
 }
 
 export const WysiwygArea: React.VFC<WysiwygAreaPropsType> = ({ children }) => {
+  const rootRef = useRef<HTMLDivElement>(null)
   const [html, setHtml] = useState<string>('')
 
   useEffect(() => {
     if (children) setHtml(DOMPurify().sanitize(children))
   }, [children])
 
-  return <Area dangerouslySetInnerHTML={{ __html: html }} />
+  // Twitterのウィジェットを読み込む
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.twttr && window.twttr.widgets) {
+      window.twttr.widgets.load(rootRef.current)
+    }
+  }, [html])
+
+  return <Area ref={rootRef} dangerouslySetInnerHTML={{ __html: html }} />
 }
 
 const Area = styled.div`
@@ -42,8 +56,8 @@ const Area = styled.div`
   & h4:not([class]),
   & h5:not([class]),
   & h6:not([class]) {
-    margin-bottom: 2em;
     margin-bottom: 1em;
+    margin-top: 2em;
   }
 
   & h2:not([class]) {
@@ -53,17 +67,14 @@ const Area = styled.div`
 
   & h3:not([class]) {
     font-size: ${clamp(18, 22, true)};
-    margin-top: 2em;
   }
 
   & h4:not([class]) {
     font-size: ${clamp(16, 20, true)};
-    margin-top: 2em;
   }
 
   & h5:not([class]) {
     font-size: ${clamp(14, 18, true)};
-    margin-top: 2em;
   }
 
   & *:is(ul, ol):not([class]) {
@@ -96,24 +107,11 @@ const Area = styled.div`
     background-image: linear-gradient(rgba(0, 0, 0, 0) 40%, var(--layout-color-accent) 40%);
   }
 
-  & .wp-block-embed {
-    background-color: var(--color-grayscale-5);
-    width: fit-content;
-
-    & blockquote {
-      display: none;
-    }
-
-    & iframe {
-      clip: auto !important;
-      position: relative !important;
-    }
-  }
-
   & pre {
     border: 1px solid var(--theme-divider);
   }
 `
+
 function processNodes(children: any, transform: (node: any, index: any) => any): string {
   throw new Error('Function not implemented.')
 }

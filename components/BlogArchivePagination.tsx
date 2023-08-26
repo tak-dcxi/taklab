@@ -29,26 +29,28 @@ export const BlogArchivePagination: React.VFC<BlogArchivePaginationPropsType> = 
       <List>
         {currentPage !== 1 && (
           <ListItem>
-            <Link href={`${paginationPath}/${currentPage - 1}`} passHref>
-              <Button aria-label="前のページに戻る">
-                <BaseIcon type={'chevron-left'} size={'1rem'} />
-              </Button>
-            </Link>
+            <Button href={`${paginationPath}/${currentPage - 1}`} passHref aria-label="前のページに戻る">
+              <BaseIcon type={'chevron-left'} size={'1rem'} />
+            </Button>
           </ListItem>
         )}
 
         <ListItem key={1}>
-          <Link href={`${paginationPath}/1`} passHref>
-            <Button {...(currentPage === 1 && { 'aria-current': 'location' })}>1</Button>
-          </Link>
+          <Button href={`${paginationPath}/1`} passHref {...(currentPage === 1 && { 'aria-current': 'location' })}>
+            1
+          </Button>
         </ListItem>
 
         {range(2, lastPage - 1).map((number: number, index: number) => {
           return Math.abs(currentPage - number) < 3 ? (
             <ListItem key={index}>
-              <Link href={`${paginationPath}/${number}`} passHref>
-                <Button {...(currentPage === number && { 'aria-current': 'location' })}>{number}</Button>
-              </Link>
+              <Button
+                href={`${paginationPath}/${number}`}
+                passHref
+                {...(currentPage === number && { 'aria-current': 'location' })}
+              >
+                {number}
+              </Button>
             </ListItem>
           ) : (
             Math.abs(currentPage - number) === 3 && (
@@ -60,18 +62,20 @@ export const BlogArchivePagination: React.VFC<BlogArchivePaginationPropsType> = 
         })}
 
         <ListItem key={lastPage}>
-          <Link href={`${paginationPath}/${lastPage}`} passHref>
-            <Button {...(currentPage === lastPage && { 'aria-current': 'location' })}>{lastPage}</Button>
-          </Link>
+          <Button
+            href={`${paginationPath}/${lastPage}`}
+            passHref
+            {...(currentPage === lastPage && { 'aria-current': 'location' })}
+          >
+            {lastPage}
+          </Button>
         </ListItem>
 
         {currentPage !== lastPage && (
           <ListItem>
-            <Link href={`${paginationPath}/${currentPage + 1}`} passHref>
-              <Button aria-label="次のページへ進む">
-                <BaseIcon type={'chevron-right'} size={'1rem'} />
-              </Button>
-            </Link>
+            <Button href={`${paginationPath}/${currentPage + 1}`} passHref aria-label="次のページへ進む">
+              <BaseIcon type={'chevron-right'} size={'1rem'} />
+            </Button>
           </ListItem>
         )}
       </List>
@@ -105,7 +109,7 @@ const buttonStyle = css`
   width: ${36 / 16}rem;
 `
 
-const Button = styled.a`
+const Button = styled(Link)`
   ${buttonStyle}
 
   &[aria-current] {

@@ -8,11 +8,13 @@ type SiteStructureTemplatePropsType = {
 }
 
 export const SiteStructureTemplate: React.VFC<SiteStructureTemplatePropsType> = ({ children }) => {
+  const mainTagId = 'main'
+
   return (
     <Root>
       <SiteSkipLink />
       <SiteHeader />
-      <Main id="main" aria-label="メインコンテンツ" tabIndex={-1}>
+      <Main id={mainTagId} aria-label="メインコンテンツ" tabIndex={-1}>
         {children}
       </Main>
       <SiteFooter />

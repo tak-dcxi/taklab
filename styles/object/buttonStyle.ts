@@ -15,7 +15,7 @@ export const buttonStyle = css`
 
   & > svg {
     bottom: 0;
-    margin: auto 0;
+    margin-block: auto;
     position: absolute;
     right: 12px;
     top: 0;

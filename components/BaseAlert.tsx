@@ -12,14 +12,14 @@ type BaseAlertPropsType = {
 
 export const BaseAlert: React.VFC<BaseAlertPropsType> = ({ children, centering }) => {
   return (
-    <Alert className="BaseAlert" role="alert" {...{ centering }}>
+    <Alert role="alert" centering={centering}>
       <BaseIcon type={'alert'} size={`${14 / 16}rem`} />
       {children}
     </Alert>
   )
 }
 
-const Alert = styled.span<CommonPropsType>`
+const Alert = styled.div<CommonPropsType>`
   align-items: center;
   background-color: var(--color-accent-2);
   border-radius: 4px;
@@ -36,7 +36,6 @@ const Alert = styled.span<CommonPropsType>`
   ${(props) =>
     props.centering &&
     css`
-      margin-left: auto;
-      margin-right: auto;
+      margin-inline: auto;
     `}
 `
