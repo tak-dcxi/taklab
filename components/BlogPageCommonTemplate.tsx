@@ -23,12 +23,10 @@ export const BlogPageCommonTemplate: React.VFC<BlogPageCommonTemplatePropsType> 
             {categories.map((category, index) => {
               return (
                 <li key={index}>
-                  <Link href={`/blog/category/${category.id}/1`} passHref>
-                    <CategoryLink>
-                      {category.name}
-                      <BaseIcon type={'chevron-right'} size={`${14 / 16}rem`} />
-                    </CategoryLink>
-                  </Link>
+                  <CategoryLink href={`/blog/category/${category.id}/1`} passHref>
+                    {category.name}
+                    <BaseIcon type={'chevron-right'} size={`${14 / 16}rem`} />
+                  </CategoryLink>
                 </li>
               )
             })}
@@ -57,7 +55,7 @@ const CategoryList = styled.ul`
   grid-template-columns: repeat(auto-fit, minmax(152px, 1fr));
 `
 
-const CategoryLink = styled.a`
+const CategoryLink = styled(Link)`
   align-items: center;
   border-bottom: 1px dotted;
   display: flex;

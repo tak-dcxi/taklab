@@ -22,13 +22,15 @@ export const SiteFooterMenu: React.VFC = () => {
 
             return (
               <li key={index}>
-                <Link href={item.path} passHref>
-                  {item.id === 'blog' ? (
-                    <FooterLink {...(isBlogPage && { 'aria-current': 'page' })}>{item.title}</FooterLink>
-                  ) : (
-                    <FooterLink {...(item.path === path && { 'aria-current': 'page' })}>{item.title}</FooterLink>
-                  )}
-                </Link>
+                {item.id === 'blog' ? (
+                  <FooterLink href={item.path} passHref {...(isBlogPage && { 'aria-current': 'page' })}>
+                    {item.title}
+                  </FooterLink>
+                ) : (
+                  <FooterLink href={item.path} passHref {...(item.path === path && { 'aria-current': 'page' })}>
+                    {item.title}
+                  </FooterLink>
+                )}
               </li>
             )
           })}
@@ -61,7 +63,7 @@ const Menu = styled.ul`
   }
 `
 
-const FooterLink = styled.a`
+const FooterLink = styled(Link)`
   display: inline-block;
   font-family: var(--font-designed);
   font-size: ${14 / 16}rem;

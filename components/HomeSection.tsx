@@ -39,3 +39,5 @@ const Section = styled.section<SectionPropsType>`
   padding: var(--padding-block-contents) 0;
   position: relative;
 `
+
+const Paragraph = styled.p``

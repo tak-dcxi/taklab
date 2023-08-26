@@ -1,6 +1,5 @@
 import React, { useRef } from 'react'
 import styled from 'styled-components'
-import { formFieldStyle } from '~/styles/object/formFieldStyle'
 
 export type BaseTextAreaPropsType = {
   id?: string
@@ -46,7 +45,7 @@ export const BaseTextArea = React.forwardRef<HTMLTextAreaElement, BaseTextAreaPr
           {...{ ref, id, title, placeholder, value, onChange, onBlur }}
           {...(required && { 'aria-required': 'true' })}
           {...(disabled && { disabled, 'aria-disabled': 'true' })}
-          aria-invalid={error}
+          aria-invalid={!!error}
           onInput={handleInput}
         />
         <Dummy ref={dummyRef} aria-hidden="true" />
@@ -105,9 +104,8 @@ const Input = styled.textarea`
 `
 
 const Dummy = styled.span`
-  border: 1px solid;
   display: block;
-  font-size: max(var(--fontsize-2), 14px);
+  font-size: max(1rem, 16px);
   overflow: hidden;
   overflow-wrap: break-word;
   padding: 1em;

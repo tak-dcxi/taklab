@@ -27,7 +27,7 @@ export const ErrorPageTemplate: React.VFC<ErrorPageTemplatePropsType> = ({ statu
       <BaseCenter>
         <Contents>
           <Sentence>
-            <p className="emoji" role="img" aria-label="ごめんなさい">
+            <p className="emoji" role="img" aria-label="Sorry">
               🙇‍♂️
             </p>
             {statusCode === 404 ? (

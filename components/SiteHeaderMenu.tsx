@@ -19,13 +19,15 @@ export const SiteHeaderMenu: React.VFC = () => {
 
         return (
           <li key={index}>
-            <Link href={item.path} passHref>
-              {item.id === 'blog' ? (
-                <NavbarLink {...(isBlogPage && { 'aria-current': 'page' })}>{item.title}</NavbarLink>
-              ) : (
-                <NavbarLink {...(item.path === asPath && { 'aria-current': 'page' })}>{item.title}</NavbarLink>
-              )}
-            </Link>
+            {item.id === 'blog' ? (
+              <NavbarLink href={item.path} passHref {...(isBlogPage && { 'aria-current': 'page' })}>
+                {item.title}
+              </NavbarLink>
+            ) : (
+              <NavbarLink href={item.path} passHref {...(item.path === asPath && { 'aria-current': 'page' })}>
+                {item.title}
+              </NavbarLink>
+            )}
           </li>
         )
       })}
@@ -61,7 +63,7 @@ const Root = styled.ul`
   }
 `
 
-const NavbarLink = styled.a`
+const NavbarLink = styled(Link)`
   align-items: center;
   display: inline-flex;
   font-family: var(--font-designed);

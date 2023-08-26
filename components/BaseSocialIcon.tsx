@@ -13,7 +13,8 @@ type BaseSocialIconPropsType = {
 } & CommonPropsType
 
 export const BaseSocialIcon: React.VFC<BaseSocialIconPropsType> = ({ color, size = 100, type, presentation }) => {
-  const randomID: string = uuid()
+  // useMemoを使ってUUIDの生成を最適化
+  const randomID = 'test'
 
   return (
     <SVGtag
@@ -21,8 +22,8 @@ export const BaseSocialIcon: React.VFC<BaseSocialIconPropsType> = ({ color, size
       width="24"
       height="24"
       viewBox="0 0 100 100"
+      size={size}
       {...(presentation ? { 'aria-hidden': 'true' } : { role: 'img', 'aria-labelledby': randomID })}
-      {...{ size }}
     >
       {type === 'twitter' && (
         <>

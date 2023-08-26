@@ -34,6 +34,19 @@ export const getBlogs = async (limit: number = DEFAULT_MAX_LIMIT): Promise<Micro
   })
 }
 
+export const getBlogsByKeyword = async (
+  keyword: string,
+  limit: number = DEFAULT_MAX_LIMIT
+): Promise<MicroCmsResponse<PostType>> => {
+  return client.get<MicroCmsResponse<PostType>>({
+    endpoint: 'blog',
+    queries: {
+      q: keyword,
+      limit,
+    },
+  })
+}
+
 export const getBlogsByFilter = async (
   limit: number,
   currentPage: number,
@@ -67,4 +80,18 @@ export const getBlogById = async (blogId: string): Promise<PostType> => {
 // カテゴリを取得
 export const getCategories = async (): Promise<MicroCmsResponse<CategoriesType>> => {
   return client.get<MicroCmsResponse<CategoriesType>>({ endpoint: 'blog-category' })
+}
+
+export const getPostsCountByCategory = async (categoryId: string): Promise<number> => {
+  try {
+    const response = await client.get({
+      endpoint: 'blog', // これはあなたのエンドポイントに合わせて変更する必要があります
+      queries: { filters: `category[equals]${categoryId}`, limit: 0 }, // カテゴリIDに基づいてフィルタリング
+    })
+
+    return response.totalCount // totalCountは、クエリ結果の総数を返すフィールドと仮定しています。
+  } catch (error) {
+    console.error('Failed to fetch post count by category', error)
+    return 0
+  }
 }

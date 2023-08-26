@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { BinaryData, JSDOM } from 'jsdom'
 import { Feed } from 'feed'
 import { client } from '~/libs/microCMS'
 import { config } from '~/site.config'
@@ -28,21 +29,30 @@ async function generatedRssFeed(): Promise<void> {
   const posts = await client.get({ endpoint: 'blog' })
 
   // 取得したブログデータをRSSフィードに追加
-  posts.contents.forEach((content) => {
-    const postURL: string = `${baseURL}/blog/${content.category.id}/${content.id}`
-    const parser: DOMParser = new DOMParser()
-    const parsedDescription: Document = parser.parseFromString(content.body, 'text/html')
-    const text: string = parsedDescription.body.textContent || ''
+  posts.contents.forEach(
+    (content: {
+      category: { id: any }
+      id: any
+      body: string | Buffer | BinaryData
+      title: any
+      publishedAt: string | number | Date
+    }) => {
+      const postURL: string = `${baseURL}/blog/${content.category.id}/${content.id}`
 
-    feed.addItem({
-      title: content.title,
-      description: text,
-      id: postURL,
-      link: postURL,
-      content: text,
-      date: new Date(content.publishedAt),
-    })
-  })
+      // jsdomを利用してHTMLを解析
+      const dom = new JSDOM(content.body)
+      const text: string = dom.window.document.body.textContent || ''
+
+      feed.addItem({
+        title: content.title,
+        description: text,
+        id: postURL,
+        link: postURL,
+        content: text,
+        date: new Date(content.publishedAt),
+      })
+    }
+  )
 
   // public/rssにRSSフィードを保存
   fs.mkdirSync('./public/rss', { recursive: true })

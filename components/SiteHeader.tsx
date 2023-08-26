@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { NextRouter, useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 import styled, { css } from 'styled-components'
 import { breakpoints } from '~/constant/breakpoints'
@@ -8,29 +8,27 @@ import { hoverable } from '~/styles/tools/hoverable'
 import { BaseLogo } from '~/components/BaseLogo'
 import { SiteDrawer } from '~/components/SiteDrawer'
 import { useMatchMedia } from '~/hooks/useMatchMedia'
-import { clamp } from '~/styles/tools/clamp'
 import { useHeaderIntersectionObserve } from '~/context/HeaderIntersectionOberve'
+import { clamp } from '~/styles/tools/clamp'
 
 const SiteHeaderMenu = dynamic(() => import('~/components/SiteHeaderMenu').then((module) => module.SiteHeaderMenu))
 const SiteSNSLinks = dynamic(() => import('~/components/SiteSNSLinks').then((module) => module.SiteSNSLinks))
 
 export const SiteHeader: React.VFC = () => {
-  const router: NextRouter = useRouter()
-  const path: string = router.asPath
-  const media: { [key: string]: boolean } = useMatchMedia()
+  const { asPath: path } = useRouter()
+  const media = useMatchMedia()
   const { intersecting } = useHeaderIntersectionObserve()
+  const menuId = 'menu'
 
   return (
     <Root aria-label="サイトヘッダー" isHome={path === '/'} intersecting={intersecting}>
       <Container>
         <Logo>
-          <Link href={'/'} passHref>
-            <LogoLink title={'トップページ'}>
-              <BaseLogo size={`${144 / 16}rem`} />
-            </LogoLink>
-          </Link>
+          <LogoLink href="/" passHref title="トップページへ">
+            <BaseLogo size={`${144 / 16}rem`} />
+          </LogoLink>
         </Logo>
-        <Menu id="menu" tabIndex={-1} aria-label="サイト内メニュー">
+        <Menu id={menuId} tabIndex={-1} aria-label="サイト内メニュー">
           {media.lg && <SiteHeaderMenu />}
           <SiteDrawer />
         </Menu>
@@ -44,12 +42,7 @@ export const SiteHeader: React.VFC = () => {
   )
 }
 
-type HeaderRootPropsType = {
-  isHome: boolean
-  intersecting?: boolean
-}
-
-const Root = styled.header<HeaderRootPropsType>`
+const Root = styled.header<{ isHome: boolean; intersecting?: boolean }>`
   height: var(--height-header);
   position: ${(props) => (props.isHome ? 'fixed' : 'sticky')};
   top: 0;
@@ -62,21 +55,13 @@ const Root = styled.header<HeaderRootPropsType>`
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     content: '';
     left: 0;
+    opacity: ${(props) => (props.isHome && !props.intersecting ? 1 : 0)};
     position: absolute;
     right: 0;
     top: 0;
     transition: opacity 0.3s;
     z-index: -1;
   }
-
-  /* トップページでの処理 */
-  ${(props) =>
-    props.isHome &&
-    css`
-      &::after {
-        opacity: ${props.intersecting ? 0 : 1};
-      }
-    `}
 `
 
 const Container = styled.div`
@@ -99,7 +84,7 @@ const Logo = styled.p`
   padding: 0 ${clamp(16, 32, false, 320, 1920)};
 `
 
-const LogoLink = styled.a`
+const LogoLink = styled(Link)`
   display: inline-block;
   isolation: isolate;
   position: relative;
@@ -119,9 +104,9 @@ const LogoLink = styled.a`
   }
 
   ${hoverable(`
-    &::after {
-      opacity: 0.5;
-    }
+      &::after {
+        opacity: 0.5;
+      }
   `)}
 `
 

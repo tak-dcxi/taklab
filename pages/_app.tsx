@@ -13,22 +13,35 @@ const SiteScriptTags = dynamic(() => import('~/components/SiteScriptTags').then(
 })
 
 const App: React.VFC<AppProps> = ({ Component, pageProps, router }) => {
+  // ページビューのカスタムフックを使用
   usePageView()
 
   useEffect(() => {
+    // JavaScriptが有効であることを示す属性を追加
     document.documentElement.setAttribute('data-js', 'true')
-    scrollBehavior()
-    setViewHeight()
-  }, [])
 
-  useEffect(() => {
+    // スクロールの挙動を設定
+    scrollBehavior()
+
+    // ビューポートの高さを設定
+    setViewHeight()
+
+    // GoogleFontsのリンク要素を取得し、media属性を変更
+    const googleFontsLink = document.getElementById('myGoogleFonts') as HTMLLinkElement
+    if (googleFontsLink) {
+      googleFontsLink.media = 'all'
+    }
+
+    // ルートが変更されたときの処理を設定
     const handleRouteChange = (): void => {
       const main: HTMLElement = document.getElementById('main')
       if (main) main.focus()
-      window.scrollTo(0, 0)
     }
 
+    // ルートが変更されたら処理を実行
     router.events.on('routeChangeComplete', handleRouteChange)
+
+    // コンポーネントがアンマウントされるときに処理を解除
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
 

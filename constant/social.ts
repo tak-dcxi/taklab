@@ -24,6 +24,6 @@ export const social: { [key: string]: SocialType } = {
   },
   rss: {
     name: 'RSS',
-    url: `${config.baseURL}/rss/feed.xml`,
+    url: `${config.baseURL}/api/rss`,
   },
 }

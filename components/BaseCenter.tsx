@@ -7,7 +7,6 @@ type CommonPropsType = {
   gutters?: string
   intrinsic?: boolean
   andText?: boolean
-  style?: string
 }
 
 type BaseCenterPropsType = {
@@ -22,10 +21,9 @@ export const BaseCenter: React.VFC<BaseCenterPropsType> = ({
   gutters = clamp(16, 32),
   intrinsic,
   andText,
-  style,
 }) => {
   return (
-    <Center className="BaseCenter" {...{ as, maxWidth, gutters, intrinsic, andText, style }}>
+    <Center as={as} maxWidth={maxWidth} gutters={gutters} intrinsic={intrinsic} andText={andText}>
       {children}
     </Center>
   )
@@ -33,11 +31,9 @@ export const BaseCenter: React.VFC<BaseCenterPropsType> = ({
 
 const Center = styled.div<CommonPropsType>`
   box-sizing: content-box;
-  margin-left: auto;
-  margin-right: auto;
+  margin-inline: auto;
   max-width: ${(props) => props.maxWidth};
-  padding-left: ${(props) => props.gutters};
-  padding-right: ${(props) => props.gutters};
+  padding-inline: ${(props) => props.gutters};
 
   ${(props) =>
     props.intrinsic &&
@@ -52,6 +48,4 @@ const Center = styled.div<CommonPropsType>`
     css`
       text-align: center;
     `}
-
-  ${(props) => props.style}
 `

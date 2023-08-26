@@ -38,24 +38,14 @@ export const BlogArticlePageHeader: React.VFC<BlogArticlePageHeaderPropsType> = 
             <dt className="VisuallyHidden">公開日</dt>
             <dd>
               <BaseIcon type={'clock'} />
-              <time
-                itemProp="datePublished"
-                // @ts-ignore
-                content={publishedAt}
-                dateTime={publishedAt}
-              >
+              <time itemProp="datePublished" dateTime={publishedAt}>
                 {getDate(publishedAt, 'en')}
               </time>
             </dd>
             <dt className="VisuallyHidden">最終更新日</dt>
             <dd>
               <BaseIcon type={'refresh'} />
-              <time
-                itemProp="dateModified"
-                // @ts-ignore
-                content={updatedAt}
-                dateTime={updatedAt}
-              >
+              <time itemProp="dateModified" dateTime={updatedAt}>
                 {getDate(updatedAt, 'en')}
               </time>
             </dd>
@@ -64,9 +54,9 @@ export const BlogArticlePageHeader: React.VFC<BlogArticlePageHeaderPropsType> = 
         <dl>
           <dt className="VisuallyHidden">カテゴリ</dt>
           <dd>
-            <Link href={`/blog/${category.id}`} passHref>
-              <Category>{category.name}</Category>
-            </Link>
+            <Category href={`/blog/${category.id}`} passHref>
+              {category.name}
+            </Category>
           </dd>
         </dl>
       </Description>
@@ -119,7 +109,7 @@ const Headline = styled.h1`
   margin-bottom: 24px;
 `
 
-const Category = styled.a`
+const Category = styled(Link)`
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
   display: inline-block;
